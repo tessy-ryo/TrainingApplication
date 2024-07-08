@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.1</version>
+		<version>3.1.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -73,11 +73,11 @@
 			<artifactId>jquery</artifactId>
 			<version>3.5.1</version>
 		</dependency>
-		<dependeny>
+		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<version>4.5.3</version>
-		</dependeny>
+		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>webjars-locator</artifactId>

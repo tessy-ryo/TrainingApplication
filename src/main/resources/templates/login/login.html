@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<script th:src="@{/webjars/bootstrap/js/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	<title>ログイン</title>
 </head>
 <body>
+	<div class="text-center">
+		<form method="post" th:action="@{/login}">
+			<h2>筋トレ管理</h2>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<input type="text" class="form-control" placeholder="アカウント名"
+						name="accountName"/>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<input type="password" class="form-control" placeholder="パスワード"
+						name="password"/>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3 mb-3">
+				<div class="col-4">
+					<button type="submit" class="btn btn-primary">ログイン</button>
+				</div>
+			</div>
+		</form>
+		<a th:href="@{/user/signup}">新規登録はこちら</a>
+	</div>
 
 </body>
 </html>
