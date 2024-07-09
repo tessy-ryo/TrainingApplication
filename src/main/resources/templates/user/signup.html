@@ -11,26 +11,28 @@
 </head>
 <body>
 	<div class="text-center">
-		<form method="post" th:action="@{/user/signup}">
+		<form method="post" th:action="@{/user/signup}" th:object="${signupForm}">
 			<h1>新規登録</h1>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 					<label for="accountName">アカウント名</label>
-					<input type="text" class="form-control"/>
+					<input type="text" class="form-control" th:field="*{accountName}"
+					th:errorclass="is-invalid"/>
+					<div class="invalid-feedback" th:errors="*{accountName}"></div>
 				</div>
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 					<label for="password">パスワード</label>
-					<input type="password" class="form-control"/>
+					<input type="password" class="form-control" th:field="*{password}"
+					th:errorclass="is-invalid"/>
+					<div class="invalid-feedback" th:errors="*{password}"></div>
 				</div>
 			</div>
 			<div class="row justify-content-center mt-3">
-				<div class="me-3">
+				<div class="col-auto">
+					<a th:href="@{/login}" class="btn btn-secondary me-3">戻る</a>
 					<button type="submit" class="btn btn-primary">アカウント登録</button>
-				</div>
-				<div class="me-3">
-					<a th:href="@{/login}" class="btn btn-secondary">戻る</a>
 				</div>
 			</div>
 		</form>
