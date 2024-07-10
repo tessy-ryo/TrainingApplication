@@ -94,7 +94,18 @@
 		<dependency>
     		<groupId>com.mysql</groupId>
     		<artifactId>mysql-connector-j</artifactId>
-    		<version>8.2.0</version>
+    	</dependency>
+		<!-- MyBatis -->
+		<dependency>
+    		<groupId>org.mybatis.spring.boot</groupId>
+    		<artifactId>mybatis-spring-boot-starter</artifactId>
+    		<version>3.0.3</version>
+		</dependency>
+		<!-- Model Mapper -->
+		<dependency>
+    		<groupId>org.modelmapper.extensions</groupId>
+    		<artifactId>modelmapper-spring</artifactId>
+    		<version>3.1.1</version>
 		</dependency>
 	</dependencies>
 
