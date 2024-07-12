@@ -107,7 +107,18 @@
     		<artifactId>modelmapper-spring</artifactId>
     		<version>3.1.1</version>
 		</dependency>
+		<!-- SpringSecurity -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<!-- Thymeleaf拡張ライブラリ-->
+		<dependency>
+    		<groupId>org.thymeleaf.extras</groupId>
+    		<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+		</dependency>
 	</dependencies>
+	
 
 	<build>
 		<plugins>
