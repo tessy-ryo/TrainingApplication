@@ -15,4 +15,13 @@
 	,#{password}
 	)
 </insert>
+
+<select id = "findLoginUser" resultType="MUser">
+	select
+		*
+	from
+		training.users
+	where
+		account_name = #{accountName}
+</select>
 </mapper>

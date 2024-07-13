@@ -38,8 +38,8 @@ public class SecurityConfig {
                 .loginProcessingUrl("/login")
                 .loginPage("/login")
                 .failureUrl("/login?error")
-                .usernameParameter("user")
-                .passwordParameter("pass")
+                .usernameParameter("accountName")
+                .passwordParameter("password")
                 .defaultSuccessUrl("/training/dashboard", true)
                 .permitAll()
         ).logout(logout -> logout
