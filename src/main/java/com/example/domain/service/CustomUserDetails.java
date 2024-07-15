@@ -22,7 +22,7 @@ public class CustomUserDetails implements UserDetails{
 	public CustomUserDetails(MUser user) {
 		this.accountName = user.getAccountName();
 		this.password = user.getPassword();
-		this.isAdmin = "1".equals(user.getIsAdmin());
+		this.isAdmin = (user.getIsAdmin() == 1);
 		this.isAccountNonExpired = true;
 		this.isAccountNonLocked = true;
 		this.isCredentialsNonExpired = true;
@@ -79,4 +79,7 @@ public class CustomUserDetails implements UserDetails{
 		return isEnabled;
 	}
 
+	public String getAccountName() {
+		return accountName;
+	}
 }

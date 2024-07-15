@@ -9,10 +9,12 @@
 	insert into training.users(
 	account_name
 	,password
+	,is_admin
 	)
 	values(
 	#{accountName}
 	,#{password}
+	,#{isAdmin}
 	)
 </insert>
 

@@ -6,5 +6,5 @@ import lombok.Data;
 public class MUser {
 	private String accountName;
 	private String password;
-	private String isAdmin;
+	private int isAdmin;
 }
