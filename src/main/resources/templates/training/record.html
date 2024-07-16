@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<title>筋トレ記録</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="text-center">
+			<div class="row justify-content-center">
+				<div class="mt-3">
+					<div><u>記録する項目をクリックしてください</u></div>
+				</div>
+			</div>
+		</div>
+		<div class="text-center">
+			<div class="row justify-content-center">
+				<div class="d-grid gap-2 col-6 mx-auto mt-3">
+					<a class="btn btn-danger btn-lg" href="#" type="button">筋トレを記録する</a>
+				</div>
+  			</div>
+  			<div class="row justify-content-center">
+				<div class="d-grid gap-2 col-6 mx-auto mt-3">
+					<a class="btn btn-danger btn-lg" href="/training/record/weight" type="button">体重を記録する</a>
+				</div>
+  			</div>
+		</div>
+	</div>
+
+</body>
+</html>
