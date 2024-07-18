@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.example.domain.model.MUser;
 
 public class CustomUserDetails implements UserDetails{
+	private int id;
 	private String accountName;
 	private String password;
 	private boolean isAdmin;
@@ -20,6 +21,7 @@ public class CustomUserDetails implements UserDetails{
 	private boolean isEnabled;
 	
 	public CustomUserDetails(MUser user) {
+		this.id = user.getId();
 		this.accountName = user.getAccountName();
 		this.password = user.getPassword();
 		this.isAdmin = (user.getIsAdmin() == 1);
@@ -41,6 +43,11 @@ public class CustomUserDetails implements UserDetails{
 		    }
 
 		    return authorities;
+	}
+	
+	public int getId() {
+		
+		return id;
 	}
 
 	@Override
