@@ -60,7 +60,7 @@ public class TrainingRecordController {
 		}
 		
 		//**体重記録確認画面を表示*/
-		@GetMapping("/training/weight/checkWeightRecord")
+		@GetMapping("/weight/checkWeightRecord")
 			public String checkWeightRecord(Model model, HttpSession session, Authentication authentication) {
 			setupModel(model,authentication);
 			//セッションからフォームデータを取得
