@@ -15,6 +15,9 @@ import com.example.domain.service.CustomUserDetails;
 import com.example.domain.service.WeightService;
 import com.example.form.RecordWeightForm;
 
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+
 @Controller
 @RequestMapping("/training")
 public class TrainingRecordController {
@@ -40,19 +43,49 @@ public class TrainingRecordController {
 		
 		//**体重を記録する画面を表示*/
 		@GetMapping("/record/weight")
-		public String getRecordWeight(Model model,@ModelAttribute RecordWeightForm form, Authentication authentication) {
+		public String getRecordWeight(@ModelAttribute RecordWeightForm form,Model model,Authentication authentication) {
 			setupModel(model,authentication);
 			//体重を記録する画面を表示
-			return "training/recordWeight";
+			return "training/weight/recordWeight";
 		}
 		
-		//**体重記録処理*/
+		//**体重記録確認画面に移動*/
 		@PostMapping("/record/weight")
-		public String postRecordWeight(@ModelAttribute RecordWeightForm form,Authentication authentication) {
+		public String postRecordWeight(@Valid @ModelAttribute RecordWeightForm form, Model model,HttpSession session, Authentication authentication) {
+			setupModel(model,authentication);
+			
+			session.setAttribute("recordWeightForm", form);
+			
+			return "redirect:/training/weight/checkWeightRecord";
+		}
+		
+		//**体重記録確認画面を表示*/
+		@GetMapping("/training/weight/checkWeightRecord")
+			public String checkWeightRecord(Model model, HttpSession session, Authentication authentication) {
+			setupModel(model,authentication);
+			//セッションからフォームデータを取得
+			RecordWeightForm form = (RecordWeightForm) session.getAttribute("recordWeightForm");
+			
+			model.addAttribute("recordWeightForm", form);
+			
+			return "training/weight/checkWeightRecord";
+		}
+		
+		@PostMapping("/training/weight/checkWeightRecord")
+			public String confirmWeightRecord(Model model, HttpSession session, Authentication authentication) {
+			setupModel(model,authentication);
+			
+			//セッションからフォームデータを取得
+			RecordWeightForm form = (RecordWeightForm) session.getAttribute("recordWeightForm");
+			
 			WeightRecord record = modelMapper.map(form,WeightRecord.class);
 			//体重を記録
 			weightService.recordWeight(record,authentication);
 			
-			return "redirect:/training/record";
+			session.removeAttribute("recordWeightForm");
+			
+			return "redirect:/training/dashboard";
 		}
+			
+		
 }
