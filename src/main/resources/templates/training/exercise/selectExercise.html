@@ -37,7 +37,7 @@
 						<label for="部位" class="form-label">部位</label>
 					</div>
 					<div>
-						<select th:field="*{bodyParts}" class="form-select" th:errorclass="is-invalid">
+						<select id="bodyPartsSelect" th:field="*{bodyParts}" class="form-select" th:errorclass="is-invalid" onchange="fetchExercises()">
 							<option value = "">選択してください</option>
 							<option th:each="item : ${bodyPartsMap}" th:text="${item.key}" 
 								th:value="${item.value}"></option>
@@ -46,7 +46,46 @@
 					</div>
 				</div>
 			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<div>
+						<label for="種目" class="form-label">種目</label>
+					</div>
+					<div>
+						<select id="exerciseSelect" th:field="*{exercise}" class="form-select" th:errorclass="is-invalid">
+							<option value="">選択してください</option>
+						</select>
+						<div class="invalid-feedback" th:errors="*{exercise}"></div>
+					</div>
+				</div>
+			</div>
 		</form>
 	</div>
 </body>
+<script>
+	function fetchExercises(){
+		const bodyPart = document.getElementById('bodyPartsSelect').value;
+		const exerciseSelect = document.getElementById("exerciseSelect");
+		
+		if(bodyPart){
+			fetch(`/api/exercise?bodyPart=${bodyPart}`)
+			.then(response => response.json())
+			.then(data => {
+				//種目のセレクトボックスをクリア
+				exerciseSelect.innerHTML = '<option value="">選択してください</option>'
+				
+				//データをセレクトボックスに追加
+				data.forEach(item => {
+					const option = document.createElement('option');
+					option.value = item.id;
+					option.text = item.name
+					exerciseSelect.appendChild(option);
+				});
+			})
+			.catch(error => console.error('Error fetching exercises:',error));
+		}else{
+			exerciseSelect.innerHTML = '<option value = "">選択してください</option>';
+		}
+	}
+</script>
 </html>
