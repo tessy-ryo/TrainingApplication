@@ -26,15 +26,15 @@
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
-					<label for="日付" class="form-label">日付</label>
-					<input type="date" class="form-control" th:field="*{date}" th:errorclass="is-invalid">
+					<label for="date" class="form-label">日付</label>
+					<input type="date" class="form-control" id="date" th:field="*{date}" th:errorclass="is-invalid">
 					<div class="invalid-feedback" th:errors="*{date}"></div>
 				</div>
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 					<div>
-						<label for="部位" class="form-label">部位</label>
+						<label for="bodyPartsSelect" class="form-label">部位</label>
 					</div>
 					<div>
 						<select id="bodyPartsSelect" th:field="*{bodyParts}" class="form-select" th:errorclass="is-invalid" onchange="fetchExercises()">
@@ -49,7 +49,7 @@
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 					<div>
-						<label for="種目" class="form-label">種目</label>
+						<label for="exerciseSelect" class="form-label">種目</label>
 					</div>
 					<div>
 						<select id="exerciseSelect" th:field="*{exercise}" class="form-select" th:errorclass="is-invalid">
@@ -61,14 +61,14 @@
 			</div>
 		</form>
 	</div>
-</body>
-<script>
+	<script>
+	console.log("JavaScript is loaded");
 	function fetchExercises(){
-		const bodyPart = document.getElementById('bodyPartsSelect').value;
+		const bodyPartId = document.getElementById('bodyPartsSelect').value;
 		const exerciseSelect = document.getElementById("exerciseSelect");
 		
-		if(bodyPart){
-			fetch(`/api/exercise?bodyPart=${bodyPart}`)
+		if(bodyPartId){
+			fetch(`/api/exercise?bodyPartId=${bodyPartId}`)
 			.then(response => response.json())
 			.then(data => {
 				//種目のセレクトボックスをクリア
@@ -87,5 +87,8 @@
 			exerciseSelect.innerHTML = '<option value = "">選択してください</option>';
 		}
 	}
+	
 </script>
+</body>
+
 </html>

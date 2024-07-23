@@ -10,5 +10,5 @@ import com.example.domain.model.Exercise;
 public interface ExerciseMapper {
 
 	/**筋トレ種目取得*/
-	public List<Exercise> getExercisesByBodyPart(int bodyPart);
+	public List<Exercise> getExercisesByBodyPart(int bodyPartId);
 }

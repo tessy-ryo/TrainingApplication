@@ -12,4 +12,6 @@ public class SelectExerciseForm {
 	private Date date;
 	
 	private Integer bodyParts;
+	
+	private Integer exercise;
 }
