@@ -3,9 +3,7 @@ package com.example.domain.model;
 import lombok.Data;
 
 @Data
-public class Exercise {
+public class BodyParts {
 	private Integer id;
 	private String name;
-	private Integer bodyPartId;
-	private Integer weightBased;
 }

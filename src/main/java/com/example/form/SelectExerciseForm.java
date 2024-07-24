@@ -13,5 +13,5 @@ public class SelectExerciseForm {
 	
 	private Integer bodyParts;
 	
-	private Integer exercise;
+	private Integer id;
 }

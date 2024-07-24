@@ -21,7 +21,7 @@ public class ExerciseController {
 	private ExerciseService exerciseService;
 	
 	@GetMapping("/exercise")
-	public List<Map<String,Object>> listExercises(@RequestParam("bodyPartId") int bodyPartId ){
+	public List<Map<String,Object>> listExercises(@RequestParam("bodyPartId") Integer bodyPartId ){
 		List<Exercise> exercises = exerciseService.getExercises(bodyPartId);
 		return exercises.stream()
 				.map(exercise -> {

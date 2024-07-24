@@ -6,6 +6,7 @@
 <link rel="stylesheet" th:href="@{/css/record/record.css}">
 <link rel="stylesheet" th:href="@{/css/select/select.css}">
 <title>種目を選択する</title>
+<script th:src="@{/js/script.js}"></script>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -39,8 +40,8 @@
 					<div>
 						<select id="bodyPartsSelect" th:field="*{bodyParts}" class="form-select" th:errorclass="is-invalid" onchange="fetchExercises()">
 							<option value = "">選択してください</option>
-							<option th:each="item : ${bodyPartsMap}" th:text="${item.key}" 
-								th:value="${item.value}"></option>
+							<option th:each="item : ${bodyPartsList}" th:text="${item.name}" 
+								th:value="${item.id}"></option>
 						</select>
 						<div class="invalid-feedback" th:errors="*{bodyParts}"></div>
 					</div>
@@ -52,43 +53,21 @@
 						<label for="exerciseSelect" class="form-label">種目</label>
 					</div>
 					<div>
-						<select id="exerciseSelect" th:field="*{exercise}" class="form-select" th:errorclass="is-invalid">
+						<select id="exerciseSelect" th:field="*{id}" class="form-select" th:errorclass="is-invalid">
 							<option value="">選択してください</option>
 						</select>
-						<div class="invalid-feedback" th:errors="*{exercise}"></div>
+						<div class="invalid-feedback" th:errors="*{id}"></div>
 					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-auto">
+					<a class="btn btn-secondary" href="/training/record" role="button">筋トレ記録へ戻る</a>
+					<button type="submit" class="btn-record-red">重量や回数を入力する</button>
 				</div>
 			</div>
 		</form>
 	</div>
-	<script>
-	console.log("JavaScript is loaded");
-	function fetchExercises(){
-		const bodyPartId = document.getElementById('bodyPartsSelect').value;
-		const exerciseSelect = document.getElementById("exerciseSelect");
-		
-		if(bodyPartId){
-			fetch(`/api/exercise?bodyPartId=${bodyPartId}`)
-			.then(response => response.json())
-			.then(data => {
-				//種目のセレクトボックスをクリア
-				exerciseSelect.innerHTML = '<option value="">選択してください</option>'
-				
-				//データをセレクトボックスに追加
-				data.forEach(item => {
-					const option = document.createElement('option');
-					option.value = item.id;
-					option.text = item.name
-					exerciseSelect.appendChild(option);
-				});
-			})
-			.catch(error => console.error('Error fetching exercises:',error));
-		}else{
-			exerciseSelect.innerHTML = '<option value = "">選択してください</option>';
-		}
-	}
-	
-</script>
 </body>
 
 </html>
