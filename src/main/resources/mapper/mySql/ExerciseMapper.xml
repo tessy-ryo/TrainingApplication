@@ -29,6 +29,24 @@ SELECT
 FROM 
 	training.exercises
 WHERE
-	id=#{id}
+	id=#{exerciseId}
 </select>
+
+<insert id="insertExerciseData">
+	insert into training.exercise_records(
+		user_id
+		,exercise_id
+		,date
+		,weight
+		,reps
+		)
+		values(
+		#{userId}
+		,#{exerciseId}
+		,#{date}
+		,#{weight}
+		,#{reps}
+		)
+</insert>
+
 </mapper>

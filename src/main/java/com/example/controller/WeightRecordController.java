@@ -45,7 +45,7 @@ public class WeightRecordController {
 		@PostMapping("/record/weight")
 		public String postRecordWeight(@Valid @ModelAttribute RecordWeightForm form, Model model,HttpSession session, Authentication authentication) {
 			setupModel(model,authentication);
-			
+			//セッションにフォームデータを保存
 			session.setAttribute("recordWeightForm", form);
 			
 			return "redirect:/training/weight/checkWeightRecord";
@@ -74,6 +74,7 @@ public class WeightRecordController {
 			//体重を記録
 			weightService.recordWeight(record,authentication);
 			
+			//セッションのフォームデータを破棄
 			session.removeAttribute("recordWeightForm");
 			
 			return "redirect:/training/dashboard";
