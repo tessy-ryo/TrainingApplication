@@ -18,9 +18,9 @@ public interface ExerciseService {
 	//重量の有無の確認
 	public int checkWeightBased(int exerciseId);
 	
-	//筋トレ記録(重量無し）
-	public int recordReps(ExerciseRecord record,Authentication authentication);
+	//筋トレ記録
+	public int recordExercise(ExerciseRecord record,Authentication authentication);
 	
-	//筋トレ記録（重量あり）
-	public int recordWeightReps(ExerciseRecord record,Authentication authentication);
+	//筋トレデータ取得
+	public List<ExerciseRecord> showExerciseData(String searchName);
 }

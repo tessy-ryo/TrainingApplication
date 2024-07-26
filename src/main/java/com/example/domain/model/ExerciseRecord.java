@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class ExerciseRecord {
-	private Integer bodyParts;
+	private Integer bodyPartId;
 	
 	private Integer userId;
 	
@@ -17,4 +17,8 @@ public class ExerciseRecord {
 	private Integer weight;
 	
 	private Integer reps;
+	
+	private Exercise exercise;
+	
+	private BodyParts bodyParts;
 }

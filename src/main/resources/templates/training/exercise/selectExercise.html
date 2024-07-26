@@ -38,7 +38,7 @@
 						<label for="bodyPartsSelect" class="form-label">部位</label>
 					</div>
 					<div>
-						<select id="bodyPartsSelect" th:field="*{bodyParts}" class="form-select" th:errorclass="is-invalid" onchange="fetchExercises()">
+						<select id="bodyPartsSelect" th:field="*{bodyPartId}" class="form-select" th:errorclass="is-invalid" onchange="fetchExercises()">
 							<option value = "">選択してください</option>
 							<option th:each="item : ${bodyPartsList}" th:text="${item.name}" 
 								th:value="${item.id}"></option>

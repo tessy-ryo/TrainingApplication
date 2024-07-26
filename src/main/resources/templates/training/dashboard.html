@@ -3,11 +3,34 @@
 	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/record/record.css}">
 <title>ダッシュボード</title>
 </head>
 <body>
 	<div layout:fragment="content">
-		
+		<form role="search" method="post" th:action="@{/training/dashboard}" th:object="${exerciseDataForm}">
+			<input class="form-control" type="search" placeholder="Search" aria-label="Search" th:field="*{searchName}"/>
+			<button class="btn-record-red" type="submit">検索</button>
+		</form>
+		<div class="row justify-content-center mt-3">
+			<div class="col-8">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">日付</th>
+							<th scope="col">部位</th>
+							<th scope="col">種目</th>
+							<th scope="col">重量(kg)</th>
+							<th scope="col">回数</th>
+							<th scope="col">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item"
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 
 </body>

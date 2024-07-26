@@ -5,6 +5,25 @@
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="com.example.repository.ExerciseMapper">
 
+<resultMap type="com.example.domain.model.ExerciseRecord" id="record">
+<id column="user_id" property="userId"/>
+<id column="body_part_id" property="bodyPartId"/>
+<id column="exercise_id" property="exerciseId"/>
+<id column="date" property="date"/>
+<id column="weight" property="weight"/>
+<id column="reps" property="reps"/>
+<association property="exercise" resultMap="exercise"/>
+<collection property="bodyParts" resultMap="bodyParts"/>
+</resultMap>
+
+<!-- マッピング定義（種目） -->
+<resultMap type="com.example.domain.model.Exercise" id="exercise">
+	<id column="id" property="id"/>
+	<result column="name" property="name"/>
+	<result column="body_part_id" property="bodyPartId"/>
+	<result column="weight_based" property="weightBased"/>
+	</resultMap>
+
 <!-- 部位複数件取得 -->
 <select id = "findBodyParts" resultType="BodyParts">
 SELECT
@@ -32,9 +51,10 @@ WHERE
 	id=#{exerciseId}
 </select>
 
-<insert id="insertExerciseData">
+<insert id="recordExerciseData">
 	insert into training.exercise_records(
 		user_id
+		,body_part_id
 		,exercise_id
 		,date
 		,weight
@@ -42,11 +62,15 @@ WHERE
 		)
 		values(
 		#{userId}
+		,#{
 		,#{exerciseId}
 		,#{date}
 		,#{weight}
 		,#{reps}
 		)
 </insert>
+
+<select id="findExerciseData"
+
 
 </mapper>

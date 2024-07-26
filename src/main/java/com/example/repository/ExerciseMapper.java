@@ -19,6 +19,9 @@ public interface ExerciseMapper {
 	//**重量の有無の確認*/
 	public int findWeightBased(int exerciseId);
 	
-	//**筋トレ記録*/
-	public int insertExerciseData(ExerciseRecord record);
+	//**筋トレの記録*/
+	public int recordExerciseData(ExerciseRecord record);
+	
+	//筋トレデータ取得
+	public List<ExerciseRecord> findExerciseData(String searchName);
 }

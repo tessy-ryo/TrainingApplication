@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class ExerciseDataForm {
-	private Integer bodyParts;
+	private Integer bodyPartId;
 	
 	private Integer userId;
 	

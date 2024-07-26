@@ -35,12 +35,18 @@ public class ExerciseServiceImpl implements ExerciseService {
 		return mapper.findWeightBased(exerciseId);
 	}
 	
-	//筋トレ記録(重量無し）
+	//筋トレ記録
 	@Override
-	public int recordReps(ExerciseRecord record,Authentication authentication) {
+	public int recordExercise(ExerciseRecord record,Authentication authentication) {
 		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
 		record.setUserId(userDetails.getId());
-		return mapper.insertExerciseData(record);
+		return mapper.recordExerciseData(record);
+	}
+	
+	//筋トレデータ取得
+	@Override
+	public List<ExerciseRecord> showExerciseData(String searchName){
+		
 	}
 	
 	

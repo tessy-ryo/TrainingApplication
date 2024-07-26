@@ -61,7 +61,7 @@ public class ExerciseRecordController {
 			return "redirect:/training/exercise/recordReps";
 		}else {
 			//重量がある場合
-			return "redirect:training/exercise/recordWeightReps";
+			return "redirect:/training/exercise/recordWeightReps";
 		}
 	}
 	
@@ -85,18 +85,28 @@ public class ExerciseRecordController {
 		
 		ExerciseRecord record = modelMapper.map(sessionForm, ExerciseRecord.class);
 		
-		exerciseService.recordReps(record,authentication);
+		exerciseService.recordExercise(record,authentication);
 		
 		session.removeAttribute("exerciseDataForm");
 		
 		return "training/dashboard";
 	}
 	
+	@GetMapping("/exercise/recordWeightReps")
+	public String getRecordWeightReps(Model model,HttpSession session,Authentication authentication) {
+		setupModel(model, authentication);
+		
+		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
+		model.addAttribute("exerciseDataForm",form);
+		
+		return "training/exercise/recordWeightReps";
+	}
+	
 	@PostMapping("/exercise/recordWeightReps")
 	public String postRecordWeightReps(@ModelAttribute ExerciseDataForm form, Model model,HttpSession session,Authentication authentication) {
 		setupModel(model, authentication);
 		
-		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDAtaForm");
+		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 		
 		sessionForm.setWeight(form.getWeight());
 		
@@ -104,7 +114,7 @@ public class ExerciseRecordController {
 		
 		ExerciseRecord record = modelMapper.map(sessionForm, ExerciseRecord.class);
 		
-		exerciseService.recordWeightReps(record,authentication);
+		exerciseService.recordExercise(record,authentication);
 		
 		session.removeAttribute("exerciseDataForm");
 		
