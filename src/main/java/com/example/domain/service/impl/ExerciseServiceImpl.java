@@ -46,7 +46,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 	//筋トレデータ取得
 	@Override
 	public List<ExerciseRecord> showExerciseData(String searchName){
-		
+		return mapper.findExerciseData(searchName);
 	}
 	
 	

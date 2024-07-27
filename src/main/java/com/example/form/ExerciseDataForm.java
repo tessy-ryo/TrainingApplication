@@ -20,4 +20,6 @@ public class ExerciseDataForm {
 	private Integer weight;
 	
 	private Integer reps;
+	
+	private String searchName;
 }

@@ -43,7 +43,7 @@
 							<option th:each="item : ${bodyPartsList}" th:text="${item.name}" 
 								th:value="${item.id}"></option>
 						</select>
-						<div class="invalid-feedback" th:errors="*{bodyParts}"></div>
+						<div class="invalid-feedback" th:errors="*{bodyPartId}"></div>
 					</div>
 				</div>
 			</div>

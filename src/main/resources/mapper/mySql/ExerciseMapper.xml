@@ -12,8 +12,8 @@
 <id column="date" property="date"/>
 <id column="weight" property="weight"/>
 <id column="reps" property="reps"/>
-<association property="exercise" resultMap="exercise"/>
-<collection property="bodyParts" resultMap="bodyParts"/>
+<association property="exercise" resultMap="exercise" columnPrefix="exercise_"/>
+<association property="bodyParts" resultMap="bodyParts" columnPrefix="bodyParts_"/>
 </resultMap>
 
 <!-- マッピング定義（種目） -->
@@ -22,7 +22,12 @@
 	<result column="name" property="name"/>
 	<result column="body_part_id" property="bodyPartId"/>
 	<result column="weight_based" property="weightBased"/>
-	</resultMap>
+</resultMap>
+
+<resultMap type="com.example.domain.model.BodyParts" id="bodyParts">
+	<id column="id" property="id"/>
+	<result column="name" property="name"/>
+</resultMap>
 
 <!-- 部位複数件取得 -->
 <select id = "findBodyParts" resultType="BodyParts">
@@ -62,7 +67,7 @@ WHERE
 		)
 		values(
 		#{userId}
-		,#{
+		,#{bodyPartId}
 		,#{exerciseId}
 		,#{date}
 		,#{weight}
@@ -70,7 +75,32 @@ WHERE
 		)
 </insert>
 
-<select id="findExerciseData"
+<select id="findExerciseData" resultMap="record">
+SELECT
+	exercise_records.date
+	,exercise_records.weight
+	,exercise_records.reps
+	,exercises.name AS exercise_name
+	,body_parts.name AS body_part_name
+FROM
+	training.exercise_records
+JOIN
+	training.exercises
+ON
+	training.exercises.id=training.exercise_records.exercise_id
+JOIN
+	training.body_parts
+ON
+	training.body_parts.id=training.exercise_records.body_part_id
+<where>
+	exercise_records.user_id=#{userId}
+<if test="searchName!=null and searchName != ''">
+		AND (exercise_records.date LIKE CONCAT('%', #{searchName}, '%') OR 
+		exercise.name LIKE CONCAT('%', #{searchName}, '%') OR
+		body_parts.name LIKE CONCAT('%', #{searchName}, '%'))
+</if>
+</where>
+</select>
 
 
 </mapper>

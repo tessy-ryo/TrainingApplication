@@ -26,7 +26,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="item"
+						<tr th:each="training:${trainingList}">
+							<td th:text="${training.date}"></td>
+							<td th:text="${training.bodyParts.name}"></td>
+							<td th:text="${training.exercise.name}"></td>
+							<td th:text="${training.weight}"></td>
+							<td th:text="${training.reps}"></td>
+							
+						</tr>
+						
+						
 					</tbody>
 				</table>
 			</div>
