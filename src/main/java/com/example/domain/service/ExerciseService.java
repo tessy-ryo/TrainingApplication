@@ -22,5 +22,8 @@ public interface ExerciseService {
 	public int recordExercise(ExerciseRecord record,Authentication authentication);
 	
 	//筋トレデータ取得
-	public List<ExerciseRecord> showExerciseData(String searchName);
+	public List<ExerciseRecord> showExerciseData(ExerciseRecord record,Authentication authentication);
+	
+	//特定の筋トレデータ取得
+	public ExerciseRecord showSpecificData(int data);
 }

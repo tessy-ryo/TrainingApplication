@@ -23,5 +23,8 @@ public interface ExerciseMapper {
 	public int recordExerciseData(ExerciseRecord record);
 	
 	//筋トレデータ取得
-	public List<ExerciseRecord> findExerciseData(String searchName);
+	public List<ExerciseRecord> findExerciseData(ExerciseRecord record);
+	
+	//特定の筋トレデータ取得
+	public ExerciseRecord getSpecificData(int id);
 }

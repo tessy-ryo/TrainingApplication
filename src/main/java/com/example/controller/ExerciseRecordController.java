@@ -89,7 +89,7 @@ public class ExerciseRecordController {
 		
 		session.removeAttribute("exerciseDataForm");
 		
-		return "training/dashboard";
+		return "redirect:/training/dashboard";
 	}
 	
 	@GetMapping("/exercise/recordWeightReps")
@@ -118,6 +118,6 @@ public class ExerciseRecordController {
 		
 		session.removeAttribute("exerciseDataForm");
 		
-		return "training/dashboard";
+		return "redirect:/training/dashboard";
 	}
 }

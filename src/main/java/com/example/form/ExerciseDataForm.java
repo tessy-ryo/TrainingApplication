@@ -8,6 +8,8 @@ import lombok.Data;
 
 @Data
 public class ExerciseDataForm {
+	private Integer id;
+	
 	private Integer bodyPartId;
 	
 	private Integer userId;

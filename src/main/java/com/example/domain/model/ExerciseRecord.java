@@ -4,8 +4,11 @@ import java.util.Date;
 
 import lombok.Data;
 
+//筋トレデータ
 @Data
 public class ExerciseRecord {
+	private Integer id;
+	
 	private Integer bodyPartId;
 	
 	private Integer userId;
@@ -21,4 +24,6 @@ public class ExerciseRecord {
 	private Exercise exercise;
 	
 	private BodyParts bodyParts;
+	
+	private String searchName;
 }

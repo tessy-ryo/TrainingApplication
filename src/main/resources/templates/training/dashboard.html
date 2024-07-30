@@ -4,13 +4,21 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/css/record/record.css}">
+<link rel="stylesheet" th:href="@{/css/select/select.css}">
 <title>ダッシュボード</title>
 </head>
 <body>
 	<div layout:fragment="content">
 		<form role="search" method="post" th:action="@{/training/dashboard}" th:object="${exerciseDataForm}">
-			<input class="form-control" type="search" placeholder="Search" aria-label="Search" th:field="*{searchName}"/>
-			<button class="btn-record-red" type="submit">検索</button>
+			<div class="text-center">
+				<div class="row justify-content-center">
+					<div class="mt-3 col-auto">日付、部位または種目:</div>
+					<div class="mt-3 col-auto"><input class="form-control" type="search" placeholder="Search" aria-label="Search" th:field="*{searchName}"/></div>
+					<div class="mt-3 col-auto">
+			<button class="btn-record-red" type="submit">検索</button></div>
+				</div>
+			</div>
+			
 		</form>
 		<div class="row justify-content-center mt-3">
 			<div class="col-8">
@@ -27,12 +35,15 @@
 					</thead>
 					<tbody>
 						<tr th:each="training:${trainingList}">
-							<td th:text="${training.date}"></td>
+							<td th:text="${#dates.format(training.date,'YYYY/MM/dd')}"></td>
 							<td th:text="${training.bodyParts.name}"></td>
 							<td th:text="${training.exercise.name}"></td>
 							<td th:text="${training.weight}"></td>
 							<td th:text="${training.reps}"></td>
-							
+							<td>
+								<a class="btn btn-secondary" th:href="@{'/trainig/delete/'+${training.id}}" role="edit">削除</a>
+								<a class="btn-select-orange" th:href="@{'/trainig/edit/'+${training.id}}" role="delete">編集</a>
+							</td>
 						</tr>
 						
 						

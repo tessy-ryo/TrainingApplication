@@ -45,8 +45,18 @@ public class ExerciseServiceImpl implements ExerciseService {
 	
 	//筋トレデータ取得
 	@Override
-	public List<ExerciseRecord> showExerciseData(String searchName){
-		return mapper.findExerciseData(searchName);
+	public List<ExerciseRecord> showExerciseData(ExerciseRecord record,Authentication authentication){
+		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
+		record.setUserId(userDetails.getId());
+		
+		return mapper.findExerciseData(record);
+	}
+	
+	//特定の筋トレデータ取得
+	@Override
+	public ExerciseRecord showSpecificData(int data) {
+		
+		return mapper.getSpecificData(data);
 	}
 	
 	

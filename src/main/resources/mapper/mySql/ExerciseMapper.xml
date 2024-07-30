@@ -6,12 +6,13 @@
 <mapper namespace="com.example.repository.ExerciseMapper">
 
 <resultMap type="com.example.domain.model.ExerciseRecord" id="record">
-<id column="user_id" property="userId"/>
-<id column="body_part_id" property="bodyPartId"/>
-<id column="exercise_id" property="exerciseId"/>
-<id column="date" property="date"/>
-<id column="weight" property="weight"/>
-<id column="reps" property="reps"/>
+<id column="id" property="id"/>
+<result column="user_id" property="userId"/>
+<result column="body_part_id" property="bodyPartId"/>
+<result column="exercise_id" property="exerciseId"/>
+<result column="date" property="date"/>
+<result column="weight" property="weight"/>
+<result column="reps" property="reps"/>
 <association property="exercise" resultMap="exercise" columnPrefix="exercise_"/>
 <association property="bodyParts" resultMap="bodyParts" columnPrefix="bodyParts_"/>
 </resultMap>
@@ -75,13 +76,15 @@ WHERE
 		)
 </insert>
 
+<!-- ユーザーIDからその人の筋トレ記録を取得する -->
 <select id="findExerciseData" resultMap="record">
 SELECT
-	exercise_records.date
+	exercise_records.id	
+	,exercise_records.date
 	,exercise_records.weight
 	,exercise_records.reps
 	,exercises.name AS exercise_name
-	,body_parts.name AS body_part_name
+	,body_parts.name AS bodyParts_name
 FROM
 	training.exercise_records
 JOIN
@@ -96,11 +99,33 @@ ON
 	exercise_records.user_id=#{userId}
 <if test="searchName!=null and searchName != ''">
 		AND (exercise_records.date LIKE CONCAT('%', #{searchName}, '%') OR 
-		exercise.name LIKE CONCAT('%', #{searchName}, '%') OR
+		exercises.name LIKE CONCAT('%', #{searchName}, '%') OR
 		body_parts.name LIKE CONCAT('%', #{searchName}, '%'))
 </if>
 </where>
 </select>
 
+<!-- 特定のExerciseRecordを筋トレデータIDで取得する -->
+<select id="getSpecificData" resultMap="record">
+	SELECT
+	exercise_records.date
+	,exercise_records.weight
+	,exercise_records.reps
+	,exercises.name AS exercise_name
+	,body_parts.name AS bodyParts_name
+FROM
+	training.exercise_records
+JOIN
+	training.exercises
+ON
+	training.exercises.id=training.exercise_records.exercise_id
+JOIN
+	training.body_parts
+ON
+	training.body_parts.id=training.exercise_records.body_part_id
+WHERE
+	exercise_records.id=#{id};
+	
+</select>
 
 </mapper>
