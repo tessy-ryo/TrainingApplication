@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/record/record.css}">
+<link rel="stylesheet" th:href="@{/css/select/select.css}">
+<title>トレーニング種目の編集</title>
+<script th:src="@{/js/script.js}"></script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<form th:action="@{/training/edit}" method="post" th:object="${exerciseDataForm}">
+			<input type="hidden" th:field="*{reps}">
+			<input type="hidden" th:field="*{weight}">
+			<input type="hidden" th:field="*{id}">
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+						<input class="form-control text-center" type="text" placeholder="トレーニング種目を編集してください" aria-label="Disabled input" disabled>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<label for="date" class="form-label">日付</label>
+					<input type="date" class="form-control" id="date" th:field="*{date}" th:errorclass="is-invalid">
+					<div class="invalid-feedback" th:errors="*{date}"></div>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<div>
+						<label for="bodyPartsSelect" class="form-label">部位</label>
+					</div>
+					<div>
+						<select id="bodyPartsSelect" th:field="*{bodyPartId}" class="form-select" th:errorclass="is-invalid" onchange="fetchExercises()">
+							<option value = "">選択してください</option>
+							<option th:each="item : ${bodyPartsList}" th:text="${item.name}" 
+								th:value="${item.id}" th:selected="${item.id == exerciseDataForm.bodyPartId}"></option>
+						</select>
+						<div class="invalid-feedback" th:errors="*{bodyPartId}"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<div>
+						<label for="exerciseSelect" class="form-label">種目</label>
+					</div>
+					<div>
+						<select id="exerciseSelect" th:field="*{exerciseId}" class="form-select" th:errorclass="is-invalid">
+							<option value="">選択してください</option>
+							<option th:each="item : ${exerciseList}" th:text="${item.name}"
+								th:value="${item.id}" th:selected="${item.id == exerciseDataForm.exerciseId}"></option>
+						</select>
+						<div class="invalid-feedback" th:errors="*{exerciseId}"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-auto">
+					<a class="btn btn-secondary" href="/training/dashboard" role="button">キャンセル</a>
+					<button type="submit" class="btn-record-red">重量や回数を編集する</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

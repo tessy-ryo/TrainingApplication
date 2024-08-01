@@ -4,23 +4,14 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/css/record/record.css}">
-<title>重量と回数を記録する</title>
+<title>回数を編集する</title>
 </head>
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/recordWeightReps}" th:object="${exerciseDataForm}" method="post">
-			<fieldset disabled>
-				<div class="row justify-content-center mt-3">
-					<div class="col-4">
-						<div id ="disabledTextInput" class="form-control">重量と回数を入力してください</div>
-					</div>
-				</div>
-			</fieldset>
+		<form th:action="@{/training/exercise/editReps}" th:object="${exerciseDataForm}" method="post">
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
-					<label for="重量" class="form-label">重量</label>
-					<input type="text" class="form-control" th:field="*{weight}" th:errorclass="is-invalid">
-					<div class="invalid-feedback" th:errors="*{weight}"></div>
+						<input class="form-control text-center" type="text" placeholder="回数を編集してください" aria-label="Disabled input" disabled>
 				</div>
 			</div>
 			<div class="row justify-content-center mt-3">
@@ -33,7 +24,7 @@
 			<div class="row justify-content-center mt-3">
 				<div class="col-auto">
 					<a class="btn btn-secondary" href="/training/exercise/selectExercise" role="button">キャンセル</a>
-					<button type="submit" class="btn-record-red">記録</button>
+					<button type="submit" class="btn-record-red">編集を完了する</button>
 				</div>
 			</div>
 		</form>

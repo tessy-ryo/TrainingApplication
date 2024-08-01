@@ -107,12 +107,13 @@ ON
 
 <!-- 特定のExerciseRecordを筋トレデータIDで取得する -->
 <select id="getSpecificData" resultMap="record">
-	SELECT
-	exercise_records.date
+SELECT
+	exercise_records.id
+	,exercise_records.date
 	,exercise_records.weight
 	,exercise_records.reps
-	,exercises.name AS exercise_name
-	,body_parts.name AS bodyParts_name
+	,exercises.id AS exercise_id
+	,body_parts.id AS bodyParts_id
 FROM
 	training.exercise_records
 JOIN
@@ -127,5 +128,10 @@ WHERE
 	exercise_records.id=#{id};
 	
 </select>
+
+
+<update id="updateOne">
+
+</update>
 
 </mapper>

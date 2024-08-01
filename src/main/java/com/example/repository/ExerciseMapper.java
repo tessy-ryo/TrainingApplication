@@ -27,4 +27,7 @@ public interface ExerciseMapper {
 	
 	//特定の筋トレデータ取得
 	public ExerciseRecord getSpecificData(int id);
+	
+	//筋トレデータをidで更新する
+	public ExerciseRecord
 }
