@@ -52,15 +52,15 @@ public class TrainingRecordController {
 				model.addAttribute("bodyPartsList",bodyPartsList);
 				
 				//種目を取得
-				List<Exercise> exerciseList = exerciseService.getExercises(record.getBodyParts().getId());
+				List<Exercise> exerciseList = exerciseService.getExercises(record.getBodyPartId());
 				model.addAttribute("exerciseList",exerciseList);
 				
 				//日付け設定
 				form.setDate(record.getDate());
 				//部位設定
-				form.setBodyPartId(record.getBodyParts().getId());
+				form.setBodyPartId(record.getBodyPartId());
 				//種目設定
-				form.setExerciseId(record.getExercise().getId());
+				form.setExerciseId(record.getExerciseId());
 				//重量設定
 				form.setReps(record.getReps());
 				//回数設定
@@ -71,7 +71,7 @@ public class TrainingRecordController {
 				return "training/exercise/edit";
 			}
 			
-			@PostMapping("edit")
+			@PostMapping("/edit")
 			public String postEdit(@ModelAttribute ExerciseDataForm form,HttpSession session) {
 				
 				//セッションにフォームデータを保存
@@ -105,9 +105,11 @@ public class TrainingRecordController {
 				
 				ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 				
-				//編集した重量と回数をsessionに保存
-				sessionForm.setWeight(form.getWeight());
-				sessionForm.setReps(form.getReps());
+				//筋トレデータを更新
+				exerciseService.updateExerciseRecordOne(sessionForm.getDate(), sessionForm.getBodyPartId(), sessionForm.getExerciseId(), form.getWeight(), form.getReps(),sessionForm.getId());
+				
+				return "redirect:/training/exercise/editRepsSuccess";
+				
 			}
 			
 			//重量と回数を編集する画面を表示
@@ -119,5 +121,27 @@ public class TrainingRecordController {
 				model.addAttribute("exerciseDataForm",form);
 				
 				return "training/exercise/editWeightReps";
+			}
+			
+			@PostMapping("/exercise/editWeightReps")
+			public String postEditWeightReps(@ModelAttribute ExerciseDataForm form, Model model,HttpSession session,Authentication authentication) {
+				setupModel(model, authentication);
+				
+				ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+				
+				//筋トレデータを更新
+				exerciseService.updateExerciseRecordOne(sessionForm.getDate(), sessionForm.getBodyPartId(), sessionForm.getExerciseId(), form.getWeight(), form.getReps(),sessionForm.getId());
+				
+				return "redirect:/training/exercise/editWeightRepsSuccess";
+				
+			}
+			
+			@GetMapping("/exercise/editRepsSuccess")
+			public String getEditRepsSuccess(Model model,HttpSession session, Authentication authentication) {
+				setupModel(model,authentication);
+				
+				ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
+				
+				ExerciseRecord form = exerciseService.showSpecificData(sessionForm.getId()); 
 			}
 }

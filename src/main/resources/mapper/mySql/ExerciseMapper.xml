@@ -103,6 +103,7 @@ ON
 		body_parts.name LIKE CONCAT('%', #{searchName}, '%'))
 </if>
 </where>
+ORDER BY exercise_records.date DESC
 </select>
 
 <!-- 特定のExerciseRecordを筋トレデータIDで取得する -->
@@ -112,8 +113,10 @@ SELECT
 	,exercise_records.date
 	,exercise_records.weight
 	,exercise_records.reps
-	,exercises.id AS exercise_id
-	,body_parts.id AS bodyParts_id
+	,exercise_records.exercise_id 
+	,exercise_records.body_part_id 
+	,exercises.name AS exercise_name
+	,body_parts.name AS bodyParts_name
 FROM
 	training.exercise_records
 JOIN
@@ -129,9 +132,18 @@ WHERE
 	
 </select>
 
-
+<!-- 筋トレデータをIDで更新する -->
 <update id="updateOne">
-
+UPDATE
+	training.exercise_records
+SET
+	exercise_records.date=#{date}
+	,exercise_records.body_part_id=#{bodyPartId}
+	,exercise_records.exercise_id=#{exerciseId}
+	,exercise_records.weight=#{weight}
+	,exercise_records.reps=#{reps}
+WHERE
+	id=#{id}
 </update>
 
 </mapper>

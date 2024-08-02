@@ -1,8 +1,10 @@
 package com.example.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.example.domain.model.BodyParts;
 import com.example.domain.model.Exercise;
@@ -29,5 +31,10 @@ public interface ExerciseMapper {
 	public ExerciseRecord getSpecificData(int id);
 	
 	//筋トレデータをidで更新する
-	public ExerciseRecord
+	public void updateOne(@Param("date")Date date,
+			@Param("bodyPartId")Integer bodyPartId,
+			@Param("exerciseId")Integer exerciseId,
+			@Param("weight")Integer weight,
+			@Param("reps")Integer reps,
+			@Param("id")Integer id);
 }

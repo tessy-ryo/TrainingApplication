@@ -1,5 +1,6 @@
 package com.example.domain.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,15 @@ public class ExerciseServiceImpl implements ExerciseService {
 		return mapper.getSpecificData(data);
 	}
 	
+	//筋トレデータ更新
+	@Override
+	public void updateExerciseRecordOne(Date date,
+			Integer bodyPartId,
+			Integer exerciseId,
+			Integer weight,
+			Integer reps,
+			Integer id) {
+		mapper.updateOne(date,bodyPartId,exerciseId,weight,reps,id);
+	}
 	
 }
