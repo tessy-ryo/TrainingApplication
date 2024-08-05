@@ -1,10 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/record/record.css}">
+	<title>トレーニングデータ編集完了のおしらせ</title>
 </head>
+
 <body>
+	<div layout:fragment="content">
+		<div class="row justify-content-center mt-3">
+			<div class="col-4">
+				<input class="form-control text-center" type="text" placeholder="トレーニングデータが編集されました"
+					aria-label="Disabled input" disabled>
+			</div>
+		</div>
+		<div class="row justify-content-center mt-3">
+			<div class="col-4">
+				<label for="date">日付</label>
+				<input type="date" class="form-control" th:value="${#dates.format(form.date, 'yyyy-MM-dd')}" readonly>
+			</div>
+		</div>
+		<div class="row justify-content-center mt-3">
+			<di class="col-4">
+				<label for="date">部位</label>
+				<input type="text" class="form-control" th:value="${form.bodyPartName}" readonly>
+			</di>
+		</div>
+		<div class="row justify-content-center mt-3">
+			<div class="col-4">
+				<label for="date">種目</label>
+				<input type="text" class="form-control" th:value="${form.exerciseName}" readonly>
+			</div>
+		</div>
+		<div class="row justify-content-center mt-3">
+			<div class="col-4">
+				<label for="date">重量(kg)</label>
+				<input type="text" class="form-control" th:value="${form.weight}" readonly>
+			</div>
+		</div>
+		<div class="row justify-content-center mt-3">
+			<div class="col-4">
+				<label for="date">回数</label>
+				<input type="text" class="form-control" th:value="${form.reps}" readonly>
+			</div>
+		</div>
+		<div class="row justify-content-center mt-3">
+			<div class="col-auto">
+				<a class="btn-record-red" href="/training/dashboard" role="button">完了</a>
+			</div>
+		</div>
+	</div>
 
 </body>
+
 </html>

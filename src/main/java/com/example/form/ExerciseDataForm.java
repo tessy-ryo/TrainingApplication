@@ -23,4 +23,8 @@ public class ExerciseDataForm {
 	private Integer reps;
 	
 	private String searchName;
+	
+	private String bodyPartName;
+	
+	private String exerciseName;
 }

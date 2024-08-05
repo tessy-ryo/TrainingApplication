@@ -35,6 +35,14 @@ public class ExerciseRecordController {
 		model.addAttribute("username",userDetails.getAccountName());
 	}
 			
+	//**トレーニング記録画面を表示*/
+	@GetMapping("/record")
+	public String getTrainingRecord(Model model,Authentication authentication) {
+		setupModel(model,authentication);
+		//トレーニング記録画面を表示
+		return "training/record";
+	}
+	
 	//**種目を選択する画面を表示*/
 	@GetMapping("/exercise/selectExercise")
 	public String getSelectExercise(@ModelAttribute ExerciseDataForm form,Model model,Authentication authentication) {
