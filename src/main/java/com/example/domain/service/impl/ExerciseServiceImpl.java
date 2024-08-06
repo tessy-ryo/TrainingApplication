@@ -60,7 +60,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 		return mapper.getSpecificData(data);
 	}
 	
-	//筋トレデータ更新
+	//筋トレデータ更新（１件）
 	@Override
 	public void updateExerciseRecordOne(Date date,
 			Integer bodyPartId,
@@ -69,6 +69,12 @@ public class ExerciseServiceImpl implements ExerciseService {
 			Integer reps,
 			Integer id) {
 		mapper.updateOne(date,bodyPartId,exerciseId,weight,reps,id);
+	}
+	
+	//筋トレデータ削除（１件）
+	@Override
+	public void deleteExerciseRecordOne(Integer id) {
+		mapper.deleteOne(id);
 	}
 	
 }

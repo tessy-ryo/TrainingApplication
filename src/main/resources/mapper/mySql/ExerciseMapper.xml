@@ -146,4 +146,11 @@ WHERE
 	id=#{id}
 </update>
 
+<!-- 筋トレデータ1件削除 -->
+<delete id="deleteOne">
+DELETE from
+	training.exercise_records
+WHERE
+	id=#{id}
+</delete>
 </mapper>

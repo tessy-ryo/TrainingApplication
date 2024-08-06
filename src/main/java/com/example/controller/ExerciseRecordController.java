@@ -70,7 +70,7 @@ public class ExerciseRecordController {
 		}else {
 			//重量がある場合
 			return "redirect:/training/exercise/recordWeightReps";
-		}
+		}          
 	}
 	
 	@GetMapping("/exercise/recordReps")

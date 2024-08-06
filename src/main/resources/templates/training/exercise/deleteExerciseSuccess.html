@@ -5,20 +5,14 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" th:href="@{/css/record/record.css}">
-	<title>トレーニングデータ削除（重量あり）</title>
+	<title>種目を削除する（確認）</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<form th:action="@{/training/exercise/deleteWeightReps}" method="post" th:object="${form}">
 			<div class="border-bottom">
-				<h1 class="h2">トレーニングデータを削除する（確認）</h1>
-			</div>
-			<div class="row justify-content-center mt-3">
-				<div class="col-4">
-					<label for="date" class="form-label">日付</label>
-					<input type="date" class="form-control" th:field="*{date}" readonly>
-				</div>
+				<h1 class="h2">種目を削除する（確認）</h1>
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
@@ -32,21 +26,9 @@
 					<input type="text" class="form-control" th:field="*{exerciseName}" readonly>
 				</div>
 			</div>
-			<div class="row justify-content-center mt-3">
+		<div class="row justify-content-center mt-3">
 				<div class="col-4">
-					<label for="weight" class="form-label">重量</label>
-					<input type="text" class="form-control" th:field="*{weight}" readonly>
-				</div>
-			</div>
-			<div class="row justify-content-center mt-3">
-				<div class="col-4">
-					<label for="reps" class="form-label">回数</label>
-					<input type="text" class="form-control" th:field="*{reps}" readonly>
-				</div>
-			</div>
-			<div class="row justify-content-center mt-3">
-				<div class="col-4">
-					<div>上記のトレーニングデータを削除します。よろしいですか？</div>
+					<div>上記の種目を削除します。よろしいですか？</div>
 				</div>
 			</div>
 			<div class="row justify-content-center mt-3">
@@ -59,5 +41,3 @@
 	</div>
 
 </body>
-
-</html>

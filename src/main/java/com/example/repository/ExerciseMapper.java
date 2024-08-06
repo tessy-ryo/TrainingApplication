@@ -30,11 +30,14 @@ public interface ExerciseMapper {
 	//特定の筋トレデータ取得
 	public ExerciseRecord getSpecificData(int id);
 	
-	//筋トレデータをidで更新する
+	//筋トレデータ更新（1件）
 	public void updateOne(@Param("date")Date date,
 			@Param("bodyPartId")Integer bodyPartId,
 			@Param("exerciseId")Integer exerciseId,
 			@Param("weight")Integer weight,
 			@Param("reps")Integer reps,
 			@Param("id")Integer id);
+	
+	//筋トレデータ削除（１件）
+	public int deleteOne(@Param("id") Integer id);
 }

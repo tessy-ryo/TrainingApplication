@@ -35,4 +35,7 @@ public interface ExerciseService {
 			Integer weight,
 			Integer reps,
 			Integer id);
+	
+	//筋トレデータ削除（１件）
+	public void deleteExerciseRecordOne(Integer id);
 }
