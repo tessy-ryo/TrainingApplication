@@ -24,6 +24,12 @@ public class ExerciseServiceImpl implements ExerciseService {
 		return mapper.findBodyParts();
 	}
 	
+	//筋トレ種目と種目ID、筋トレ部位を一件取得
+	@Override
+	public ExerciseRecord getOneExercise(int exerciseId) {
+		return mapper.getExerciseBodyPartById(exerciseId);
+	}
+	
 	//筋トレ種目複数件取得
 	@Override
 	public List<Exercise> getExercises(int bodyPartId){

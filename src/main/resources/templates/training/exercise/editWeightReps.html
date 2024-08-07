@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/editWeightReps}" th:object="${exerciseDataForm}" method="post">
+		<form th:action="@{/training/exercise/editWeightReps}" th:object="${form}" method="post">
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 						<input class="form-control text-center" type="text" placeholder="重量と回数を編集してください" aria-label="Disabled input" disabled>

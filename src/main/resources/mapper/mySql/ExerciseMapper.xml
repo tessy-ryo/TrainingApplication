@@ -25,6 +25,7 @@
 	<result column="weight_based" property="weightBased"/>
 </resultMap>
 
+<!-- マッピング定義（部位） -->
 <resultMap type="com.example.domain.model.BodyParts" id="bodyParts">
 	<id column="id" property="id"/>
 	<result column="name" property="name"/>
@@ -38,6 +39,22 @@ FROM
 	training.body_parts
 </select>
 
+<!-- 筋トレ種目と種目ID、筋トレ部位を一件取得 -->
+<select id="getExerciseBodyPartById" resultMap="record">
+SELECT
+	exercises.id as exercise_id
+	,exercises.name as exercise_name
+	,body_parts.name as bodyParts_name
+FROM
+	training.exercises
+JOIN
+	training.body_parts
+ON
+	training.body_parts.id=training.exercises.body_part_id
+WHERE
+	exercises.id=#{exerciseId}
+</select>
+
 <!-- 筋トレ種目複数件取得 -->
 <select id="getExercisesByBodyPart" resultType="Exercise">
 SELECT
@@ -46,6 +63,8 @@ FROM
 	training.exercises
 WHERE
 	body_part_id=#{bodyPartId}
+AND
+	is_deleted=0	
 </select>
 
 <select id="findWeightBased" resultType="int">
@@ -153,4 +172,14 @@ DELETE from
 WHERE
 	id=#{id}
 </delete>
+
+<!-- 筋トレ種目を論理削除する -->
+<update id="softDeleteOne">
+UPDATE
+	training.exercises
+SET
+	is_deleted=1
+WHERE
+	exercises.id = #{id}
+</update>
 </mapper>

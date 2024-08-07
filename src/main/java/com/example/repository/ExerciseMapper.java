@@ -14,6 +14,9 @@ import com.example.domain.model.ExerciseRecord;
 public interface ExerciseMapper {
 	//**部位取得*/
 	public List<BodyParts> findBodyParts();
+	
+	//筋トレ種目と種目ID、筋トレ部位を一件取得
+	public ExerciseRecord getExerciseBodyPartById(int exerciseId);
 
 	/**筋トレ種目取得*/
 	public List<Exercise> getExercisesByBodyPart(int bodyPartId);
@@ -40,4 +43,7 @@ public interface ExerciseMapper {
 	
 	//筋トレデータ削除（１件）
 	public int deleteOne(@Param("id") Integer id);
+	
+	//筋トレ種目を論理削除する 
+	public int softDeleteOne(Int id);
 }

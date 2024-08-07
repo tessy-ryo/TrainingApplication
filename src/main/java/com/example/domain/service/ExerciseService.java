@@ -13,6 +13,9 @@ public interface ExerciseService {
 	//部位複数件取得
 	public List<BodyParts> getBodyParts();
 	
+	//筋トレ種目と種目ID、筋トレ部位を一件取得
+	public ExerciseRecord getOneExercise(int exerciseId);
+	
 	//筋トレ種目複数件取得
 	public List<Exercise> getExercises(int bodyPartId);
 
@@ -38,4 +41,7 @@ public interface ExerciseService {
 	
 	//筋トレデータ削除（１件）
 	public void deleteExerciseRecordOne(Integer id);
+	
+	//筋トレ種目を論理削除
+	public void softDeleteExercise(int id);
 }
