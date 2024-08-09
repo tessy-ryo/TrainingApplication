@@ -173,7 +173,7 @@ WHERE
 	id=#{id}
 </delete>
 
-<!-- 筋トレ種目を論理削除する -->
+<!-- 筋トレ種目を種目IDで論理削除する -->
 <update id="softDeleteOne">
 UPDATE
 	training.exercises

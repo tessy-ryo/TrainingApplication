@@ -83,4 +83,9 @@ public class ExerciseServiceImpl implements ExerciseService {
 		mapper.deleteOne(id);
 	}
 	
+	//筋トレ種目を論理削除
+	public void softDeleteExercise(int id) {
+		mapper.softDeleteOne(id);
+	}
+	
 }

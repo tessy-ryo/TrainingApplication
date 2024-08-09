@@ -17,6 +17,8 @@ import com.example.domain.service.CustomUserDetails;
 import com.example.domain.service.ExerciseService;
 import com.example.form.ExerciseDataForm;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/training")
 public class DashBoardController {
@@ -34,9 +36,12 @@ public class DashBoardController {
 
 	/**ダッシュボード画面を表示*/
 	@GetMapping("/dashboard")
-	public String getTrainingDashBoard(@ModelAttribute ExerciseDataForm form,Model model,Authentication authentication) {
+	public String getTrainingDashBoard(@ModelAttribute ExerciseDataForm form,Model model,HttpSession session,Authentication authentication) {
 		//ダッシュボード画面を表示
 		setupModel(model,authentication);
+		
+		//トレーニングデータの追加、削除、編集されこの画面に遷移した際フォームデータを破棄
+		session.removeAttribute("exerciseDataForm");
 		
 		ExerciseRecord record = modelMapper.map(form,ExerciseRecord.class);
 		

@@ -35,8 +35,17 @@ public class WeightRecordController {
 		
 		//**体重を記録する画面を表示*/
 		@GetMapping("/record/weight")
-		public String getRecordWeight(@ModelAttribute RecordWeightForm form,Model model,Authentication authentication) {
+		public String getRecordWeight(Model model,Authentication authentication,HttpSession session) {
 			setupModel(model,authentication);
+			
+			//次画面でいいえボタンで戻る場合があるため保存されたフォームデータを取り出して値を表示
+			RecordWeightForm form = (RecordWeightForm) session.getAttribute("recordWeightForm") ;
+			
+			//フォームがセッションに存在しない場合新しいフォームを作成
+			if(form == null) {
+				form = new RecordWeightForm();
+			}
+			model.addAttribute("recordWeightForm",form);
 			//体重を記録する画面を表示
 			return "training/weight/recordWeight";
 		}
@@ -63,7 +72,7 @@ public class WeightRecordController {
 			return "training/weight/checkWeightRecord";
 		}
 		
-		@PostMapping("/weight/confirmWeightRecord")
+		@PostMapping("/weight/checkWeightRecord")
 			public String confirmWeightRecord(Model model, HttpSession session, Authentication authentication) {
 			setupModel(model,authentication);
 			

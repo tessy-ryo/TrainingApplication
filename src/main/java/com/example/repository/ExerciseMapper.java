@@ -45,5 +45,5 @@ public interface ExerciseMapper {
 	public int deleteOne(@Param("id") Integer id);
 	
 	//筋トレ種目を論理削除する 
-	public int softDeleteOne(Int id);
+	public int softDeleteOne(int id);
 }

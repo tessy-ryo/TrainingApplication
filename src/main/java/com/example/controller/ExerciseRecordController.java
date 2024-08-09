@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.model.BodyParts;
+import com.example.domain.model.Exercise;
 import com.example.domain.model.ExerciseRecord;
 import com.example.domain.service.CustomUserDetails;
 import com.example.domain.service.ExerciseService;
@@ -45,12 +46,28 @@ public class ExerciseRecordController {
 	
 	//**種目を選択する画面を表示*/
 	@GetMapping("/exercise/selectExercise")
-	public String getSelectExercise(@ModelAttribute ExerciseDataForm form,Model model,Authentication authentication) {
+	public String getSelectExercise(Model model,HttpSession session,Authentication authentication) {
 		setupModel(model,authentication);
 		
+		//次画面でキャンセルボタンで戻る場合があるため保存されたフォームデータを取り出して値を表示
+		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
+		
+		//次画面のキャンセルボタンで戻った際は種目を取得
+		if(form != null) {
+			List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId());
+			model.addAttribute("exerciseList",exerciseList);
+		}
+				
+		//フォームがセッションに存在しない場合新しいフォームを作成
+		if(form == null) {
+			form = new ExerciseDataForm();
+		}
+		
+		model.addAttribute("form",form);
 		//部位を取得
 		List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
 		model.addAttribute("bodyPartsList",bodyPartsList);
+		
 		//種目を選択する画面を表示
 		return "training/exercise/selectExercise";
 	}
@@ -95,8 +112,6 @@ public class ExerciseRecordController {
 		
 		exerciseService.recordExercise(record,authentication);
 		
-		session.removeAttribute("exerciseDataForm");
-		
 		return "redirect:/training/dashboard";
 	}
 	
@@ -123,8 +138,6 @@ public class ExerciseRecordController {
 		ExerciseRecord record = modelMapper.map(sessionForm, ExerciseRecord.class);
 		
 		exerciseService.recordExercise(record,authentication);
-		
-		session.removeAttribute("exerciseDataForm");
 		
 		return "redirect:/training/dashboard";
 	}

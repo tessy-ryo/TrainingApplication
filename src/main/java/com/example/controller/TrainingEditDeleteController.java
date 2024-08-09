@@ -37,6 +37,7 @@ public class TrainingEditDeleteController {
 			@GetMapping("/edit/{id}")
 			public String getEdit(@ModelAttribute ExerciseDataForm form, Authentication authentication,Model model, HttpSession session,@PathVariable("id") Integer id) {
 				setupModel(model, authentication);
+				
 				//特定の筋トレデータ取得
 				ExerciseRecord record = exerciseService.showSpecificData(id);
 				
@@ -163,8 +164,6 @@ public class TrainingEditDeleteController {
 				
 				model.addAttribute("form",sessionForm);
 				
-				session.removeAttribute("exerciseDataForm");
-				
 				return "training/exercise/editRepsSuccess";
 			}
 			
@@ -185,8 +184,6 @@ public class TrainingEditDeleteController {
 				sessionForm.setExerciseName(record.getExercise().getName());
 				
 				model.addAttribute("form",sessionForm);
-				
-				session.removeAttribute("exerciseDataForm");
 				
 				return "training/exercise/editWeightRepsSuccess";
 			}
@@ -259,8 +256,6 @@ public class TrainingEditDeleteController {
 				//筋トレデータ削除
 				exerciseService.deleteExerciseRecordOne(form.getId());
 				
-				session.removeAttribute("exerciseDataForm");
-				
 				//ダッシュボード画面にリダイレクト
 				return "redirect:/training/dashboard";
 			}
@@ -274,8 +269,6 @@ public class TrainingEditDeleteController {
 				
 				//筋トレデータ削除
 				exerciseService.deleteExerciseRecordOne(form.getId());
-				
-				session.removeAttribute("exerciseDataForm");
 				
 				//ダッシュボード画面にリダイレクト
 				return "redirect:/training/dashboard";
@@ -315,7 +308,7 @@ public class TrainingEditDeleteController {
 				ExerciseRecord record = exerciseService.getOneExercise(sessionForm.getExerciseId());
 				
 				//sessionFormに種目IDを設定
-				sessionForm.setId(record.getExerciseId());
+				sessionForm.setExerciseId(record.getExerciseId());
 				
 				//sessionFormに筋トレ部位名を設定
 				sessionForm.setBodyPartName(record.getBodyParts().getName());
@@ -337,6 +330,12 @@ public class TrainingEditDeleteController {
 			public String postDeleteExerciseCheck(Authentication authentication,Model model,HttpSession session) {
 				setupModel(model,authentication);
 				
+				//保存されたフォームの取り出し
 				ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+				
+				//筋トレ種目を種目IDで論理削除する
+				exerciseService.softDeleteExercise(sessionForm.getExerciseId());
+				
+				return "redirect:/training/dashboard";
 			}
 }
