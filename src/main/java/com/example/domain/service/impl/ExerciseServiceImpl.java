@@ -18,7 +18,12 @@ import com.example.repository.ExerciseMapper;
 public class ExerciseServiceImpl implements ExerciseService {
 	@Autowired ExerciseMapper mapper;
 	
-	//部位複数権取得
+	//部位一件取得
+		public BodyParts getOneBodyPart(int bodyPartId) {
+			return mapper.findOneBodyPart(bodyPartId);
+		}
+	
+	//部位複数件取得
 	@Override
 	public List<BodyParts> getBodyParts(){
 		return mapper.findBodyParts();

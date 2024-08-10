@@ -10,6 +10,9 @@ import com.example.domain.model.Exercise;
 import com.example.domain.model.ExerciseRecord;
 
 public interface ExerciseService {
+	//部位一件取得
+	public BodyParts getOneBodyPart(int bodyPartId);
+	
 	//部位複数件取得
 	public List<BodyParts> getBodyParts();
 	

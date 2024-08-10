@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/training")
-public class TrainingEditDeleteController {
+public class TrainingEditController {
 	@Autowired
 	private ExerciseService exerciseService;
 	
@@ -276,8 +276,24 @@ public class TrainingEditDeleteController {
 			
 			//種目を削除する画面を表示
 			@GetMapping("/exercise/deleteExercise")
-			public String deleteExercise(Authentication authentication,Model model,@ModelAttribute ExerciseDataForm form) {
+			public String deleteExercise(Authentication authentication,Model model,HttpSession session) {
 				setupModel(model,authentication);
+				
+				//次画面のいいえボタンで戻る場合があるため保存されたフォームデータを取り出して値を表示
+				ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
+				
+				//次画面のいいえボタンで戻った際は種目を取得
+				if(form != null) {
+					List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId());
+					model.addAttribute("exerciseList",exerciseList);
+				}
+						
+				//フォームがセッションに存在しない場合新しいフォームを作成
+				if(form == null) {
+					form = new ExerciseDataForm();
+				}
+				
+				model.addAttribute("form",form);
 				
 				//部位を取得
 				List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
@@ -337,5 +353,58 @@ public class TrainingEditDeleteController {
 				exerciseService.softDeleteExercise(sessionForm.getExerciseId());
 				
 				return "redirect:/training/dashboard";
+			}
+			
+			//種目を追加する画面を表示
+			@GetMapping("/exercise/addExercise")
+			public String addExercise(Authentication authentication,Model model,HttpSession session) {
+				setupModel(model,authentication);
+				
+				//次画面のいいえボタンで戻る場合があるため保存されたフォームデータを取り出して値を表示
+				ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
+				
+				//次画面のいいえボタンで戻った際は種目を取得
+				if(form != null) {
+					List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId());
+					model.addAttribute("exerciseList",exerciseList);
+				}
+						
+				//フォームがセッションに存在しない場合新しいフォームを作成
+				if(form == null) {
+					form = new ExerciseDataForm();
+				}
+				
+				model.addAttribute("form",form);
+				
+				//部位を取得
+				List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
+				model.addAttribute("bodyPartsList",bodyPartsList);
+				//種目を選択する画面を表示
+				return "training/exercise/addExercise";
+			}
+			
+			//種目追加確認画面へ遷移
+			@PostMapping("/exercise/addExercise")
+			public String postAddExercise(@ModelAttribute ExerciseDataForm form,Authentication authentication,Model model,HttpSession session) {
+				setupModel(model,authentication);
+				
+				//セッションにフォームデータを保存
+				session.setAttribute("exerciseDataForm", form);
+				
+				return "redirect:/training/exercise/addExerciseCheck";
+			}
+			
+			//種目追加確認画面を表示
+			@GetMapping("/exercise/addExerciseCheck")
+			public String addExerciseCheck(@ModelAttribute ExerciseDataForm form,Authentication authentication,Model model,HttpSession session) {
+				setupModel(model,authentication);
+				
+				ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+				
+				BodyParts bodyPart = exerciseService.getOneBodyPart(sessionForm.getBodyPartId());
+				
+				sessionForm.setBodyPartName(bodyPart.getName());
+				
+				return "training/exercise/addExerciseCheck";
 			}
 }

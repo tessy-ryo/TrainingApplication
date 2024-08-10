@@ -5,14 +5,14 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" th:href="@{/css/record/record.css}">
-	<title>種目を削除する（確認）</title>
+	<title>種目を追加する（確認）</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/deleteExerciseCheck}" method="post" th:object="${exerciseDataForm}">
+		<form th:action="@{/training/exercise/addExerciseCheck}" method="post" th:object="${exerciseDataForm}">
 			<div class="border-bottom">
-				<h1 class="h2">種目を削除する（確認）</h1>
+				<h1 class="h2">種目を追加する（確認）</h1>
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
@@ -26,14 +26,20 @@
 					<input type="text" class="form-control" th:field="*{exerciseName}" readonly>
 				</div>
 			</div>
-		<div class="row justify-content-center mt-3">
+			<div class="row justify-content-center mt-3">
 				<div class="col-4">
-					<div>上記の種目を削除します。よろしいですか？</div>
+					<label for="weightBased" class="form-label">重量の有無</label>
+					<input type="text" class="form-control" th:field="" readonly>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<div>上記の種目を追加します。よろしいですか？</div>
 				</div>
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-auto">
-					<a class="btn btn-secondary" th:href="@{/training/exercise/deleteExercise}" role="button">いいえ</a>
+					<a class="btn btn-secondary" th:href="@{/training/exercise/addExercise}" role="button">いいえ</a>
 					<button type="submit" class="btn-record-red">はい</button>
 				</div>
 			</div>

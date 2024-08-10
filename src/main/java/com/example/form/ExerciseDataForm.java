@@ -27,4 +27,6 @@ public class ExerciseDataForm {
 	private String bodyPartName;
 	
 	private String exerciseName;
+	
+	private Integer weightBased;
 }

@@ -12,7 +12,10 @@ import com.example.domain.model.ExerciseRecord;
 
 @Mapper
 public interface ExerciseMapper {
-	//**部位取得*/
+	//部位一件取得
+	public BodyParts findOneBodyPart(int bodyPartId);
+	
+	//**部位複数件取得*/
 	public List<BodyParts> findBodyParts();
 	
 	//筋トレ種目と種目ID、筋トレ部位を一件取得

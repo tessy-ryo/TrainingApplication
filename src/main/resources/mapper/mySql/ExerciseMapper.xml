@@ -31,6 +31,16 @@
 	<result column="name" property="name"/>
 </resultMap>
 
+<!-- 部位1件取得 -->
+<select id = "findOneBodyPart" resultType="BodyParts">
+SELECT
+	name
+FROM
+	training.body_parts
+WHERE 
+	id = #{bodyPartId}
+</select>
+
 <!-- 部位複数件取得 -->
 <select id = "findBodyParts" resultType="BodyParts">
 SELECT
