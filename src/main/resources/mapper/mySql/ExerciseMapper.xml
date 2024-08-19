@@ -127,7 +127,7 @@ ON
 <where>
 	exercise_records.user_id=#{userId}
 <if test="searchName!=null and searchName != ''">
-		AND (exercise_records.date LIKE CONCAT('%', #{searchName}, '%') OR 
+		AND (DATE_FORMAT(exercise_records.date, '%Y/%m/%d') LIKE CONCAT('%', #{searchName}, '%') OR 
 		exercises.name LIKE CONCAT('%', #{searchName}, '%') OR
 		body_parts.name LIKE CONCAT('%', #{searchName}, '%'))
 </if>
@@ -192,4 +192,18 @@ SET
 WHERE
 	exercises.id = #{id}
 </update>
+
+<!-- 種目を追加 -->
+<insert id="insertOne">
+INSERT into training.exercises(
+	name
+	,body_part_id
+	,weight_based
+	)
+values(
+	#{name}
+	,#{bodyPartId}
+	,#{weightBased}
+	)
+</insert>
 </mapper>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/record/record.css}">
+<title>トレーニングデータ記録完了のお知らせ（重量あり）</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<form th:action="@{/training/exercise/recordWeightReps}" th:object="${exerciseDataForm}" method="post">
+			<fieldset disabled>
+				<div class="row justify-content-center mt-3">
+					<div class="col-4">
+						<div id ="disabledTextInput" class="form-control">トレーニングデータが記録されました</div>
+					</div>
+				</div>
+			</fieldset>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<label for="date" class="form-label">日付</label>
+					<input type="date" class="form-control" th:field="*{date}" readonly>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<label for="bodyPartName" class="form-label">部位</label>
+					<input type="text" class="form-control" th:field="*{bodyPartName}" readonly>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<label for="exerciseName" class="form-label">種目</label>
+					<input type="text" class="form-control" th:field="*{exerciseName}" readonly>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<label for="weight" class="form-label">重量</label>
+					<input type="text" class="form-control" th:field="*{weight}" readonly>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<label for="reps" class="form-label">回数</label>
+					<input type="text" class="form-control" th:field="*{reps}" readonly>
+				</div>
+			</div>
+		</form>
+	</div>
+			
+</body>
+</html>

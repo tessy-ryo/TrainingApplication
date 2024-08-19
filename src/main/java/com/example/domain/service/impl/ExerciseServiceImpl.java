@@ -57,11 +57,8 @@ public class ExerciseServiceImpl implements ExerciseService {
 	
 	//筋トレデータ取得
 	@Override
-	public List<ExerciseRecord> showExerciseData(ExerciseRecord record,Authentication authentication){
-		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
-		record.setUserId(userDetails.getId());
-		
-		return mapper.findExerciseData(record);
+	public List<ExerciseRecord> showExerciseData(Integer userId, String searchName){
+		return mapper.findExerciseData(userId,searchName);
 	}
 	
 	//特定の筋トレデータ取得
@@ -91,6 +88,13 @@ public class ExerciseServiceImpl implements ExerciseService {
 	//筋トレ種目を論理削除
 	public void softDeleteExercise(int id) {
 		mapper.softDeleteOne(id);
+	}
+	
+	//筋トレ種目を追加
+	public void addExercise(String name,
+			Integer bodyPartId,
+			Integer weightBased) {
+		mapper.insertOne(name, bodyPartId, weightBased);
 	}
 	
 }

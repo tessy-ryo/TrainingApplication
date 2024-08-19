@@ -2,7 +2,6 @@ package com.example.controller;
 
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -25,9 +24,6 @@ public class DashBoardController {
 	@Autowired
 	private ExerciseService exerciseService;
 	
-	@Autowired
-	private ModelMapper modelMapper;
-	
 	//**認証されたユーザーのアカウントネームを表示するメソッド*/
 	private void setupModel(Model model,Authentication authentication) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -43,9 +39,10 @@ public class DashBoardController {
 		//トレーニングデータの追加、削除、編集されこの画面に遷移した際フォームデータを破棄
 		session.removeAttribute("exerciseDataForm");
 		
-		ExerciseRecord record = modelMapper.map(form,ExerciseRecord.class);
+		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
+		form.setUserId(userDetails.getId());
 		
-		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(record,authentication);
+		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(form.getUserId(),form.getSearchName());
 		model.addAttribute("trainingList",trainingList);
 		
 		return "training/dashboard";
@@ -56,9 +53,10 @@ public class DashBoardController {
 		//ダッシュボード画面を表示
 		setupModel(model,authentication);
 		
-		ExerciseRecord record = modelMapper.map(form,ExerciseRecord.class);
+		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
+		form.setUserId(userDetails.getId());
 		
-		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(record,authentication);
+		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(form.getUserId(),form.getSearchName());
 		model.addAttribute("trainingList",trainingList);
 		
 		return "training/dashboard";

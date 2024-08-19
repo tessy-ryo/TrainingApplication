@@ -24,6 +24,4 @@ public class ExerciseRecord {
 	private Exercise exercise;
 	
 	private BodyParts bodyParts;
-	
-	private String searchName;
 }

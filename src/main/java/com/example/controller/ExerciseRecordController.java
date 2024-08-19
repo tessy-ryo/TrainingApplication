@@ -137,6 +137,7 @@ public class ExerciseRecordController {
 		
 		ExerciseRecord record = modelMapper.map(sessionForm, ExerciseRecord.class);
 		
+		//筋トレを記録
 		exerciseService.recordExercise(record,authentication);
 		
 		return "redirect:/training/dashboard";

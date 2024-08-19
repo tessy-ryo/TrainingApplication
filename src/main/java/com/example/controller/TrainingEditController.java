@@ -388,6 +388,12 @@ public class TrainingEditController {
 			public String postAddExercise(@ModelAttribute ExerciseDataForm form,Authentication authentication,Model model,HttpSession session) {
 				setupModel(model,authentication);
 				
+				if(form.getWeightBased() == 1) {
+					form.setWeightBasedText("あり");
+				}else if(form.getWeightBased() == 0) {
+					form.setWeightBasedText("なし");
+				}
+				
 				//セッションにフォームデータを保存
 				session.setAttribute("exerciseDataForm", form);
 				
@@ -396,7 +402,7 @@ public class TrainingEditController {
 			
 			//種目追加確認画面を表示
 			@GetMapping("/exercise/addExerciseCheck")
-			public String addExerciseCheck(@ModelAttribute ExerciseDataForm form,Authentication authentication,Model model,HttpSession session) {
+			public String addExerciseCheck(Authentication authentication,Model model,HttpSession session) {
 				setupModel(model,authentication);
 				
 				ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
@@ -405,6 +411,24 @@ public class TrainingEditController {
 				
 				sessionForm.setBodyPartName(bodyPart.getName());
 				
+				//セッションにフォームデータを保存
+				session.setAttribute("exerciseDataForm", sessionForm);
+				
+				model.addAttribute("exerciseDataForm",sessionForm);
+				
 				return "training/exercise/addExerciseCheck";
+			}
+			
+			//種目が追加され、種目選択画面に移動
+			@PostMapping("/exercise/addExerciseCheck")
+			public String postExerciseCheck(Authentication authentication,Model model,HttpSession session) {
+				ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+				
+				exerciseService.addExercise(sessionForm.getExerciseName(),sessionForm.getBodyPartId(),sessionForm.getWeightBased());
+				
+				//セッションフォームのデータを破棄
+				session.removeAttribute("exerciseDataForm");
+				
+				return "redirect:/training/exercise/selectExercise";
 			}
 }
