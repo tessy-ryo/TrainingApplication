@@ -13,7 +13,7 @@
 		<div class="border-bottom">
 			<h1 class="h2">種目を選択する</h1>
 		</div>
-		<form th:action="@{/training/exercise/selectExercise}" method="post" th:object="${form}">
+		<form th:action="@{/training/exercise/selectExercise}" method="post" th:object="${exerciseDataForm}">
 			<div class="text-center">
 				<div class= "mt-3">
 					<div><u>日付を入力し、種目を一つ選択してください</u></div>

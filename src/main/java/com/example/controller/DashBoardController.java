@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.domain.model.ExerciseRecord;
 import com.example.domain.service.CustomUserDetails;
@@ -32,7 +33,10 @@ public class DashBoardController {
 
 	/**ダッシュボード画面を表示*/
 	@GetMapping("/dashboard")
-	public String getTrainingDashBoard(@ModelAttribute ExerciseDataForm form,Model model,HttpSession session,Authentication authentication) {
+	public String getTrainingDashBoard(@ModelAttribute ExerciseDataForm form,
+			@RequestParam(value="page",defaultValue="1") int page,
+			@RequestParam(value="size",defaultValue="10") int size,
+			Model model,HttpSession session,Authentication authentication) {
 		//ダッシュボード画面を表示
 		setupModel(model,authentication);
 		
@@ -41,6 +45,8 @@ public class DashBoardController {
 		
 		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
 		form.setUserId(userDetails.getId());
+		
+		int offset = (page - 1) * size;
 		
 		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(form.getUserId(),form.getSearchName());
 		model.addAttribute("trainingList",trainingList);

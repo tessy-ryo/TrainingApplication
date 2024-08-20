@@ -8,11 +8,12 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/recordWeightReps}" th:object="${exerciseDataForm}" method="post">
+		<form th:action="@{/training/exercise/confirmRecordWeightReps}" th:object="${exerciseDataForm}" method="post">
 			<fieldset disabled>
 				<div class="row justify-content-center mt-3">
 					<div class="col-4">
-						<div id ="disabledTextInput" class="form-control">トレーニングデータが記録されました</div>
+						<input class="form-control text-center" type="text" placeholder="トレーニングデータが記録されました"
+					aria-label="Disabled input" disabled>
 					</div>
 				</div>
 			</fieldset>
@@ -44,6 +45,12 @@
 				<div class="col-4">
 					<label for="reps" class="form-label">回数</label>
 					<input type="text" class="form-control" th:field="*{reps}" readonly>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-auto">
+					<a class="btn btn-secondary" href="/training/exercise/selectExercise" role="button">種目を変更する</a>
+					<button type="submit" class="btn-record-red">続けて重量と回数を入力する</button>
 				</div>
 			</div>
 		</form>
