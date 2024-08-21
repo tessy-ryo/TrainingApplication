@@ -57,8 +57,11 @@ public class ExerciseServiceImpl implements ExerciseService {
 	
 	//筋トレデータ取得
 	@Override
-	public List<ExerciseRecord> showExerciseData(Integer userId, String searchName){
-		return mapper.findExerciseData(userId,searchName);
+	public List<ExerciseRecord> showExerciseData(Integer userId, 
+			String searchName,
+			Integer offset,
+			Integer size){
+		return mapper.findExerciseData(userId,searchName,offset,size);
 	}
 	
 	//特定の筋トレデータ取得
@@ -85,7 +88,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 		mapper.deleteOne(id);
 	}
 	
-	//筋トレ種目を論理削除
+	//筋トレ種目を論理削除 
 	public void softDeleteExercise(int id) {
 		mapper.softDeleteOne(id);
 	}
@@ -96,5 +99,10 @@ public class ExerciseServiceImpl implements ExerciseService {
 			Integer weightBased) {
 		mapper.insertOne(name, bodyPartId, weightBased);
 	}
+	
+	//ユーザーの筋トレデータレコード数をカウント
+		public int getTotalRecords(Integer userId, String searchName) {
+			return mapper.countExerciseData(userId, searchName);
+		}
 	
 }

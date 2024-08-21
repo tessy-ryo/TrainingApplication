@@ -29,7 +29,10 @@ public interface ExerciseService {
 	public int recordExercise(ExerciseRecord record,Authentication authentication);
 	
 	//筋トレデータ取得
-	public List<ExerciseRecord> showExerciseData(Integer userId, String searchName);
+	public List<ExerciseRecord> showExerciseData(Integer userId, 
+			String searchName,
+			Integer offset,
+			Integer size);
 	
 	//特定の筋トレデータ取得
 	public ExerciseRecord showSpecificData(int data);
@@ -52,4 +55,7 @@ public interface ExerciseService {
 	public void addExercise(String name,
 			Integer bodyPartId,
 			Integer weightBased);
+	
+	//ユーザーの筋トレデータレコード数をカウント
+	public int getTotalRecords(Integer userId, String searchName);
 }

@@ -49,6 +49,27 @@
 						
 					</tbody>
 				</table>
+				<div class="row justify-content-center mt-3">
+					<div class="col-auto">
+						<nav aria-label="Page navigation">
+							<ul class="pagination">
+								<li th:classappend="${currentPage == 1} ? 'disabled'" class="page-item">
+									<a class="page-link" th:href="@{'/training/dashboard'(page=${currentPage - 1},size=${size},searchName=${searchName})}" aria-label="前へ">
+										前へ
+									</a>
+								</li>
+								<li th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage == i} ? 'active'" class="page-item">
+									<a class="page-link" th:href="@{'/training/dashboard'(page=${i},size=${size},searchName=${searchName})}" th:text="${i}"></a>
+								</li>
+								<li th:classappend="${currentPage == totalPages} ? 'disabled'" class="page-item">
+									<a class="page-link" th:href="@{'/training/dashboard'(page=${currentPage + 1},size=${size},searchName=${searchName})}" aria-label="次へ">
+										次へ
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

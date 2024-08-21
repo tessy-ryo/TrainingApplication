@@ -31,7 +31,10 @@ public interface ExerciseMapper {
 	public int recordExerciseData(ExerciseRecord record);
 	
 	//筋トレデータ取得
-	public List<ExerciseRecord> findExerciseData(@Param("userId")Integer userId,@Param("searchName")String searchName);
+	public List<ExerciseRecord> findExerciseData(@Param("userId")Integer userId,
+			@Param("searchName")String searchName,
+			@Param("offset") Integer offset,
+			@Param("size") Integer size);
 	
 	//特定の筋トレデータ取得
 	public ExerciseRecord getSpecificData(int id);
@@ -54,4 +57,8 @@ public interface ExerciseMapper {
 	public int insertOne(@Param("name") String name,
 			@Param("bodyPartId") Integer BodyPartId,
 			@Param("weightBased") Integer weightBased);
+	
+	//ユーザーの筋トレデータのレコード数をカウントする
+	public int countExerciseData(@Param("userId") Integer userId,
+			@Param("searchName") String searchName);
 }

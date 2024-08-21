@@ -35,7 +35,7 @@ public class DashBoardController {
 	@GetMapping("/dashboard")
 	public String getTrainingDashBoard(@ModelAttribute ExerciseDataForm form,
 			@RequestParam(value="page",defaultValue="1") int page,
-			@RequestParam(value="size",defaultValue="10") int size,
+			@RequestParam(value="size",defaultValue="6") int size,
 			Model model,HttpSession session,Authentication authentication) {
 		//ダッシュボード画面を表示
 		setupModel(model,authentication);
@@ -48,22 +48,47 @@ public class DashBoardController {
 		
 		int offset = (page - 1) * size;
 		
-		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(form.getUserId(),form.getSearchName());
+		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(form.getUserId(),form.getSearchName(),offset,size);
+		
+		//ユーザーの筋トレデータレコード数をカウント
+		int totalRecords = exerciseService.getTotalRecords(form.getUserId(),form.getSearchName());
+		//レコード数をsizeで割って、合計ページを計算する
+		int totalPages = (int)Math.ceil((double)totalRecords / size);
+				
 		model.addAttribute("trainingList",trainingList);
+		
+		model.addAttribute("currentPage",page);
+		
+		model.addAttribute("totalPages", totalPages);
 		
 		return "training/dashboard";
 	}
 	
 	@PostMapping("/dashboard")
-	public String postTrainingDashBoard(@ModelAttribute ExerciseDataForm form,Model model,Authentication authentication) {
+	public String postTrainingDashBoard(@ModelAttribute ExerciseDataForm form,
+			@RequestParam(value="page",defaultValue="1") int page,
+			@RequestParam(value="size",defaultValue="6") int size,
+			Model model,Authentication authentication) {
 		//ダッシュボード画面を表示
 		setupModel(model,authentication);
 		
 		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
 		form.setUserId(userDetails.getId());
 		
-		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(form.getUserId(),form.getSearchName());
+		int offset = (page - 1) * size;
+		
+		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(form.getUserId(),form.getSearchName(),offset,size);
+		
+		//ユーザーの筋トレデータレコード数をカウント
+		int totalRecords = exerciseService.getTotalRecords(form.getUserId(),form.getSearchName());
+		//レコード数をsizeで割って、合計ページを計算する
+		int totalPages = (int)Math.ceil((double)totalRecords / size);
+				
 		model.addAttribute("trainingList",trainingList);
+		
+		model.addAttribute("currentPage",page);
+		
+		model.addAttribute("totalPages", totalPages);
 		
 		return "training/dashboard";
 	}
