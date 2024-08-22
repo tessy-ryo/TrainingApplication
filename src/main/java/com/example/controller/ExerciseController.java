@@ -32,4 +32,17 @@ public class ExerciseController {
 				})
 				.collect(Collectors.toList());
 	}
+	
+	@GetMapping("/exercise/weightBased")
+	public List<Map<String,Object>> listWeightBasedExercises(@RequestParam("bodyPartId") Integer bodyPartId ){
+		List<Exercise> exercises = exerciseService.getWeightBasedExercises(bodyPartId);
+		return exercises.stream()
+				.map(exercise -> {
+					Map<String, Object> map = new HashMap<>();
+					map.put("id", exercise.getId());
+					map.put("name", exercise.getName());
+					return map;
+				})
+				.collect(Collectors.toList());
+	}
 }

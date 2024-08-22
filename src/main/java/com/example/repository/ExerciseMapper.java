@@ -24,6 +24,9 @@ public interface ExerciseMapper {
 	/**筋トレ種目取得*/
 	public List<Exercise> getExercisesByBodyPart(int bodyPartId);
 	
+	//重量あり筋トレ種目複数件取得
+	public List<Exercise> getWeightBasedExercisesByBodyPart(int bodyPartId);
+	
 	//**重量の有無の確認*/
 	public int findWeightBased(int exerciseId);
 	
@@ -61,4 +64,7 @@ public interface ExerciseMapper {
 	//ユーザーの筋トレデータのレコード数をカウントする
 	public int countExerciseData(@Param("userId") Integer userId,
 			@Param("searchName") String searchName);
+	
+	//特定の種目の、今までの最大重量を取得する
+	public int findMaxWeightByExerciseId(Integer exerciseId);
 }

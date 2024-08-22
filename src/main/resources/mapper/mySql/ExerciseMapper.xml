@@ -77,6 +77,20 @@ AND
 	is_deleted=0	
 </select>
 
+<!-- 重量あり筋トレ種目複数件取得 -->
+<select id="getWeightBasedExercisesByBodyPart" resultType="Exercise">
+SELECT
+	id,name
+FROM
+	training.exercises
+WHERE
+	body_part_id=#{bodyPartId}
+AND
+	is_deleted=0	
+AND 
+	weight_based=1
+</select>
+
 <select id="findWeightBased" resultType="int">
 SELECT
 	weight_based
@@ -228,5 +242,15 @@ WHERE
 		exercises.name LIKE CONCAT('%', #{searchName}, '%') OR
 		body_parts.name LIKE CONCAT('%', #{searchName}, '%'))
 </if>
+</select>
+
+<!--特定の種目の、今までの最大重量を取得する -->
+<select id="findMaxWeightByExerciseId" resultType="int">
+SELECT
+	MAX(exercise_records.weight)
+FROM
+	training.exercise_records
+WHERE
+	exercise_records.exercise_id = #{exerciseId}
 </select>
 </mapper>

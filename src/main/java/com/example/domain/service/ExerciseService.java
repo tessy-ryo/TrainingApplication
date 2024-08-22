@@ -21,6 +21,9 @@ public interface ExerciseService {
 	
 	//筋トレ種目複数件取得
 	public List<Exercise> getExercises(int bodyPartId);
+	
+	//重量あり筋トレ種目複数件取得
+	public List<Exercise> getWeightBasedExercises(int bodyPartId);
 
 	//重量の有無の確認
 	public int checkWeightBased(int exerciseId);
@@ -58,4 +61,7 @@ public interface ExerciseService {
 	
 	//ユーザーの筋トレデータレコード数をカウント
 	public int getTotalRecords(Integer userId, String searchName);
+	
+	//特定の種目の、今までの最大重量を取得する
+	public int getMaxWeightByExerciseId(Integer exerciseId);
 }

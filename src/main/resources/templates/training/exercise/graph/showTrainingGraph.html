@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/record/record.css}">
+	<title>トレーニンググラフ</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="border-bottom">
+			<h1 class="h2">トレーニンググラフ</h1>
+		</div>
+		<div class="row justify-content-center mt-3">
+			<div class="col-4">
+				<div>
+					<label for="exerciseName" class="form-label">筋トレ種目</label>
+					<input type="text" class="form-control" th:value="${exerciseName}" readonly>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center mt-3">
+			<div class="col-4">
+				<div>
+					<label for="maxWeight" class="form-label">今までの最大重量</label>
+					<input type="text" class="form-control" th:value="${maxWeight}" readonly>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+</body>
+</html>

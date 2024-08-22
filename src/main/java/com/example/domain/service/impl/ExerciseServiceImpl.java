@@ -41,6 +41,12 @@ public class ExerciseServiceImpl implements ExerciseService {
 		return mapper.getExercisesByBodyPart(bodyPartId);
 	}
 	
+	//重量あり筋トレ種目複数件取得
+	@Override
+	public List<Exercise> getWeightBasedExercises(int bodyPartId){
+		return mapper.getWeightBasedExercisesByBodyPart(bodyPartId);
+	}
+	
 	//重量の有無の確認
 	@Override
 	public int checkWeightBased(int exerciseId) {
@@ -101,8 +107,12 @@ public class ExerciseServiceImpl implements ExerciseService {
 	}
 	
 	//ユーザーの筋トレデータレコード数をカウント
-		public int getTotalRecords(Integer userId, String searchName) {
-			return mapper.countExerciseData(userId, searchName);
-		}
+	public int getTotalRecords(Integer userId, String searchName) {
+		return mapper.countExerciseData(userId, searchName);
+	}
 	
+	//特定の種目の、今までの最大重量を取得する
+	public int getMaxWeightByExerciseId(Integer exerciseId) {
+		return mapper.findMaxWeightByExerciseId(exerciseId);
+	}
 }
