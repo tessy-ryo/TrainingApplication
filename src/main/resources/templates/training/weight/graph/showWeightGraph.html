@@ -5,39 +5,39 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" th:href="@{/css/record/record.css}">
-	<title>トレーニンググラフ</title>
+	<title>体重グラフ</title>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<div class="border-bottom">
-			<h1 class="h2">トレーニンググラフ</h1>
+			<h1 class="h2">体重グラフ</h1>
 		</div>
 		<div class="row justify-content-center mt-3">
 			<div class="col-4">
 				<div>
-					<label for="exerciseName" class="form-label">筋トレ種目</label>
-					<input type="text" class="form-control" th:value="${exerciseName}" readonly>
+					<label for="minBodyWeight" class="form-label">今までの最低体重</label>
+					<input type="text" class="form-control" th:value="${minBodyWeight}" readonly>
 				</div>
 			</div>
 		</div>
 		<div class="row justify-content-center mt-3">
 			<div class="col-4">
 				<div>
-					<label for="maxWeight" class="form-label">今までの最大重量</label>
-					<input type="text" class="form-control" th:value="${maxWeight}" readonly>
+					<label for="maxBodyWeight" class="form-label">今までの最高重量</label>
+					<input type="text" class="form-control" th:value="${maxBodyWeight}" readonly>
 				</div>
 			</div>
 		</div>
 		<div class="row justify-content-center mt-3">
 			<div class="col-8">
-				<canvas id="trainingGraph"></canvas>
+				<canvas id="weightGraph"></canvas>
 			</div>
 		</div>
 
 		<script th:inline="javascript">
-			const ctx = document.getElementById('trainingGraph').getContext('2d');
+			const ctx = document.getElementById('weightGraph').getContext('2d');
 			const labels = /*[[${dates}]]*/ [];
 			const data = /*[[${weights}]]*/ [];
 			const chart = new Chart(ctx, {
@@ -45,7 +45,7 @@
 				data: {
 					labels: labels,
 					datasets: [{
-						label: '最大重量',
+						label: '体重',
 						data: data,
 						backgroundColor: 'rgba(255, 255, 0, 1)',
 						borderColor: 'rgba(255, 255, 0, 1)',
@@ -59,7 +59,7 @@
 							beginAtZero: true,
 							title:{
 								display:true,
-								text:'最大重量(kg)'
+								text:'体重(kg)'
 							}
 						},
 						x:{
@@ -80,15 +80,15 @@
 		        <nav aria-label="Page navigation">
 		            <ul class="pagination">
 		                <li th:classappend="${currentPage == 1} ? 'disabled'" class="page-item">
-		                    <a class="page-link" th:href="@{'/training/exercise/graph/showTrainingGraph'(page=${currentPage - 1}, size=${size})}" aria-label="前の期間">
+		                    <a class="page-link" th:href="@{'/training/weight/graph/showWeightGraph'(page=${currentPage - 1}, size=${size})}" aria-label="前の期間">
 		                        前の期間
 		                    </a>
 		                </li>
 		                <li th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage == i} ? 'active'" class="page-item">
-		                    <a class="page-link" th:href="@{'/training/exercise/graph/showTrainingGraph'(page=${i}, size=${size})}" th:text="${i}"></a>
+		                    <a class="page-link" th:href="@{'/training/weight/graph/showWeightGraph'(page=${i}, size=${size})}" th:text="${i}"></a>
 		                </li>
 		                <li th:classappend="${currentPage == totalPages} ? 'disabled'" class="page-item">
-		                    <a class="page-link" th:href="@{'/training/exercise/graph/showTrainingGraph'(page=${currentPage + 1}, size=${size})}" aria-label="次の期間">
+		                    <a class="page-link" th:href="@{'/training/weight/graph/showWeightGraph'(page=${currentPage + 1}, size=${size})}" aria-label="次の期間">
 		                        次の期間
 		                    </a>
 		                </li>

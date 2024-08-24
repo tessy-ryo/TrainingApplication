@@ -115,4 +115,14 @@ public class ExerciseServiceImpl implements ExerciseService {
 	public int getMaxWeightByExerciseId(Integer exerciseId) {
 		return mapper.findMaxWeightByExerciseId(exerciseId);
 	}
+	
+	//特定の種目の、直近7日間の最大重量を取得
+	public List<ExerciseRecord> getMaxWeightForLast7Days(Integer exerciseId, int size, int offset){
+		return mapper.findMaxWeightForLast7Days(exerciseId, size, offset);
+	}
+		
+	//特定の種目の、筋トレが記録された日付け（重複無し）の総数をカウントする
+	public int getMaxWeightRecords(Integer exerciseId){
+		return mapper.countMaxWeightRecords(exerciseId);
+	}
 }

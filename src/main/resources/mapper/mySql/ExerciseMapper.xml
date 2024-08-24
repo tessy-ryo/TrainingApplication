@@ -247,10 +247,35 @@ WHERE
 <!--特定の種目の、今までの最大重量を取得する -->
 <select id="findMaxWeightByExerciseId" resultType="int">
 SELECT
-	MAX(exercise_records.weight)
+	MAX(weight)
 FROM
 	training.exercise_records
 WHERE
-	exercise_records.exercise_id = #{exerciseId}
+	exercise_id = #{exerciseId}
+</select>
+
+<!-- 特定の種目の、直近7日間の最大重量を取得 -->
+<select id="findMaxWeightForLast7Days" resultMap ="record">
+SELECT
+	date,
+	MAX(weight) as weight
+FROM
+	training.exercise_records
+WHERE
+	exercise_id = #{exerciseId}
+GROUP BY
+	date
+ORDER BY
+	date DESC
+LIMIT #{size} OFFSET #{offset}
+</select>
+
+<!-- 特定の種目の、筋トレが記録された日付け（重複無し）の総数をカウントする -->
+<select id="countMaxWeightRecords" resultType="int">
+SELECT  COUNT(DISTINCT date)
+FROM
+	training.exercise_records
+WHERE
+	exercise_id = #{exerciseId}
 </select>
 </mapper>

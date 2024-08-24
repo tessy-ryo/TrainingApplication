@@ -67,4 +67,10 @@ public interface ExerciseMapper {
 	
 	//特定の種目の、今までの最大重量を取得する
 	public int findMaxWeightByExerciseId(Integer exerciseId);
+	
+	//特定の種目の、直近7日間の最大重量を取得
+	public List<ExerciseRecord> findMaxWeightForLast7Days(Integer exerciseId, int size, int offset);
+	
+	//特定の種目の、筋トレが記録された日付け（重複無し）の総数をカウントする
+	public int countMaxWeightRecords(Integer exerciseId);
 }

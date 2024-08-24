@@ -18,4 +18,39 @@
 	,#{weight}
 	)
 </insert>
+
+<!-- 今までの最低体重を取得 -->
+<select id="findMinBodyWeight" resultType="int">
+SELECT
+	MIN(weight) as weight
+FROM
+	training.weight_records
+</select>
+
+<!-- 今までの最大体重を取得 -->
+<select id="findMaxBodyWeight" resultType="int">
+SELECT
+	MAX(weight) as weight
+FROM
+	training.weight_records
+</select>
+
+<!-- 直近7日間の体重を取得 -->
+<select id="findBodyWeightForLast7Days" resultType="WeightRecord">
+SELECT
+	date,
+	weight
+FROM
+	training.weight_records
+ORDER BY
+	date DESC
+LIMIT #{size} OFFSET #{offset}
+</select>
+
+<!-- 体重が記録された日付の総数をカウントする -->
+<select id="countBodyWeightRecords" resultType="int">
+SELECT COUNT(date)
+FROM
+	training.weight_records
+</select>
 </mapper>
