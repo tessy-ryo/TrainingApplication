@@ -125,4 +125,9 @@ public class ExerciseServiceImpl implements ExerciseService {
 	public int getMaxWeightRecords(Integer exerciseId){
 		return mapper.countMaxWeightRecords(exerciseId);
 	}
+	
+	//ユーザーが筋トレした日付け（重複無し）をすべて取得する
+		public List<ExerciseRecord> getAllTrainingDate(Integer userId){
+			return mapper.findAllTrainingDate(userId);
+		}
 }

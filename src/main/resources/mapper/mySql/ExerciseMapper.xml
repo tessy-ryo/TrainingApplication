@@ -278,4 +278,13 @@ FROM
 WHERE
 	exercise_id = #{exerciseId}
 </select>
+
+<!-- ユーザーが筋トレした日付け（重複無し）をすべて取得する -->
+<select id="findAllTrainingDate" resultMap = "record">
+SELECT DISTINCT date
+FROM
+	training.exercise_records
+WHERE
+	user_id = #{userId}
+</select>
 </mapper>

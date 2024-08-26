@@ -70,4 +70,7 @@ public interface ExerciseService {
 	
 	//特定の種目の、筋トレが記録された日付け（重複無し）の総数をカウントする
 	public int getMaxWeightRecords(Integer exerciseId);
+	
+	//ユーザーが筋トレした日付け（重複無し）をすべて取得する
+	public List<ExerciseRecord> getAllTrainingDate(Integer userId);
 }
