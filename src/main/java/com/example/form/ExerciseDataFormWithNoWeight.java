@@ -4,9 +4,10 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 @Data
-public class ExerciseDataForm {
+public class ExerciseDataFormWithNoWeight {
 	private Integer id;
 	
 	private Integer bodyPartId;
@@ -18,8 +19,10 @@ public class ExerciseDataForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date date;
 	
+	
 	private Integer weight;
 	
+	@NotNull
 	private Integer reps;
 	
 	private String searchName;

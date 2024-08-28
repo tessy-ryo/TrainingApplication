@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +51,8 @@ public class TrainingEditController {
 				List<Exercise> exerciseList = exerciseService.getExercises(record.getBodyPartId());
 				model.addAttribute("exerciseList",exerciseList);
 				
+				//id設定
+				form.setId(record.getId());
 				//日付け設定
 				form.setDate(record.getDate());
 				//部位設定
@@ -69,7 +73,7 @@ public class TrainingEditController {
 			}
 			
 			@PostMapping("/edit")
-			public String postEdit(@ModelAttribute ExerciseDataForm form, HttpSession session) {
+			public String postEdit(@ModelAttribute ExerciseDataForm form, BindingResult bindingResult,HttpSession session,Authentication authentication,Model model) {
 				//フォームデータを取り出してsessionFormに格納
 				ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
 				
@@ -83,6 +87,10 @@ public class TrainingEditController {
 				session.setAttribute("exerciseDataForm", sessionForm);
 				//重量確認
 				int weightBased = exerciseService.checkWeightBased(sessionForm.getExerciseId());
+				
+				if(bindingResult.hasErrors()) {
+					return getEdit(form, authentication, model, session, sessionForm.getId());
+				}
 				
 				if(weightBased==0) {
 					//重量がない場合
@@ -99,20 +107,24 @@ public class TrainingEditController {
 				setupModel(model, authentication);
 				//保存されたフォームの取り出し
 				ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
-				model.addAttribute("form",sessionForm);
+				model.addAttribute("exerciseDataForm",sessionForm);
 				
 				return "training/exercise/editReps";
 			}
 			
 			@PostMapping("/exercise/editReps")
-			public String postEditReps(@ModelAttribute ExerciseDataForm form, Model model,HttpSession session,Authentication authentication) {
+			public String postEditReps(@ModelAttribute @Validated ExerciseDataForm form,BindingResult bindingResult,HttpSession session,Authentication authentication,Model model) {
 				setupModel(model, authentication);
 				
 				ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
-				//重量設定
-				sessionForm.setReps(form.getReps());
+				
+				if(bindingResult.hasErrors()) {
+					model.addAttribute("exerciseDataForm",form);
+					
+					return "training/exercise/editReps";
+				}
 				//回数設定
-				sessionForm.setWeight(form.getWeight());
+				sessionForm.setReps(form.getReps());
 				//筋トレデータを更新
 				exerciseService.updateExerciseRecordOne(sessionForm.getDate(), sessionForm.getBodyPartId(), sessionForm.getExerciseId(), sessionForm.getWeight(), sessionForm.getReps(),sessionForm.getId());
 				
@@ -132,10 +144,13 @@ public class TrainingEditController {
 			}
 			
 			@PostMapping("/exercise/editWeightReps")
-			public String postEditWeightReps(@ModelAttribute ExerciseDataForm form, Model model,HttpSession session,Authentication authentication) {
+			public String postEditWeightReps(@ModelAttribute ExerciseDataForm form,BindingResult bindingResult, Model model,HttpSession session,Authentication authentication) {
 				setupModel(model, authentication);
 				
 				ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+				if(bindingResult.hasErrors()) {
+					return getEditWeightReps(model, session, authentication);
+				}
 				//重量設定
 				sessionForm.setReps(form.getReps());
 				//回数設定
