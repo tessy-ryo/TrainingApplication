@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/editReps}" th:object="${exerciseDataForm}" method="post">
+		<form th:action="@{/training/exercise/editReps}" th:object="${noWeightExerciseDataForm}" method="post">
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 						<input class="form-control text-center" type="text" placeholder="回数を編集してください" aria-label="Disabled input" disabled>
@@ -23,7 +23,7 @@
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-auto">
-					<a class="btn btn-secondary" th:href="@{/training/edit/{id}(id=${exerciseDataForm.id})}" role="button">キャンセル</a>
+					<a class="btn btn-secondary" th:href="@{/training/edit/{id}(id=${noWeightExerciseDataForm.id})}" role="button">キャンセル</a>
 					<button type="submit" class="btn-record-red">編集を完了する</button>
 				</div>
 			</div>

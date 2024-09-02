@@ -6,24 +6,25 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
 @Data
-public class ExerciseDataFormWithWeight {
+public class ExerciseDataForm {
 	private Integer id;
 	
+	@NotNull
 	private Integer bodyPartId;
+	
 	
 	private Integer userId;
 	
+	@NotNull
 	private Integer exerciseId;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull
 	private Date date;
 	
-	@NotNull
 	private Integer weight;
 	
-	@NotNull
 	private Integer reps;
 	
 	private String searchName;
