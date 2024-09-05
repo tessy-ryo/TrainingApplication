@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.domain.model.BodyParts;
+import com.example.domain.model.Exercise;
 import com.example.domain.model.ExerciseRecord;
 import com.example.domain.model.WeightRecord;
 import com.example.domain.service.CustomUserDetails;
 import com.example.domain.service.ExerciseService;
 import com.example.domain.service.WeightService;
-import com.example.form.ExerciseDataForm;
+import com.example.form.TrainingGraphForm;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -48,7 +51,7 @@ public class TrainingGraphController {
 	
 	//種目グラフ選択画面を表示
 	@GetMapping("/exercise/graph/selectExerciseGraph")
-	public String getExerciseGraph(@ModelAttribute ExerciseDataForm form, Model model, Authentication authentication) {
+	public String getExerciseGraph(@ModelAttribute TrainingGraphForm form, Model model, Authentication authentication) {
 		setupModel(model,authentication);
 		//部位を取得
 		List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
@@ -60,11 +63,25 @@ public class TrainingGraphController {
 	
 	//トレーニンググラフを表示する画面に遷移
 	@PostMapping("/exercise/graph/selectExerciseGraph")
-	public String postSelectExerciseGraph(@ModelAttribute ExerciseDataForm form, Model model, Authentication authentication,HttpSession session) {
+	public String postSelectExerciseGraph(@ModelAttribute @Validated TrainingGraphForm form,BindingResult bindingResult, Model model, Authentication authentication,HttpSession session) {
 		setupModel(model,authentication);
 		
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("trainingGraphForm",form);
+			//部位を取得
+			List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
+			model.addAttribute("bodyPartsList",bodyPartsList);
+			//部位は選択されていた場合
+			if(form.getBodyPartId() != null) {
+				//種目を取得
+				List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId());
+				model.addAttribute("exerciseList",exerciseList);
+			}
+			return "training/exercise/graph/selectExerciseGraph";
+		}
+		
 		//セッションにフォームデータを保存
-		session.setAttribute("exerciseDataForm",form);
+		session.setAttribute("trainingGraphForm",form);
 		
 		return "redirect:/training/exercise/graph/showTrainingGraph";
 	}
@@ -76,13 +93,13 @@ public class TrainingGraphController {
 				@RequestParam(value = "size", defaultValue = "7")int size) {
 		setupModel(model,authentication);
 		
-		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+		TrainingGraphForm sessionForm = (TrainingGraphForm) session.getAttribute("trainingGraphForm");
 		
 		//筋トレ種目と種目ID、筋トレ部位を一件取得
 		ExerciseRecord record = exerciseService.getOneExercise(sessionForm.getExerciseId());
 		
 		//特定の種目の、今までの最大重量を取得する
-		int maxWeight = exerciseService.getMaxWeightByExerciseId(sessionForm.getExerciseId());
+		Integer maxWeight = exerciseService.getMaxWeightByExerciseId(sessionForm.getExerciseId());
 		
 		//7日分のデータを取得
 		int offset = (page - 1) * size;
@@ -99,7 +116,7 @@ public class TrainingGraphController {
 	            .collect(Collectors.toList());
 
 		model.addAttribute("exerciseName",record.getExercise().getName());
-		
+			
 		model.addAttribute("maxWeight",maxWeight);
 		
 		model.addAttribute("dates", dates);

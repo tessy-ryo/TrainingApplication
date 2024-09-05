@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/record/record.css}">
+<title>回数を記録する</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<form th:action="@{/training/exercise/recordReps}" th:object="${noWeightExerciseDataForm}" method="post">
+			<fieldset disabled>
+				<div class="row justify-content-center mt-3">
+					<div class="col-4">
+						<div id ="disabledTextInput" class="form-control">回数を入力してください</div>
+					</div>
+				</div>
+			</fieldset>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<label for="回数" class="form-label">回数</label>
+					<input type="text" class="form-control" th:field="*{reps}" th:errorclass="is-invalid">
+					<div class="invalid-feedback" th:errors="*{reps}"></div>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-auto">
+					<a class="btn btn-secondary" href="/training/exercise/selectExercise" role="button">キャンセル</a>
+					<button type="submit" class="btn-record-red">記録</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

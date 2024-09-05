@@ -245,7 +245,7 @@ WHERE
 </select>
 
 <!--特定の種目の、今までの最大重量を取得する -->
-<select id="findMaxWeightByExerciseId" resultType="int">
+<select id="findMaxWeightByExerciseId" resultType="Integer">
 SELECT
 	MAX(weight)
 FROM

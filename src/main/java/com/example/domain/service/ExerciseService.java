@@ -63,7 +63,7 @@ public interface ExerciseService {
 	public int getTotalRecords(Integer userId, String searchName);
 	
 	//特定の種目の、今までの最大重量を取得する
-	public int getMaxWeightByExerciseId(Integer exerciseId);
+	public Integer getMaxWeightByExerciseId(Integer exerciseId);
 	
 	//特定の種目の、直近7日間の最大重量を取得
 	public List<ExerciseRecord> getMaxWeightForLast7Days(Integer exerciseId, int size, int offset);

@@ -4,18 +4,25 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/css/record/record.css}">
-<title>回数を記録する</title>
+<title>重量と回数を記録する</title>
 </head>
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/recordReps}" th:object="${exerciseDataForm}" method="post">
+		<form th:action="@{/training/exercise/recordWeightReps}" th:object="${weightExerciseDataForm}" method="post">
 			<fieldset disabled>
 				<div class="row justify-content-center mt-3">
 					<div class="col-4">
-						<div id ="disabledTextInput" class="form-control">回数を入力してください</div>
+						<div id ="disabledTextInput" class="form-control">重量と回数を入力してください</div>
 					</div>
 				</div>
 			</fieldset>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<label for="重量" class="form-label">重量</label>
+					<input type="text" class="form-control" th:field="*{weight}" th:errorclass="is-invalid">
+					<div class="invalid-feedback" th:errors="*{weight}"></div>
+				</div>
+			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 					<label for="回数" class="form-label">回数</label>

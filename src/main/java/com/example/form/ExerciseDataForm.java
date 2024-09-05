@@ -13,9 +13,6 @@ public class ExerciseDataForm {
 	@NotNull
 	private Integer bodyPartId;
 	
-	
-	private Integer userId;
-	
 	@NotNull
 	private Integer exerciseId;
 	
@@ -27,13 +24,7 @@ public class ExerciseDataForm {
 	
 	private Integer reps;
 	
-	private String searchName;
-	
 	private String bodyPartName;
 	
 	private String exerciseName;
-	
-	private Integer weightBased;
-	
-	private String weightBasedText;
 }

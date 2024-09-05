@@ -16,7 +16,6 @@ public class WeightExerciseDataForm {
 	private Integer exerciseId;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@NotNull
 	private Date date;
 	
 	@NotNull

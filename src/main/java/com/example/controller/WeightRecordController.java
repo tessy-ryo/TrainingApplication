@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.domain.model.WeightRecord;
 import com.example.domain.service.CustomUserDetails;
 import com.example.domain.service.WeightService;
-import com.example.form.RecordWeightForm;
+import com.example.form.RecordBodyWeightForm;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -35,27 +36,24 @@ public class WeightRecordController {
 		
 		//**体重を記録する画面を表示*/
 		@GetMapping("/record/weight")
-		public String getRecordWeight(Model model,Authentication authentication,HttpSession session) {
+		public String getRecordWeight(@ModelAttribute RecordBodyWeightForm form,Model model,Authentication authentication,HttpSession session) {
 			setupModel(model,authentication);
-			
-			//次画面でいいえボタンで戻る場合があるため保存されたフォームデータを取り出して値を表示
-			RecordWeightForm form = (RecordWeightForm) session.getAttribute("recordWeightForm") ;
-			
-			//フォームがセッションに存在しない場合新しいフォームを作成
-			if(form == null) {
-				form = new RecordWeightForm();
-			}
-			model.addAttribute("recordWeightForm",form);
 			//体重を記録する画面を表示
-			return "training/weight/recordWeight";
+			return "training/weight/record/recordWeight";
 		}
 		
 		//**体重記録確認画面に移動*/
 		@PostMapping("/record/weight")
-		public String postRecordWeight(@Valid @ModelAttribute RecordWeightForm form, Model model,HttpSession session, Authentication authentication) {
+		public String postRecordWeight(@Valid @ModelAttribute RecordBodyWeightForm form,BindingResult bindingResult, Model model,HttpSession session, Authentication authentication) {
 			setupModel(model,authentication);
+			
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("recordBodyWeightForm",form);
+				
+				return "training/weight/record/recordWeight";
+			}
 			//セッションにフォームデータを保存
-			session.setAttribute("recordWeightForm", form);
+			session.setAttribute("recordBodyWeightForm", form);
 			
 			return "redirect:/training/weight/checkWeightRecord";
 		}
@@ -65,11 +63,11 @@ public class WeightRecordController {
 			public String checkWeightRecord(Model model, HttpSession session, Authentication authentication) {
 			setupModel(model,authentication);
 			//セッションからフォームデータを取得
-			RecordWeightForm form = (RecordWeightForm) session.getAttribute("recordWeightForm");
+			RecordBodyWeightForm form = (RecordBodyWeightForm) session.getAttribute("recordBodyWeightForm");
 			
-			model.addAttribute("recordWeightForm", form);
+			model.addAttribute("recordBodyWeightForm", form);
 			
-			return "training/weight/checkWeightRecord";
+			return "training/weight/record/checkWeightRecord";
 		}
 		
 		@PostMapping("/weight/checkWeightRecord")
@@ -77,14 +75,14 @@ public class WeightRecordController {
 			setupModel(model,authentication);
 			
 			//セッションからフォームデータを取得
-			RecordWeightForm form = (RecordWeightForm) session.getAttribute("recordWeightForm");
+			RecordBodyWeightForm form = (RecordBodyWeightForm) session.getAttribute("recordBodyWeightForm");
 			
 			WeightRecord record = modelMapper.map(form,WeightRecord.class);
 			//体重を記録
 			weightService.recordWeight(record,authentication);
 			
 			//セッションのフォームデータを破棄
-			session.removeAttribute("recordWeightForm");
+			session.removeAttribute("recordBodyWeightForm");
 			
 			return "redirect:/training/dashboard";
 		}

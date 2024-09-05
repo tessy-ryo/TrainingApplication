@@ -5,18 +5,19 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" th:href="@{/css/record/record.css}">
-	<title>種目を追加する</title>
+	<title>種目を削除する</title>
+	<script th:src="@{/js/script.js}"></script>
 </head>
 
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/addExercise}" method="post" th:object="${form}">
+		<form th:action="@{/training/exercise/deleteExercise}" method="post" th:object="${deleteExerciseForm}">
 			<div class="border-bottom">
-				<h1 class="h2">種目を追加する</h1>
+				<h1 class="h2">種目を削除する</h1>
 			</div>	
 			<div class="text-center">
 				<div class="mt-3">
-					<div><u>新しい種目を追加してください</u></div>
+					<div><u>削除する種目を選択してください</u></div>
 				</div>
 			</div>
 			<div class="row justify-content-center mt-3">
@@ -25,7 +26,7 @@
 						<label for="bodyPartsSelect" class="form-label">部位</label>
 					</div>
 					<div>
-						<select id="bodyPartsSelect" th:field="*{bodyPartId}" class="form-select" th:errorclass="is-invalid">
+						<select id="bodyPartsSelect" th:field="*{bodyPartId}" class="form-select" th:errorclass="is-invalid" onchange="fetchExercises()">
 							<option value = "">選択してください</option>
 							<option th:each="item : ${bodyPartsList}" th:text="${item.name}" 
 								th:value="${item.id}"></option>
@@ -40,28 +41,19 @@
 						<label for="exerciseSelect" class="form-label">種目</label>
 					</div>
 					<div>
-						<input type="text" class="form-control" th:field="*{exerciseName}" placeholder="入力してください">
-					</div>
-				</div>
-			</div>
-			<div class ="row justify-content-center mt-3">
-				<div class="col-4">
-					<div>
-						<label for="weightBased" class="form-label">重量の有無</label>
-					</div>
-					<div>
-						<select th:field="*{weightBased}" class="form-select" th:errorclass="is-invalid">
+						<select id="exerciseSelect" th:field="*{exerciseId}" class="form-select" th:errorclass="is-invalid">
 							<option value="">選択してください</option>
-							<option value="1">あり</option>
-							<option value="0">なし</option>
+							<option th:each="item : ${exerciseList}" th:text="${item.name}"
+								th:value="${item.id}" th:selected="${item.id == deleteExerciseForm.exerciseId}"></option>
 						</select>
+						<div class="invalid-feedback" th:errors="*{exerciseId}"></div>
 					</div>
 				</div>
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-auto">
 					<a class="btn btn-secondary" th:href="@{/training/exercise/selectExercise}" role="button">種目選択に戻る</a>
-					<button type="submit" class="btn-record-red">種目を追加する</button>
+					<button type="submit" class="btn-record-red">種目を削除する</button>
 				</div>
 			</div>
 		</form>

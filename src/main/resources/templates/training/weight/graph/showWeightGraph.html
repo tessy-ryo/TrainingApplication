@@ -25,7 +25,7 @@
 		<div class="row justify-content-center mt-3">
 			<div class="col-4">
 				<div>
-					<label for="maxBodyWeight" class="form-label">今までの最高重量</label>
+					<label for="maxBodyWeight" class="form-label">今までの最大体重</label>
 					<input type="text" class="form-control" th:value="${maxBodyWeight}" readonly>
 				</div>
 			</div>
@@ -95,6 +95,11 @@
 		            </ul>
 		        </nav>
 		    </div>
+		</div>
+		<div class="row justify-content-center mt-3 mb-3">
+			<div class="col-auto">
+				<a class="btn btn-secondary" th:href="@{/training/selectGraph}" role="button">筋トレグラフへ戻る</a>
+			</div>
 		</div>
 	</div>
 

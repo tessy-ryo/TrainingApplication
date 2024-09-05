@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.domain.model.ExerciseRecord;
 import com.example.domain.service.CustomUserDetails;
 import com.example.domain.service.ExerciseService;
-import com.example.form.ExerciseDataForm;
+import com.example.form.DashBoardForm;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -33,7 +33,7 @@ public class DashBoardController {
 
 	/**ダッシュボード画面を表示*/
 	@GetMapping("/dashboard")
-	public String getTrainingDashBoard(@ModelAttribute ExerciseDataForm form,
+	public String getTrainingDashBoard(@ModelAttribute DashBoardForm form,
 			@RequestParam(value="page",defaultValue="1") int page,
 			@RequestParam(value="size",defaultValue="6") int size,
 			Model model,HttpSession session,Authentication authentication) {
@@ -65,7 +65,7 @@ public class DashBoardController {
 	}
 	
 	@PostMapping("/dashboard")
-	public String postTrainingDashBoard(@ModelAttribute ExerciseDataForm form,
+	public String postTrainingDashBoard(@ModelAttribute DashBoardForm form,
 			@RequestParam(value="page",defaultValue="1") int page,
 			@RequestParam(value="size",defaultValue="6") int size,
 			Model model,Authentication authentication) {

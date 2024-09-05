@@ -66,7 +66,7 @@ public interface ExerciseMapper {
 			@Param("searchName") String searchName);
 	
 	//特定の種目の、今までの最大重量を取得する
-	public int findMaxWeightByExerciseId(Integer exerciseId);
+	public Integer findMaxWeightByExerciseId(Integer exerciseId);
 	
 	//特定の種目の、直近7日間の最大重量を取得
 	public List<ExerciseRecord> findMaxWeightForLast7Days(Integer exerciseId, int size, int offset);

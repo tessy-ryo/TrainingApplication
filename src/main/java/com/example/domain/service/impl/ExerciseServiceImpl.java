@@ -112,7 +112,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 	}
 	
 	//特定の種目の、今までの最大重量を取得する
-	public int getMaxWeightByExerciseId(Integer exerciseId) {
+	public Integer getMaxWeightByExerciseId(Integer exerciseId) {
 		return mapper.findMaxWeightByExerciseId(exerciseId);
 	}
 	

@@ -7,16 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.model.BodyParts;
+import com.example.domain.model.Exercise;
 import com.example.domain.model.ExerciseRecord;
 import com.example.domain.service.CustomUserDetails;
 import com.example.domain.service.ExerciseService;
 import com.example.form.ExerciseDataForm;
+import com.example.form.NoWeightExerciseDataForm;
+import com.example.form.WeightExerciseDataForm;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -48,25 +53,31 @@ public class ExerciseRecordController {
 	public String getSelectExercise(@ModelAttribute ExerciseDataForm form,Model model,HttpSession session,Authentication authentication) {
 		setupModel(model,authentication);
 		
-		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
-		
-		if (sessionForm != null) {
-			form.setDate(sessionForm.getDate());
-		}
-		
-		session.removeAttribute("exerciseDataForm");
-		
 		//部位を取得
 		List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
 		model.addAttribute("bodyPartsList",bodyPartsList);
 		
 		//種目を選択する画面を表示
-		return "training/exercise/selectExercise";
+		return "training/exercise/record/selectExercise";
 	}
 	
 	@PostMapping("/exercise/selectExercise")
-	public String postSelectExercise(@ModelAttribute ExerciseDataForm form,Model model,HttpSession session,Authentication authentication) {
+	public String postSelectExercise(@ModelAttribute @Validated ExerciseDataForm form,BindingResult bindingResult,Model model,HttpSession session,Authentication authentication) {
 		setupModel(model, authentication);
+		
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("exerciseDataForm",form);
+			//部位を取得
+			List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
+			model.addAttribute("bodyPartsList",bodyPartsList);
+			//部位は選択されていた場合
+			if(form.getBodyPartId() != null) {
+				//種目を取得
+				List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId());
+				model.addAttribute("exerciseList",exerciseList);
+			}
+			return "training/exercise/record/selectExercise";
+		}
 		
 		//セッションにフォームデータを保存
 		session.setAttribute("exerciseDataForm",form);
@@ -88,14 +99,20 @@ public class ExerciseRecordController {
 		setupModel(model, authentication);
 		
 		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
-		model.addAttribute("exerciseDataForm",form);
+		model.addAttribute("noWeightExerciseDataForm",form);
 		
-		return "training/exercise/recordReps";
+		return "training/exercise/record/recordReps";
 	}
 	
 	@PostMapping("/exercise/recordReps")
-	public String postRecordReps(@ModelAttribute ExerciseDataForm form,Model model,HttpSession session,Authentication authentication) {
+	public String postRecordReps(@ModelAttribute @Validated NoWeightExerciseDataForm form,BindingResult bindingResult,Model model,HttpSession session,Authentication authentication) {
 		setupModel(model, authentication);
+		
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("noWeightExerciseDataForm",form);
+			
+			return "training/exercise/record/recordReps";
+		}
 		
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
 		
@@ -123,7 +140,7 @@ public class ExerciseRecordController {
 			
 			model.addAttribute("exerciseDataForm",sessionForm);
 			
-			return "training/exercise/confirmRecordReps";
+			return "training/exercise/record/confirmRecordReps";
 		}
 		
 		//重量と回数を記録する画面へ遷移
@@ -144,14 +161,20 @@ public class ExerciseRecordController {
 		setupModel(model, authentication);
 		
 		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
-		model.addAttribute("exerciseDataForm",form);
+		model.addAttribute("weightExerciseDataForm",form);
 		
-		return "training/exercise/recordWeightReps";
+		return "training/exercise/record/recordWeightReps";
 	}
 	
 	@PostMapping("/exercise/recordWeightReps")
-	public String postRecordWeightReps(@ModelAttribute ExerciseDataForm form, Model model,HttpSession session,Authentication authentication) {
+	public String postRecordWeightReps(@ModelAttribute @Validated WeightExerciseDataForm form, BindingResult bindingResult,Model model,HttpSession session,Authentication authentication) {
 		setupModel(model, authentication);
+		
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("weightExerciseDataForm",form);
+			
+			return "training/exercise/record/recordWeightReps";
+		}
 		
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 		
@@ -185,7 +208,7 @@ public class ExerciseRecordController {
 		
 		model.addAttribute("exerciseDataForm",sessionForm);
 		
-		return "training/exercise/confirmRecordWeightReps";
+		return "training/exercise/record/confirmRecordWeightReps";
 	}
 	
 	//重量と回数を記録する画面へ遷移
