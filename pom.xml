@@ -118,6 +118,16 @@
     		<groupId>org.thymeleaf.extras</groupId>
     		<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
+		<!--Spring AOP-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<!--AspectJ-->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
 	</dependencies>
 	
 
