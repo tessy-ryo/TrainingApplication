@@ -2,6 +2,7 @@ package com.example.aspect;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +18,18 @@ public class GlobalControllerAdvice {
 		model.addAttribute("message","内部エラーが発生しました");
 		
 		model.addAttribute("status",HttpStatus.INTERNAL_SERVER_ERROR);
+		
+		return "error";
+	}
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	public String accessDeniedExceptionHandler(AccessDeniedException e, Model model) {
+		
+		model.addAttribute("error","");
+		
+		model.addAttribute("message","アクセス権限がありません");
+		
+		model.addAttribute("status",HttpStatus.FORBIDDEN);
 		
 		return "error";
 	}

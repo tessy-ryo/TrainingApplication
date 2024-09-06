@@ -17,6 +17,7 @@ import com.example.domain.service.CustomUserDetails;
 import com.example.domain.service.ExerciseService;
 import com.example.form.DashBoardForm;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -26,9 +27,10 @@ public class DashBoardController {
 	private ExerciseService exerciseService;
 	
 	//**認証されたユーザーのアカウントネームを表示するメソッド*/
-	private void setupModel(Model model,Authentication authentication) {
+	private void setupModel(Model model,Authentication authentication,HttpServletRequest request) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		model.addAttribute("username",userDetails.getAccountName());
+		model.addAttribute("currentUri",request.getRequestURI());
 	}
 
 	/**ダッシュボード画面を表示*/
@@ -36,12 +38,9 @@ public class DashBoardController {
 	public String getTrainingDashBoard(@ModelAttribute DashBoardForm form,
 			@RequestParam(value="page",defaultValue="1") int page,
 			@RequestParam(value="size",defaultValue="6") int size,
-			Model model,HttpSession session,Authentication authentication) {
+			Model model,HttpSession session,Authentication authentication,HttpServletRequest request) {
 		//ダッシュボード画面を表示
-		setupModel(model,authentication);
-		
-		//トレーニングデータの追加、削除、編集されこの画面に遷移した際フォームデータを破棄
-		session.removeAttribute("exerciseDataForm");
+		setupModel(model,authentication,request);
 		
 		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
 		form.setUserId(userDetails.getId());
@@ -68,9 +67,9 @@ public class DashBoardController {
 	public String postTrainingDashBoard(@ModelAttribute DashBoardForm form,
 			@RequestParam(value="page",defaultValue="1") int page,
 			@RequestParam(value="size",defaultValue="6") int size,
-			Model model,Authentication authentication) {
+			Model model,Authentication authentication,HttpServletRequest request) {
 		//ダッシュボード画面を表示
-		setupModel(model,authentication);
+		setupModel(model,authentication, request);
 		
 		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
 		form.setUserId(userDetails.getId());

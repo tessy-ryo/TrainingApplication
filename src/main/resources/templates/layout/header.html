@@ -17,16 +17,20 @@ layout:decorate="~{layout/layout}">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/training/dashboard">ダッシュボード</a>
+         <a class="nav-link" th:classappend="${currentUri == '/training/dashboard'} ? ' active'"
+   			href="/training/dashboard">ダッシュボード</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/training/record">筋トレ記録</a>
+          <a class="nav-link" th:classappend="${currentUri == '/training/record'} ? ' active'"
+   			href="/training/record">筋トレ記録</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/training/exercise/calendar/showTrainingCalendar">筋トレカレンダー</a>
+          <a class="nav-link" th:classappend="${currentUri == '/training/exercise/calendar/showTrainingCalendar'} ? ' active'"
+   			href="/training/exercise/calendar/showTrainingCalendar">筋トレカレンダー</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/training/selectGraph">筋トレグラフ</a>
+          <a class="nav-link" th:classappend="${currentUri == '/training/selectGraph'} ? ' active'"
+   			href="/training/selectGraph">筋トレグラフ</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -23,6 +23,7 @@ import com.example.form.ExerciseDataForm;
 import com.example.form.NoWeightExerciseDataForm;
 import com.example.form.WeightExerciseDataForm;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -42,8 +43,10 @@ public class ExerciseRecordController {
 			
 	//**トレーニング記録画面を表示*/
 	@GetMapping("/record")
-	public String getTrainingRecord(Model model,Authentication authentication) {
+	public String getTrainingRecord(Model model,Authentication authentication,HttpServletRequest request) {
 		setupModel(model,authentication);
+		
+		model.addAttribute("currentUri",request.getRequestURI());
 		//トレーニング記録画面を表示
 		return "training/record";
 	}

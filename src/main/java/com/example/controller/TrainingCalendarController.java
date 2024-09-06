@@ -19,6 +19,8 @@ import com.example.domain.service.ExerciseService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/training")
 public class TrainingCalendarController {
@@ -26,14 +28,15 @@ public class TrainingCalendarController {
 	private ExerciseService exerciseService;
 	
 	//**認証されたユーザーのアカウントネームを表示するメソッド*/
-	private void setupModel(Model model,Authentication authentication) {
+	private void setupModel(Model model,Authentication authentication,HttpServletRequest request) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		model.addAttribute("username",userDetails.getAccountName());
+		model.addAttribute("currentUri",request.getRequestURI());
 	}
 	
 	@GetMapping("/exercise/calendar/showTrainingCalendar")
-	public String getTrainingCalendar(Model model, Authentication authentication) throws JsonProcessingException {
-		setupModel(model, authentication);
+	public String getTrainingCalendar(Model model, Authentication authentication,HttpServletRequest request) throws JsonProcessingException {
+		setupModel(model, authentication, request);
 		
 		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
 		

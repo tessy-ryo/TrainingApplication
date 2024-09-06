@@ -25,6 +25,7 @@ import com.example.domain.service.ExerciseService;
 import com.example.domain.service.WeightService;
 import com.example.form.TrainingGraphForm;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -43,8 +44,10 @@ public class TrainingGraphController {
 	}
 		
 	@GetMapping("/selectGraph")
-	public String getSelectGraph(Model model, Authentication authentication) {
+	public String getSelectGraph(Model model, Authentication authentication,HttpServletRequest request) {
 		setupModel(model,authentication);
+		
+		model.addAttribute("currentUri",request.getRequestURI());
 		//筋トレグラフ選択画面を表示
 		return "training/selectGraph";
 	}
