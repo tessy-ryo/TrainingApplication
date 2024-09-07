@@ -69,6 +69,9 @@ public class TrainingGraphController {
 	public String postSelectExerciseGraph(@ModelAttribute @Validated TrainingGraphForm form,BindingResult bindingResult, Model model, Authentication authentication,HttpSession session) {
 		setupModel(model,authentication);
 		
+		//セッションにフォームデータが保存されている場合、破棄する
+		session.removeAttribute("trainingGraphForm");
+		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("trainingGraphForm",form);
 			//部位を取得
@@ -129,8 +132,6 @@ public class TrainingGraphController {
 		model.addAttribute("currentPage", page);
 		
 		model.addAttribute("totalPages",totalPages);
-		
-		session.removeAttribute("trainingGraphForm");
 		
 		return "training/exercise/graph/showTrainingGraph";
 	}
