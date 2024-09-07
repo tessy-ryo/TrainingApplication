@@ -203,6 +203,8 @@ public class TrainingEditController {
 		sessionForm.setExerciseName(record.getExercise().getName());
 
 		model.addAttribute("form", sessionForm);
+		
+		session.removeAttribute("exerciseDataForm");
 
 		return "training/exercise/edit/editRepsSuccess";
 	}
@@ -225,6 +227,8 @@ public class TrainingEditController {
 
 		model.addAttribute("form", sessionForm);
 
+		session.removeAttribute("exerciseDataForm");
+		
 		return "training/exercise/edit/editWeightRepsSuccess";
 	}
 
@@ -296,6 +300,8 @@ public class TrainingEditController {
 
 		//筋トレデータ削除
 		exerciseService.deleteExerciseRecordOne(form.getId());
+		
+		session.removeAttribute("exerciseDataForm");
 
 		//ダッシュボード画面にリダイレクト
 		return "redirect:/training/dashboard";
@@ -310,6 +316,8 @@ public class TrainingEditController {
 
 		//筋トレデータ削除
 		exerciseService.deleteExerciseRecordOne(form.getId());
+		
+		session.removeAttribute("exerciseDataForm");
 
 		//ダッシュボード画面にリダイレクト
 		return "redirect:/training/dashboard";

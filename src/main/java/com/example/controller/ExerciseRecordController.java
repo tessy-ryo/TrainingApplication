@@ -56,6 +56,9 @@ public class ExerciseRecordController {
 	public String getSelectExercise(@ModelAttribute ExerciseDataForm form,Model model,HttpSession session,Authentication authentication) {
 		setupModel(model,authentication);
 		
+		//セッションにフォームデータがある場合、破棄する
+		session.removeAttribute("exerciseDataForm");
+		
 		//部位を取得
 		List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
 		model.addAttribute("bodyPartsList",bodyPartsList);

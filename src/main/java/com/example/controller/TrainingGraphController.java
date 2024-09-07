@@ -130,6 +130,8 @@ public class TrainingGraphController {
 		
 		model.addAttribute("totalPages",totalPages);
 		
+		session.removeAttribute("trainingGraphForm");
+		
 		return "training/exercise/graph/showTrainingGraph";
 	}
 	
