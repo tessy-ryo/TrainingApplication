@@ -32,7 +32,9 @@ layout:decorate="~{layout/layout}">
           <a class="nav-link" th:classappend="${currentUri == '/training/selectGraph'} ? ' active'"
    			href="/training/selectGraph">筋トレグラフ</a>
         </li>
-        <li class="nav-item dropdown">
+       </ul>
+       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+		   <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <span th:text="${username}"></span>
           </a>
@@ -42,7 +44,7 @@ layout:decorate="~{layout/layout}">
 			</ul>
 		  </form>
         </li>
-      </ul>
+	   </ul> 
     </div>
   </div>
 </nav>
