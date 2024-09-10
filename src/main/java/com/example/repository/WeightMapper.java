@@ -13,14 +13,14 @@ public interface WeightMapper {
 	public int insertWeightRecord(WeightRecord record);
 	
 	//今までの最大体重を取得
-	public int findMinBodyWeight();
+	public Integer findMinBodyWeight(int userId);
 	
 	//今までの最大体重を取得
-	public int findMaxBodyWeight();
+	public Integer findMaxBodyWeight(int userId);
 	
 	//直近7日間の体重を取得
-	public List<WeightRecord> findBodyWeightForLast7Days(int size, int offset);
+	public List<WeightRecord> findBodyWeightForLast7Days(int userId,int size, int offset);
 	
 	//体重が記録された日付の総数をカウントする
-	public int countBodyWeightRecords();
+	public int countBodyWeightRecords(int userId);
 }

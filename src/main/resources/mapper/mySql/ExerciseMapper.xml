@@ -252,6 +252,8 @@ FROM
 	training.exercise_records
 WHERE
 	exercise_id = #{exerciseId}
+AND
+	user_id = #{userId}
 </select>
 
 <!-- 特定の種目の、直近7日間の最大重量を取得 -->
@@ -263,6 +265,8 @@ FROM
 	training.exercise_records
 WHERE
 	exercise_id = #{exerciseId}
+AND
+	user_id = #{userId}
 GROUP BY
 	date
 ORDER BY
@@ -277,6 +281,8 @@ FROM
 	training.exercise_records
 WHERE
 	exercise_id = #{exerciseId}
+AND
+	user_id = #{userId}
 </select>
 
 <!-- ユーザーが筋トレした日付け（重複無し）をすべて取得する -->

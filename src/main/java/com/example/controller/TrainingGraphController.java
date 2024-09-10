@@ -54,8 +54,11 @@ public class TrainingGraphController {
 	
 	//種目グラフ選択画面を表示
 	@GetMapping("/exercise/graph/selectExerciseGraph")
-	public String getExerciseGraph(@ModelAttribute TrainingGraphForm form, Model model, Authentication authentication) {
+	public String getExerciseGraph(@ModelAttribute TrainingGraphForm form, Model model, Authentication authentication,HttpSession session) {
 		setupModel(model,authentication);
+		//セッションにフォームデータが保存されている場合、破棄する
+		session.removeAttribute("trainingGraphForm");
+		
 		//部位を取得
 		List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
 		model.addAttribute("bodyPartsList",bodyPartsList);
@@ -68,9 +71,6 @@ public class TrainingGraphController {
 	@PostMapping("/exercise/graph/selectExerciseGraph")
 	public String postSelectExerciseGraph(@ModelAttribute @Validated TrainingGraphForm form,BindingResult bindingResult, Model model, Authentication authentication,HttpSession session) {
 		setupModel(model,authentication);
-		
-		//セッションにフォームデータが保存されている場合、破棄する
-		session.removeAttribute("trainingGraphForm");
 		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("trainingGraphForm",form);
@@ -99,19 +99,29 @@ public class TrainingGraphController {
 				@RequestParam(value = "size", defaultValue = "7")int size) {
 		setupModel(model,authentication);
 		
+		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
+		
 		TrainingGraphForm sessionForm = (TrainingGraphForm) session.getAttribute("trainingGraphForm");
 		
 		//筋トレ種目と種目ID、筋トレ部位を一件取得
 		ExerciseRecord record = exerciseService.getOneExercise(sessionForm.getExerciseId());
 		
 		//特定の種目の、今までの最大重量を取得する
-		Integer maxWeight = exerciseService.getMaxWeightByExerciseId(sessionForm.getExerciseId());
+		Integer maxWeight = exerciseService.getMaxWeightByExerciseId(sessionForm.getExerciseId(),userDetails.getId());
 		
 		//7日分のデータを取得
 		int offset = (page - 1) * size;
-		List<ExerciseRecord> maxWeightRecords = exerciseService.getMaxWeightForLast7Days(sessionForm.getExerciseId(), size, offset);
-		int totalRecords = exerciseService.getMaxWeightRecords(sessionForm.getExerciseId());
-		int totalPages = (int) Math.ceil((double)totalRecords / size);
+		List<ExerciseRecord> maxWeightRecords = exerciseService.getMaxWeightForLast7Days(sessionForm.getExerciseId(),userDetails.getId(), size, offset);
+		int totalRecords = exerciseService.getMaxWeightRecords(sessionForm.getExerciseId(),userDetails.getId());
+		
+		int totalPages = 0;
+		
+		if (totalRecords == 0) {
+			totalPages = 1;
+		}else {
+			//レコード数をsizeで割って、合計ページを計算する
+			totalPages = (int)Math.ceil((double)totalRecords / size);
+		}
 		
 		 // 日付と最大重量のリストを作成
 	    List<String> dates = maxWeightRecords.stream()
@@ -143,17 +153,27 @@ public class TrainingGraphController {
 			@RequestParam(value = "size", defaultValue = "7") int size) {
 		setupModel(model,authentication);
 		
+		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
+		
 		//今までの最低体重を取得
-		int minBodyWeight = weightService.getMinBodyWeight();
+		Integer minBodyWeight = weightService.getMinBodyWeight(userDetails.getId());
 		
 		//今までの最大体重を取得
-		int maxBodyWeight = weightService.getMaxBodyWeight();
+		Integer maxBodyWeight = weightService.getMaxBodyWeight(userDetails.getId());
 		
 		//7日分のデータを取得
 		int offset = (page -1) * size;
-		List<WeightRecord> bodyWeightRecords = weightService.getBodyWeightForLast7Days(size, offset);
-		int totalRecords = weightService.getCountBodyWeightRecords();
-		int totalPages = (int) Math.ceil((double)totalRecords / size);
+		List<WeightRecord> bodyWeightRecords = weightService.getBodyWeightForLast7Days(userDetails.getId(),size, offset);
+		int totalRecords = weightService.getCountBodyWeightRecords(userDetails.getId());
+		
+		int totalPages = 0;
+		
+		if (totalRecords == 0) {
+			totalPages = 1;
+		}else {
+			//レコード数をsizeで割って、合計ページを計算する
+			totalPages = (int)Math.ceil((double)totalRecords / size);
+		}
 		
 		List<String> dates = bodyWeightRecords.stream()
 	            .map(r -> new SimpleDateFormat("yyyy/MM/dd").format(r.getDate()))

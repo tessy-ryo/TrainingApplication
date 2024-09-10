@@ -63,13 +63,13 @@ public interface ExerciseService {
 	public int getTotalRecords(Integer userId, String searchName);
 	
 	//特定の種目の、今までの最大重量を取得する
-	public Integer getMaxWeightByExerciseId(Integer exerciseId);
+	public Integer getMaxWeightByExerciseId(Integer exerciseId, Integer userId);
 	
 	//特定の種目の、直近7日間の最大重量を取得
-	public List<ExerciseRecord> getMaxWeightForLast7Days(Integer exerciseId, int size, int offset);
+	public List<ExerciseRecord> getMaxWeightForLast7Days(Integer exerciseId, Integer userId,int size, int offset);
 	
 	//特定の種目の、筋トレが記録された日付け（重複無し）の総数をカウントする
-	public int getMaxWeightRecords(Integer exerciseId);
+	public int getMaxWeightRecords(Integer exerciseId, Integer userId);
 	
 	//ユーザーが筋トレした日付け（重複無し）をすべて取得する
 	public List<ExerciseRecord> getAllTrainingDate(Integer userId);

@@ -51,9 +51,16 @@ public class DashBoardController {
 		
 		//ユーザーの筋トレデータレコード数をカウント
 		int totalRecords = exerciseService.getTotalRecords(form.getUserId(),form.getSearchName());
-		//レコード数をsizeで割って、合計ページを計算する
-		int totalPages = (int)Math.ceil((double)totalRecords / size);
-				
+		
+		int totalPages = 0;
+		
+		if (totalRecords == 0) {
+			totalPages = 1;
+		}else {
+			//レコード数をsizeで割って、合計ページを計算する
+			totalPages = (int)Math.ceil((double)totalRecords / size);
+		}
+			
 		model.addAttribute("trainingList",trainingList);
 		
 		model.addAttribute("currentPage",page);
@@ -79,9 +86,16 @@ public class DashBoardController {
 		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(form.getUserId(),form.getSearchName(),offset,size);
 		
 		//ユーザーの筋トレデータレコード数をカウント
-		int totalRecords = exerciseService.getTotalRecords(form.getUserId(),form.getSearchName());
-		//レコード数をsizeで割って、合計ページを計算する
-		int totalPages = (int)Math.ceil((double)totalRecords / size);
+		Integer totalRecords = exerciseService.getTotalRecords(form.getUserId(),form.getSearchName());
+
+		int totalPages = 0;
+		
+		if (totalRecords == null||totalRecords == 0) {
+			totalPages = 1;
+		}else {
+			//レコード数をsizeで割って、合計ページを計算する
+			totalPages = (int)Math.ceil((double)totalRecords / size);
+		}
 				
 		model.addAttribute("trainingList",trainingList);
 		

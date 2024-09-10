@@ -66,13 +66,13 @@ public interface ExerciseMapper {
 			@Param("searchName") String searchName);
 	
 	//特定の種目の、今までの最大重量を取得する
-	public Integer findMaxWeightByExerciseId(Integer exerciseId);
+	public Integer findMaxWeightByExerciseId(Integer exerciseId, Integer userId);
 	
 	//特定の種目の、直近7日間の最大重量を取得
-	public List<ExerciseRecord> findMaxWeightForLast7Days(Integer exerciseId, int size, int offset);
+	public List<ExerciseRecord> findMaxWeightForLast7Days(Integer exerciseId,Integer userId, int size, int offset);
 	
 	//特定の種目の、筋トレが記録された日付け（重複無し）の総数をカウントする
-	public int countMaxWeightRecords(Integer exerciseId);
+	public int countMaxWeightRecords(Integer exerciseId, Integer userId);
 	
 	//ユーザーが筋トレした日付け（重複無し）をすべて取得する
 	public List<ExerciseRecord> findAllTrainingDate(Integer userId);

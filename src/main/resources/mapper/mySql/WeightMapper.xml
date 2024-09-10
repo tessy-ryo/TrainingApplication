@@ -20,19 +20,23 @@
 </insert>
 
 <!-- 今までの最低体重を取得 -->
-<select id="findMinBodyWeight" resultType="int">
+<select id="findMinBodyWeight" resultType="Integer">
 SELECT
 	MIN(weight) as weight
 FROM
 	training.weight_records
+WHERE
+	user_id = #{userId}
 </select>
 
 <!-- 今までの最大体重を取得 -->
-<select id="findMaxBodyWeight" resultType="int">
+<select id="findMaxBodyWeight" resultType="Integer">
 SELECT
 	MAX(weight) as weight
 FROM
 	training.weight_records
+WHERE
+	user_id = #{userId}
 </select>
 
 <!-- 直近7日間の体重を取得 -->
@@ -42,6 +46,8 @@ SELECT
 	weight
 FROM
 	training.weight_records
+WHERE
+	user_id = #{userId}
 ORDER BY
 	date DESC
 LIMIT #{size} OFFSET #{offset}
@@ -52,5 +58,7 @@ LIMIT #{size} OFFSET #{offset}
 SELECT COUNT(date)
 FROM
 	training.weight_records
+WHERE 
+	user_id = #{userId}
 </select>
 </mapper>

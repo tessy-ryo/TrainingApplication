@@ -25,23 +25,23 @@ public class WeightServiceImpl implements WeightService{
 	}
 	
 	//今までの最低体重を取得
-	public int getMinBodyWeight() {
-		return mapper.findMinBodyWeight();
+	public Integer getMinBodyWeight(int userId) {
+		return mapper.findMinBodyWeight(userId);
 	}
 	
 	//今までの最大重量を取得
-	public int getMaxBodyWeight() {
-		return mapper.findMaxBodyWeight();
+	public Integer getMaxBodyWeight(int userId) {
+		return mapper.findMaxBodyWeight(userId);
 	}
 	
 	//直近7日間の体重を取得
-	public List<WeightRecord> getBodyWeightForLast7Days(int size, int offset) {
-		return mapper.findBodyWeightForLast7Days(size, offset);
+	public List<WeightRecord> getBodyWeightForLast7Days(int userId,int size, int offset) {
+		return mapper.findBodyWeightForLast7Days(userId,size, offset);
 	}
 	
 	//体重が記録された日付の総数をカウントする
-		public int getCountBodyWeightRecords() {
-			return mapper.countBodyWeightRecords();
+		public int getCountBodyWeightRecords(int userId) {
+			return mapper.countBodyWeightRecords(userId);
 		}
 
 }

@@ -12,14 +12,14 @@ public interface WeightService {
 	public void recordWeight(WeightRecord record, Authentication authentication);
 	
 	//今までの最低体重を取得
-	public int getMinBodyWeight();
+	public Integer getMinBodyWeight(int userId);
 	
 	//今までの最大体重を取得
-	public int getMaxBodyWeight();
+	public Integer getMaxBodyWeight(int userId);
 	
 	//直近7日間の体重を取得
-	public List<WeightRecord> getBodyWeightForLast7Days(int size, int offset);
+	public List<WeightRecord> getBodyWeightForLast7Days(int userId, int size, int offset);
 	
 	//体重が記録された日付の総数をカウントする
-	public int getCountBodyWeightRecords();
+	public int getCountBodyWeightRecords(int userId);
 }
