@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" th:href="@{/css/record/record.css}">
+	<link rel="stylesheet" th:href="@{/css/btn/btn.css}">
 	<title>種目グラフ選択</title>
 	<script th:src="@{/js/weightBased.js}"></script>
 </head>
@@ -50,10 +50,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="row justify-content-center mt-3">
-				<div class="col-auto">
+			<div class="mt-3">
+				<div class="d-flex justify-content-center">
 					<a class="btn btn-secondary" th:href="@{/training/selectGraph}" role="button">筋トレグラフへ戻る</a>
-					<button type="submit" class="btn-record-red">グラフで確認</button>
+					<button type="submit" class="btn-record-red ms-2">グラフで確認</button>
 				</div>
 			</div>
 		</form>

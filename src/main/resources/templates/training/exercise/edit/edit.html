@@ -3,8 +3,7 @@
 	layout:decorate="~{layout/layout}">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" th:href="@{/css/record/record.css}">
-<link rel="stylesheet" th:href="@{/css/select/select.css}">
+<link rel="stylesheet" th:href="@{/css/btn/btn.css}">
 <title>トレーニング種目の編集</title>
 <script th:src="@{/js/script.js}"></script>
 </head>
@@ -53,10 +52,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="row justify-content-center mt-3">
-				<div class="col-auto">
+			<div class="mt-3">
+				<div class="d-flex justify-content-center">
 					<a class="btn btn-secondary" href="/training/dashboard" role="button">キャンセル</a>
-					<button type="submit" class="btn-record-red">重量や回数を編集する</button>
+					<button type="submit" class="btn-record-red ms-2">重量や回数を編集する</button>
 				</div>
 			</div>
 		</form>
