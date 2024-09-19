@@ -1,53 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
 <head>
-<meta charset="UTF-8">
-<title>ヘッダー</title>
+	<meta charset="UTF-8">
+	<title>ヘッダー</title>
 </head>
+
 <body>
-	<nav layout:fragment="header"
-	 class="navbar navbar-expand-lg bg-danger navbar-dark" data-bs-theme="dark">
-  <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">筋トレ管理</span>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-         <a class="nav-link" th:classappend="${currentUri == '/training/dashboard'} ? ' active'"
-   			href="/training/dashboard">ダッシュボード</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:classappend="${currentUri == '/training/record'} ? ' active'"
-   			href="/training/record">筋トレ記録</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:classappend="${currentUri == '/training/exercise/calendar/showTrainingCalendar'} ? ' active'"
-   			href="/training/exercise/calendar/showTrainingCalendar">筋トレカレンダー</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:classappend="${currentUri == '/training/selectGraph'} ? ' active'"
-   			href="/training/selectGraph">筋トレグラフ</a>
-        </li>
-       </ul>
-       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-		   <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <span th:text="${username}"></span>
-          </a>
-          <form method="post" th:action="@{/logout}">
-			  <ul class="dropdown-menu">
-				  <li><button type="submit" class="dropdown-item">ログアウト</button></li>
-			</ul>
-		  </form>
-        </li>
-	   </ul> 
-    </div>
-  </div>
-</nav>
+	<nav layout:fragment="header" class="navbar navbar-expand-lg bg-danger navbar-dark" data-bs-theme="dark">
+		<div class="container-fluid">
+			<span class="navbar-brand mb-0 h1">筋トレ管理</span>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" th:classappend="${currentUri == '/training/dashboard'} ? ' active'"
+							href="/training/dashboard">ダッシュボード</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:classappend="${currentUri == '/training/record'} ? ' active'"
+							href="/training/record">筋トレ記録</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link"
+							th:classappend="${currentUri == '/training/exercise/calendar/showTrainingCalendar'} ? ' active'"
+							href="/training/exercise/calendar/showTrainingCalendar">筋トレカレンダー</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:classappend="${currentUri == '/training/selectGraph'} ? ' active'"
+							href="/training/selectGraph">筋トレグラフ</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav ms-lg-4 mb-2 mb-lg-0">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							<span th:text="${username}"></span>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li>
+								<form method="post" th:action="@{/logout}">
+									<button type="submit" class="dropdown-item">ログアウト</button>
+								</form>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
 </body>
+
 </html>

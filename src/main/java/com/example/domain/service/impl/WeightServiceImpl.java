@@ -25,12 +25,12 @@ public class WeightServiceImpl implements WeightService{
 	}
 	
 	//今までの最低体重を取得
-	public Integer getMinBodyWeight(int userId) {
+	public Double getMinBodyWeight(int userId) {
 		return mapper.findMinBodyWeight(userId);
 	}
 	
 	//今までの最大重量を取得
-	public Integer getMaxBodyWeight(int userId) {
+	public Double getMaxBodyWeight(int userId) {
 		return mapper.findMaxBodyWeight(userId);
 	}
 	

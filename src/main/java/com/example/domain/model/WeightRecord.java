@@ -10,5 +10,5 @@ public class WeightRecord {
 	
 	private Date date;
 
-	private Integer weight;
+	private Double weight;
 }

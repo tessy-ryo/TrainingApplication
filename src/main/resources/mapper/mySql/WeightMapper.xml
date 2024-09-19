@@ -20,7 +20,7 @@
 </insert>
 
 <!-- 今までの最低体重を取得 -->
-<select id="findMinBodyWeight" resultType="Integer">
+<select id="findMinBodyWeight" resultType="Double">
 SELECT
 	MIN(weight) as weight
 FROM
@@ -30,7 +30,7 @@ WHERE
 </select>
 
 <!-- 今までの最大体重を取得 -->
-<select id="findMaxBodyWeight" resultType="Integer">
+<select id="findMaxBodyWeight" resultType="Double">
 SELECT
 	MAX(weight) as weight
 FROM

@@ -156,10 +156,10 @@ public class TrainingGraphController {
 		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
 		
 		//今までの最低体重を取得
-		Integer minBodyWeight = weightService.getMinBodyWeight(userDetails.getId());
+		Double minBodyWeight = weightService.getMinBodyWeight(userDetails.getId());
 		
 		//今までの最大体重を取得
-		Integer maxBodyWeight = weightService.getMaxBodyWeight(userDetails.getId());
+		Double maxBodyWeight = weightService.getMaxBodyWeight(userDetails.getId());
 		
 		//7日分のデータを取得
 		int offset = (page -1) * size;
@@ -178,7 +178,7 @@ public class TrainingGraphController {
 		List<String> dates = bodyWeightRecords.stream()
 	            .map(r -> new SimpleDateFormat("yyyy/MM/dd").format(r.getDate()))
 	            .collect(Collectors.toList());
-	    List<Integer> weights = bodyWeightRecords.stream()
+	    List<Double> weights = bodyWeightRecords.stream()
 	            .map(WeightRecord::getWeight)
 	            .collect(Collectors.toList());
 		
