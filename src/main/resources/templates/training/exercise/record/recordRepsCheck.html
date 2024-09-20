@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
-
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" th:href="@{/css/btn/btn.css}">
-	<title>種目を削除する（確認）</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/btn/btn.css}">
+<title>トレーニングデータ記録確認（重量なし）</title>
 </head>
-
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/deleteExerciseCheck}" method="post" th:object="${deleteExerciseForm}">
+		<form th:action="@{/training/exercise/recordRepsCheck}" th:object="${exerciseDataForm}" method="post">
 			<div class="border-bottom">
-				<h1 class="h2">種目を削除する（確認）</h1>
+				<h1 class="h2">トレーニングデータ記録確認（重量無し）</h1>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<label for="date" class="form-label">日付</label>
+					<input type="date" class="form-control" th:field="*{date}" readonly>
+				</div>
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
@@ -28,17 +32,23 @@
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
-					<p>上記の種目を削除します。よろしいですか？</p>
+					<label for="reps" class="form-label">回数</label>
+					<input type="text" class="form-control" th:field="*{reps}" readonly>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<p>上記のトレーニングデータを記録します。よろしいですか？</p>
 				</div>
 			</div>
 			<div class="mt-3">
 				<div class="d-flex justify-content-center">
-					<a class="btn btn-secondary" th:href="@{/training/exercise/deleteExercise}" role="button">いいえ</a>
+					<a class="btn btn-secondary" th:href="@{/training/exercise/recordReps}" role="button">いいえ</a>
 					<button type="submit" class="btn-record-red ms-2">はい</button>
 				</div>
 			</div>
 		</form>
 	</div>
-
+			
 </body>
 </html>

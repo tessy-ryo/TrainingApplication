@@ -1,6 +1,8 @@
+.btn-secondary,
+.btn-select-orange, 
 .btn-record-red,
-.form-control {
-	display: inline-block;
+.form-control{
+	display: block;
 	padding: 0;
 	border: 0;
 	border-radius: 0;
@@ -9,6 +11,7 @@
 	padding: 0.5em var(--padding-x);
 	border-width: 0.5px;
 	border-style: solid;
+	border-color: black;
 }
 
 /* button */
@@ -16,7 +19,6 @@
 	justify-content: center;
 	align-items: center;
 	--padding-x: 1.2em;
-	border-color: black;
 	background-color: red;
 	color: white;
 	text-align: center;
@@ -30,21 +32,6 @@
 .form-control {
 	--padding-x: 0.5em;
 }
-
-.btn-secondary,
-.btn-select-orange {
-	display: inline-block;
-	padding: 0;
-	border: 0;
-	border-radius: 0;
-	font-size: 1em;
-	line-height: 1.2;
-	padding: 0.5em var(--padding-x);
-	border-width: 0.5px;
-	border-style: solid;
-	border-color: black;
-}
-
 
 .btn-select-orange{
 	justify-content: center;

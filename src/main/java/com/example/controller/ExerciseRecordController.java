@@ -124,27 +124,49 @@ public class ExerciseRecordController {
 		
 		sessionForm.setReps(form.getReps());
 		
+		//もう一度セッションにフォームデータを保存
+		session.setAttribute("exerciseDataForm", sessionForm);
+		
+		return "redirect:/training/exercise/recordRepsCheck";
+	}
+	
+	@GetMapping("/exercise/recordRepsCheck")
+	public String getRecordRepsCheck(Authentication authentication,Model model,HttpSession session) {
+		setupModel(model, authentication);
+		
+		//保存されたフォームの取り出し
+		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+		//筋トレ種目と種目ID、筋トレ部位を一件取得
+		ExerciseRecord record = exerciseService.getOneExercise(sessionForm.getExerciseId());
+		//筋トレ部位を設定
+		sessionForm.setBodyPartName(record.getBodyParts().getName());
+		//筋トレ種目を設定
+		sessionForm.setExerciseName(record.getExercise().getName());
+		
+		model.addAttribute("exerciseDataForm",sessionForm);
+		
+		return "training/exercise/record/recordRepsCheck";
+	}
+	
+	@PostMapping("/exercise/recordRepsCheck")
+	public String postRecordRepsCheck(Authentication authentication,Model model, HttpSession session) {
+		setupModel(model, authentication);
+		
+		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+		
 		ExerciseRecord record = modelMapper.map(sessionForm, ExerciseRecord.class);
 		
+		//筋トレを記録
 		exerciseService.recordExercise(record,authentication);
 		
 		return "redirect:/training/exercise/confirmRecordReps";
 	}
 	
+	
 	//トレーニングデータ記録完了のお知らせ（重量なし）へ遷移
 		@GetMapping("/exercise/confirmRecordReps")
 		public String getConfirmRecordReps(Model model, HttpSession session,Authentication authentication) {
 			setupModel(model,authentication);
-			
-			ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
-			
-			ExerciseRecord record = exerciseService.getOneExercise(sessionForm.getExerciseId());
-			//筋トレ部位を設定
-			sessionForm.setBodyPartName(record.getBodyParts().getName());
-			//筋トレ種目を設定
-			sessionForm.setExerciseName(record.getExercise().getName());
-			
-			model.addAttribute("exerciseDataForm",sessionForm);
 			
 			return "training/exercise/record/confirmRecordReps";
 		}
@@ -191,6 +213,32 @@ public class ExerciseRecordController {
 		//日付け、部位のid、種目id、重量、回数すべてをセッションに保存
 		session.setAttribute("exerciseDataForm", sessionForm);
 		
+		return "redirect:/training/exercise/recordWeightRepsCheck";
+	}
+	
+	@GetMapping("/exercise/recordWeightRepsCheck")
+	public String getRecordWeightRepsCheck(Authentication authentication,Model model,HttpSession session) {
+		setupModel(model,authentication);
+		
+		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+		//筋トレ種目と種目ID、筋トレ部位を一件取得
+		ExerciseRecord record = exerciseService.getOneExercise(sessionForm.getExerciseId());
+		//筋トレ部位を設定
+		sessionForm.setBodyPartName(record.getBodyParts().getName());
+		//筋トレ種目を設定
+		sessionForm.setExerciseName(record.getExercise().getName());
+		
+		model.addAttribute("exerciseDataForm",sessionForm);
+		
+		return "training/exercise/record/recordWeightRepsCheck";
+	}
+	
+	@PostMapping("/exercise/recordWeightRepsCheck")
+	public String postRecordWeightRepsCheck(Authentication authentication,Model model, HttpSession session) {
+		setupModel(model, authentication);
+		
+		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+		
 		ExerciseRecord record = modelMapper.map(sessionForm, ExerciseRecord.class);
 		
 		//筋トレを記録
@@ -203,16 +251,6 @@ public class ExerciseRecordController {
 	@GetMapping("/exercise/confirmRecordWeightReps")
 	public String getConfirmRecordWeightReps(Model model, HttpSession session,Authentication authentication) {
 		setupModel(model,authentication);
-		
-		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
-		
-		ExerciseRecord record = exerciseService.getOneExercise(sessionForm.getExerciseId());
-		//筋トレ部位を設定
-		sessionForm.setBodyPartName(record.getBodyParts().getName());
-		//筋トレ種目を設定
-		sessionForm.setExerciseName(record.getExercise().getName());
-		
-		model.addAttribute("exerciseDataForm",sessionForm);
 		
 		return "training/exercise/record/confirmRecordWeightReps";
 	}
