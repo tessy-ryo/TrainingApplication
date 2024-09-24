@@ -19,12 +19,12 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link" th:classappend="${currentUri == '/training/dashboard'} ? ' active'"
-							href="/training/dashboard">ダッシュボード</a>
+						<a class="nav-link" th:classappend="${currentUri == '/training/exercise/record/trainingHistory'} ? ' active'"
+							href="/training/exercise/record/trainingHistory">筋トレ記録</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" th:classappend="${currentUri == '/training/record'} ? ' active'"
-							href="/training/record">筋トレ記録</a>
+						<a class="nav-link" th:classappend="${currentUri == '/training/weight/record/weightHistory'} ? ' active'"
+							href="/training/weight/record/weightHistory">体重記録</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link"

@@ -7,7 +7,12 @@ import org.springframework.security.core.Authentication;
 import com.example.domain.model.WeightRecord;
 
 public interface WeightService {
-
+	//日付と体重を取得
+	public List<WeightRecord> getBodyWeight(int userId, String searchName, int size, int offset);
+	
+	//ユーザーの体重データのレコード数を検索を含めてカウントする
+	public int getCountBodyWeightData(int userId, String searchName);
+	
 	/**体重を記録*/
 	public void recordWeight(WeightRecord record, Authentication authentication);
 	

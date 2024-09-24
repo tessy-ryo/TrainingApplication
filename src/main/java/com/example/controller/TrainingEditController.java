@@ -184,7 +184,7 @@ public class TrainingEditController {
 		
 		session.removeAttribute("exerciseDataForm");
 		
-		return "redirect:/training/dashboard";
+		return "redirect:/training/exercise/record/trainingHistory";
 	}
 
 	//重量と回数を編集する画面を表示
@@ -253,7 +253,7 @@ public class TrainingEditController {
 		
 		session.removeAttribute("exerciseDataForm");
 		
-		return "redirect:/training/dashboard";
+		return "redirect:/training/exercise/record/trainingHistory";
 	}
 
 	//トレーニングデータを削除する画面へ遷移
@@ -328,7 +328,7 @@ public class TrainingEditController {
 		session.removeAttribute("exerciseDataForm");
 
 		//ダッシュボード画面にリダイレクト
-		return "redirect:/training/dashboard";
+		return "redirect:/training/exercise/record/trainingHistory";
 	}
 
 	//重量なし筋トレデータ（１件）削除
@@ -344,7 +344,7 @@ public class TrainingEditController {
 		session.removeAttribute("exerciseDataForm");
 
 		//ダッシュボード画面にリダイレクト
-		return "redirect:/training/dashboard";
+		return "redirect:/training/exercise/record/trainingHistory";
 	}
 
 	//種目を削除する画面を表示
@@ -427,7 +427,7 @@ public class TrainingEditController {
 		//セッションフォームのデータを破棄
 		session.removeAttribute("deleteExerciseForm");
 
-		return "redirect:/training/dashboard";
+		return "redirect:/training/exercise/record/trainingHistory";
 	}
 
 	//種目を追加する画面を表示

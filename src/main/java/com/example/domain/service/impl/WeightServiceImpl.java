@@ -16,6 +16,12 @@ public class WeightServiceImpl implements WeightService{
 	@Autowired
 	private WeightMapper mapper;
 	
+	//日付と体重を取得
+	@Override
+	public List<WeightRecord> getBodyWeight(int userId, String searchName, int size, int offset) {
+		return mapper.findBodyWeight(userId, searchName, size, offset);
+	}
+	
 	/**体重を記録*/
 	@Override
 	public void recordWeight(WeightRecord record, Authentication authentication) {
@@ -24,22 +30,32 @@ public class WeightServiceImpl implements WeightService{
 		mapper.insertWeightRecord(record);
 	}
 	
+	//ユーザーの体重データのレコード数を検索を含めてカウントする
+	@Override
+	public int getCountBodyWeightData(int userId, String searchName) {
+		return mapper.countBodyWeightData(userId, searchName);
+	}
+	
 	//今までの最低体重を取得
+	@Override
 	public Double getMinBodyWeight(int userId) {
 		return mapper.findMinBodyWeight(userId);
 	}
 	
 	//今までの最大重量を取得
+	@Override
 	public Double getMaxBodyWeight(int userId) {
 		return mapper.findMaxBodyWeight(userId);
 	}
 	
 	//直近7日間の体重を取得
+	@Override
 	public List<WeightRecord> getBodyWeightForLast7Days(int userId,int size, int offset) {
 		return mapper.findBodyWeightForLast7Days(userId,size, offset);
 	}
 	
 	//体重が記録された日付の総数をカウントする
+	@Override
 		public int getCountBodyWeightRecords(int userId) {
 			return mapper.countBodyWeightRecords(userId);
 		}

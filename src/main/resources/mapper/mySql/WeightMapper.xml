@@ -5,6 +5,40 @@
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="com.example.repository.WeightMapper">
 
+<!-- 日付と体重を取得 -->
+<select id="findBodyWeight" resultType="WeightRecord">
+SELECT
+	id,
+	date,
+	weight
+FROM
+	training.weight_records
+<where>
+	user_id=#{userId}
+<if test="searchName!=null and searchName != ''">
+		AND (DATE_FORMAT(weight_records.date, '%Y/%m/%d') LIKE CONCAT('%', #{searchName}, '%') OR 
+		weight_records.weight LIKE CONCAT('%', #{searchName}, '%') )
+</if>
+</where>
+ORDER BY
+	date DESC
+LIMIT #{size} OFFSET #{offset}
+</select>
+
+<!-- ユーザーの体重データのレコード数を検索を含めてカウントする -->
+<select id="countBodyWeightData" resultType="int">
+SELECT COUNT(*)
+FROM
+	training.weight_records
+WHERE
+	weight_records.user_id = #{userId}
+<if test="searchName!=null and searchName != ''">
+		AND (DATE_FORMAT(weight_records.date, '%Y/%m/%d') LIKE CONCAT('%', #{searchName}, '%') OR 
+		weight_records.weight LIKE CONCAT('%', #{searchName}, '%') )
+</if>
+</select>
+
+
 <!-- 体重を記録 -->
 <insert id="insertWeightRecord">
 	insert into training.weight_records(

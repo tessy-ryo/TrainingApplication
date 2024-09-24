@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .failureUrl("/login?error")
                 .usernameParameter("accountName")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/training/dashboard", true)
+                .defaultSuccessUrl("/training/exercise/record/trainingHistory", true)
                 .permitAll()
         ).logout(logout -> logout
         		.logoutUrl("/logout")

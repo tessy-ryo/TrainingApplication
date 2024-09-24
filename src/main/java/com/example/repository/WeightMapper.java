@@ -8,6 +8,11 @@ import com.example.domain.model.WeightRecord;
 
 @Mapper
 public interface WeightMapper {
+	//日付と体重を取得
+	public List<WeightRecord> findBodyWeight(int userId, String searchName, int size, int offset);
+	
+	//ユーザーの体重データのレコード数を検索を含めてカウントする
+	public int countBodyWeightData(int userId, String searchName);
 	
 	/**体重記録*/
 	public int insertWeightRecord(WeightRecord record);

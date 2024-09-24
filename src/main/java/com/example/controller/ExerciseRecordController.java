@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.domain.model.BodyParts;
 import com.example.domain.model.Exercise;
@@ -20,6 +21,7 @@ import com.example.domain.model.ExerciseRecord;
 import com.example.domain.service.CustomUserDetails;
 import com.example.domain.service.ExerciseService;
 import com.example.form.ExerciseDataForm;
+import com.example.form.HistoryForm;
 import com.example.form.NoWeightExerciseDataForm;
 import com.example.form.WeightExerciseDataForm;
 
@@ -41,14 +43,81 @@ public class ExerciseRecordController {
 		model.addAttribute("username",userDetails.getAccountName());
 	}
 			
-	//**トレーニング記録画面を表示*/
-	@GetMapping("/record")
-	public String getTrainingRecord(Model model,Authentication authentication,HttpServletRequest request) {
+	/**筋トレ記録画面を表示*/
+	@GetMapping("/exercise/record/trainingHistory")
+	public String getTrainingDashBoard(@ModelAttribute HistoryForm form,
+			@RequestParam(value="page",defaultValue="1") int page,
+			@RequestParam(value="size",defaultValue="6") int size,
+			Model model,HttpSession session,Authentication authentication,HttpServletRequest request) {
+		//ダッシュボード画面を表示
 		setupModel(model,authentication);
 		
 		model.addAttribute("currentUri",request.getRequestURI());
-		//トレーニング記録画面を表示
-		return "training/record";
+		
+		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
+		form.setUserId(userDetails.getId());
+		
+		int offset = (page - 1) * size;
+		
+		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(form.getUserId(),form.getSearchName(),offset,size);
+		
+		//ユーザーの筋トレデータレコード数をカウント
+		int totalRecords = exerciseService.getTotalRecords(form.getUserId(),form.getSearchName());
+		
+		int totalPages = 0;
+		
+		if (totalRecords == 0) {
+			totalPages = 1;
+		}else {
+			//レコード数をsizeで割って、合計ページを計算する
+			totalPages = (int)Math.ceil((double)totalRecords / size);
+		}
+			
+		model.addAttribute("trainingList",trainingList);
+		
+		model.addAttribute("currentPage",page);
+		
+		model.addAttribute("totalPages", totalPages);
+		
+		return "training/exercise/record/trainingHistory";
+	}
+	
+	@PostMapping("/exercise/record/trainingHistory")
+	public String postTrainingDashBoard(@ModelAttribute HistoryForm form,
+			@RequestParam(value="page",defaultValue="1") int page,
+			@RequestParam(value="size",defaultValue="6") int size,
+			Model model,Authentication authentication,HttpServletRequest request) {
+		//ダッシュボード画面を表示
+		setupModel(model,authentication);
+		
+		model.addAttribute("currentUri",request.getRequestURI());
+		
+		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
+		form.setUserId(userDetails.getId());
+		
+		int offset = (page - 1) * size;
+		
+		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(form.getUserId(),form.getSearchName(),offset,size);
+		
+		//ユーザーの筋トレデータレコード数をカウント
+		Integer totalRecords = exerciseService.getTotalRecords(form.getUserId(),form.getSearchName());
+
+		int totalPages = 0;
+		
+		if (totalRecords == null||totalRecords == 0) {
+			totalPages = 1;
+		}else {
+			//レコード数をsizeで割って、合計ページを計算する
+			totalPages = (int)Math.ceil((double)totalRecords / size);
+		}
+				
+		model.addAttribute("trainingList",trainingList);
+		
+		model.addAttribute("currentPage",page);
+		
+		model.addAttribute("totalPages", totalPages);
+		
+		return "training/exercise/record/trainingHistory";
 	}
 	
 	//**種目を選択する画面を表示*/

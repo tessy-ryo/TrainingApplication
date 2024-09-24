@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -10,12 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.domain.model.WeightRecord;
 import com.example.domain.service.CustomUserDetails;
 import com.example.domain.service.WeightService;
+import com.example.form.HistoryForm;
 import com.example.form.RecordBodyWeightForm;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -32,6 +37,82 @@ public class WeightRecordController {
 		private void setupModel(Model model,Authentication authentication) {
 			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 			model.addAttribute("username",userDetails.getAccountName());
+		}
+		
+		@GetMapping("/weight/record/weightHistory")
+		public String getWeightHistory(@ModelAttribute HistoryForm form,
+				@RequestParam(value="page",defaultValue="1") int page,
+				@RequestParam(value="size",defaultValue="6") int size,
+				Model model,HttpSession session,Authentication authentication,HttpServletRequest request) {
+			//ダッシュボード画面を表示
+			setupModel(model,authentication);
+			
+			model.addAttribute("currentUri",request.getRequestURI());
+			
+			CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
+			form.setUserId(userDetails.getId());
+			
+			int offset = (page - 1) * size;
+			
+			List<WeightRecord> weightList = weightService.getBodyWeight(form.getUserId(),form.getSearchName(),offset,size);
+			
+			//ユーザーの体重データのレコード数を検索を含めてカウントする
+			int totalRecords = weightService.getCountBodyWeightData(form.getUserId(),form.getSearchName());
+			
+			int totalPages = 0;
+			
+			if (totalRecords == 0) {
+				totalPages = 1;
+			}else {
+				//レコード数をsizeで割って、合計ページを計算する
+				totalPages = (int)Math.ceil((double)totalRecords / size);
+			}
+				
+			model.addAttribute("weightList",weightList);
+			
+			model.addAttribute("currentPage",page);
+			
+			model.addAttribute("totalPages", totalPages);
+			
+			return "training/weight/record/weightHistory";
+		}
+		
+		@PostMapping("/weight/record/weightHistory")
+		public String postTrainingDashBoard(@ModelAttribute HistoryForm form,
+				@RequestParam(value="page",defaultValue="1") int page,
+				@RequestParam(value="size",defaultValue="6") int size,
+				Model model,Authentication authentication,HttpServletRequest request) {
+			//ダッシュボード画面を表示
+			setupModel(model,authentication);
+			
+			model.addAttribute("currentUri",request.getRequestURI());
+			
+			CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
+			form.setUserId(userDetails.getId());
+			
+			int offset = (page - 1) * size;
+			
+			List<WeightRecord> weightList = weightService.getBodyWeight(form.getUserId(),form.getSearchName(),offset,size);
+			
+			//ユーザーの体重データのレコード数を検索を含めてカウントする
+			Integer totalRecords = weightService.getCountBodyWeightData(form.getUserId(),form.getSearchName());
+			
+			int totalPages = 0;
+			
+			if (totalRecords == null||totalRecords == 0) {
+				totalPages = 1;
+			}else {
+				//レコード数をsizeで割って、合計ページを計算する
+				totalPages = (int)Math.ceil((double)totalRecords / size);
+			}
+					
+			model.addAttribute("weightList",weightList);
+			
+			model.addAttribute("currentPage",page);
+			
+			model.addAttribute("totalPages", totalPages);
+			
+			return "training/weight/record/weightHistory";
 		}
 		
 		//**体重を記録する画面を表示*/
@@ -84,7 +165,7 @@ public class WeightRecordController {
 			//セッションのフォームデータを破棄
 			session.removeAttribute("recordBodyWeightForm");
 			
-			return "redirect:/training/dashboard";
+			return "redirect:/training/weight/record/weightHistory";
 		}
 			
 		

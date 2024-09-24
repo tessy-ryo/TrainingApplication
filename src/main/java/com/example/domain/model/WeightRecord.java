@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class WeightRecord {
+	private int id;
+	
 	private int userId;
 	
 	private Date date;
