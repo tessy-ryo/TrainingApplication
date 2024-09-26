@@ -36,7 +36,7 @@
 					</thead>
 					<tbody>
 						<tr th:each="training:${trainingList}">
-							<td th:text="${#dates.format(training.date,'YYYY/MM/dd')}"></td>
+							<td th:text="${#temporals.format(training.date,'YYYY/MM/dd')}"></td>
 							<td th:text="${training.bodyParts.name}"></td>
 							<td th:text="${training.exercise.name}"></td>
 							<td th:text="${training.weight}"></td>

@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/css/btn/btn.css}">
-<title>筋トレ履歴</title>
+<title>体重記録</title>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -33,12 +33,12 @@
 					</thead>
 					<tbody>
 						<tr th:each="weight:${weightList}">
-							<td th:text="${#dates.format(weight.date,'YYYY/MM/dd')}"></td>
-							<td th:text="${weight.weight}"></td>
+							<td th:text="${#temporals.format(weight.date,'yyyy/MM/dd')}"></td>
+							<td th:text="${weight.bodyWeight}"></td>
 							<td>
 								<div class="d-flex">  
-									<a class="btn btn-secondary" th:href="@{'/training/delete/'+${weight.id}}" role="delete">削除</a>
-									<a class="btn-select-orange ms-2" th:href="@{'/training/edit/'+${weight.id}}" role="edit">編集</a>
+									<a class="btn btn-secondary" th:href="@{'/training/weight/delete/'+${weight.id}}" role="delete">削除</a>
+									<a class="btn-select-orange ms-2" th:href="@{'/training/weight/edit/'+${weight.id}}" role="edit">編集</a>
 								</div>
 							</td>
 						</tr>

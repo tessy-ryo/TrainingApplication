@@ -284,35 +284,11 @@ public class TrainingEditController {
 
 		if (weightBased == 0) {
 			//重量がない場合
-			return "redirect:/training/exercise/deleteReps";
+			return "training/exercise/edit/deleteReps";
 		} else {
 			//重量がある場合
-			return "redirect:/training/exercise/deleteWeightReps";
+			return "training/exercise/edit/deleteWeightReps";
 		}
-	}
-
-	//重量ありの削除画面を表示
-	@GetMapping("/exercise/deleteWeightReps")
-	public String deleteWeightReps(Authentication authentication, HttpSession session, Model model) {
-		setupModel(model, authentication);
-
-		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
-
-		model.addAttribute("form", form);
-
-		return "training/exercise/edit/deleteWeightReps";
-	}
-
-	//重量なしの削除画面を表示
-	@GetMapping("/exercise/deleteReps")
-	public String deleteReps(Authentication authentication, HttpSession session, Model model) {
-		setupModel(model, authentication);
-
-		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
-
-		model.addAttribute("form", form);
-
-		return "training/exercise/edit/deleteReps";
 	}
 
 	//重量あり筋トレデータ（１件）削除

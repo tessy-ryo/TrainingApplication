@@ -1,6 +1,6 @@
 package com.example.domain.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ public class WeightRecord {
 	
 	private int userId;
 	
-	private Date date;
+	private LocalDate date;
 
-	private Double weight;
+	private Double bodyWeight;
 }

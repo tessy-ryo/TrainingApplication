@@ -1,6 +1,6 @@
 package com.example.domain.service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.security.core.Authentication;
@@ -41,7 +41,7 @@ public interface ExerciseService {
 	public ExerciseRecord showSpecificData(int data);
 	
 	//筋トレデータ更新
-	public void updateExerciseRecordOne(Date date,
+	public void updateExerciseRecordOne(LocalDate date,
 			Integer bodyPartId,
 			Integer exerciseId,
 			Integer weight,

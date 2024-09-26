@@ -1,6 +1,6 @@
 package com.example.repository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -43,7 +43,7 @@ public interface ExerciseMapper {
 	public ExerciseRecord getSpecificData(int id);
 	
 	//筋トレデータ更新（1件）
-	public void updateOne(@Param("date")Date date,
+	public void updateOne(@Param("date")LocalDate date,
 			@Param("bodyPartId")Integer bodyPartId,
 			@Param("exerciseId")Integer exerciseId,
 			@Param("weight")Integer weight,

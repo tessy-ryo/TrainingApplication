@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -127,6 +128,9 @@ public class ExerciseRecordController {
 		
 		//セッションにフォームデータがある場合、破棄する
 		session.removeAttribute("exerciseDataForm");
+		
+		//現在の日付をフォームのdateフィールドにセット
+		form.setDate(LocalDate.now());
 		
 		//部位を取得
 		List<BodyParts> bodyPartsList = exerciseService.getBodyParts();

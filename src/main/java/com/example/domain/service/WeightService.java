@@ -10,6 +10,9 @@ public interface WeightService {
 	//日付と体重を取得
 	public List<WeightRecord> getBodyWeight(int userId, String searchName, int size, int offset);
 	
+	//特定の日付と体重を取得
+	public WeightRecord showSpecificBodyWeight(int id);
+	
 	//ユーザーの体重データのレコード数を検索を含めてカウントする
 	public int getCountBodyWeightData(int userId, String searchName);
 	

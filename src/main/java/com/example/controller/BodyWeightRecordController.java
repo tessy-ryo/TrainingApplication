@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -17,16 +18,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.domain.model.WeightRecord;
 import com.example.domain.service.CustomUserDetails;
 import com.example.domain.service.WeightService;
+import com.example.form.BodyWeightDataForm;
 import com.example.form.HistoryForm;
-import com.example.form.RecordBodyWeightForm;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
+
 @Controller
 @RequestMapping("/training")
-public class WeightRecordController {
+public class BodyWeightRecordController {
 	@Autowired
 	private WeightService weightService;
 	
@@ -51,13 +53,13 @@ public class WeightRecordController {
 			
 			CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
 			form.setUserId(userDetails.getId());
-			
+
 			int offset = (page - 1) * size;
 			
-			List<WeightRecord> weightList = weightService.getBodyWeight(form.getUserId(),form.getSearchName(),offset,size);
+			List<WeightRecord> weightList = weightService.getBodyWeight(form.getUserId(),form.getSearchName(),size, offset);
 			
 			//ユーザーの体重データのレコード数を検索を含めてカウントする
-			int totalRecords = weightService.getCountBodyWeightData(form.getUserId(),form.getSearchName());
+			Integer totalRecords = weightService.getCountBodyWeightData(form.getUserId(),form.getSearchName());
 			
 			int totalPages = 0;
 			
@@ -92,7 +94,7 @@ public class WeightRecordController {
 			
 			int offset = (page - 1) * size;
 			
-			List<WeightRecord> weightList = weightService.getBodyWeight(form.getUserId(),form.getSearchName(),offset,size);
+			List<WeightRecord> weightList = weightService.getBodyWeight(form.getUserId(),form.getSearchName(),size, offset);
 			
 			//ユーザーの体重データのレコード数を検索を含めてカウントする
 			Integer totalRecords = weightService.getCountBodyWeightData(form.getUserId(),form.getSearchName());
@@ -117,15 +119,19 @@ public class WeightRecordController {
 		
 		//**体重を記録する画面を表示*/
 		@GetMapping("/record/weight")
-		public String getRecordWeight(@ModelAttribute RecordBodyWeightForm form,Model model,Authentication authentication,HttpSession session) {
+		public String getRecordWeight(@ModelAttribute BodyWeightDataForm form,Model model,Authentication authentication,HttpSession session) {
 			setupModel(model,authentication);
+			
+			//現在の日付をフォームのdateフィールドにセット
+			form.setDate(LocalDate.now());
+			
 			//体重を記録する画面を表示
 			return "training/weight/record/recordWeight";
 		}
 		
 		//**体重記録確認画面に移動*/
 		@PostMapping("/record/weight")
-		public String postRecordWeight(@Valid @ModelAttribute RecordBodyWeightForm form,BindingResult bindingResult, Model model,HttpSession session, Authentication authentication) {
+		public String postRecordWeight(@Valid @ModelAttribute BodyWeightDataForm form,BindingResult bindingResult, Model model,HttpSession session, Authentication authentication) {
 			setupModel(model,authentication);
 			
 			if(bindingResult.hasErrors()) {
@@ -144,7 +150,7 @@ public class WeightRecordController {
 			public String checkWeightRecord(Model model, HttpSession session, Authentication authentication) {
 			setupModel(model,authentication);
 			//セッションからフォームデータを取得
-			RecordBodyWeightForm form = (RecordBodyWeightForm) session.getAttribute("recordBodyWeightForm");
+			BodyWeightDataForm form = (BodyWeightDataForm) session.getAttribute("recordBodyWeightForm");
 			
 			model.addAttribute("recordBodyWeightForm", form);
 			
@@ -156,7 +162,7 @@ public class WeightRecordController {
 			setupModel(model,authentication);
 			
 			//セッションからフォームデータを取得
-			RecordBodyWeightForm form = (RecordBodyWeightForm) session.getAttribute("recordBodyWeightForm");
+			BodyWeightDataForm form = (BodyWeightDataForm) session.getAttribute("recordBodyWeightForm");
 			
 			WeightRecord record = modelMapper.map(form,WeightRecord.class);
 			//体重を記録

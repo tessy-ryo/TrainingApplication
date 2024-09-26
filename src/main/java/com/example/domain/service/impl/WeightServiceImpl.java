@@ -22,6 +22,12 @@ public class WeightServiceImpl implements WeightService{
 		return mapper.findBodyWeight(userId, searchName, size, offset);
 	}
 	
+	//特定の日付と体重を取得
+	@Override
+	public WeightRecord showSpecificBodyWeight(int id) {
+		return mapper.findSpecificBodyWeight(id);
+	}
+	
 	/**体重を記録*/
 	@Override
 	public void recordWeight(WeightRecord record, Authentication authentication) {

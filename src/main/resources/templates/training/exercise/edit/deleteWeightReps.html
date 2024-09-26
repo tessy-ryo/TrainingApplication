@@ -10,7 +10,7 @@
 
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/deleteWeightReps}" method="post" th:object="${form}">
+		<form th:action="@{/training/exercise/deleteWeightReps}" method="post" th:object="${exerciseDataForm}">
 			<div class="border-bottom">
 				<h1 class="h2">トレーニングデータを削除する（確認）</h1>
 			</div>

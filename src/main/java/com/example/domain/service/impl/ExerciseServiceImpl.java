@@ -1,6 +1,6 @@
 package com.example.domain.service.impl;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +79,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 	
 	//筋トレデータ更新（１件）
 	@Override
-	public void updateExerciseRecordOne(Date date,
+	public void updateExerciseRecordOne(LocalDate date,
 			Integer bodyPartId,
 			Integer exerciseId,
 			Integer weight,
