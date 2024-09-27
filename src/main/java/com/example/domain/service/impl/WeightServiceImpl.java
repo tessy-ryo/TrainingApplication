@@ -42,6 +42,12 @@ public class WeightServiceImpl implements WeightService{
 		return mapper.countBodyWeightData(userId, searchName);
 	}
 	
+	//筋トレデータ1件削除
+	@Override
+	public void deleteBodyWeightDataOne(Integer id) {
+		mapper.deleteOneBodyWeightData(id);
+	}
+	
 	//今までの最低体重を取得
 	@Override
 	public Double getMinBodyWeight(int userId) {

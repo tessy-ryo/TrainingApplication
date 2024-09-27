@@ -51,18 +51,25 @@ weight_records.user_id = #{userId}
 </where>
 </select>
 
+<!-- 筋トレデータ1件削除 -->
+<delete id="deleteOneBodyWeightData">
+DELETE from
+	training.weight_records
+WHERE
+	id=#{id}
+</delete>
 
 <!-- 体重を記録 -->
 <insert id="insertWeightRecord">
 	insert into training.weight_records(
 	user_id
 	,date
-	,weight as bodyWeight
+	,weight 
 	)
 	values(
 	#{userId}
 	,#{date}
-	,#{weight}
+	,#{bodyWeight}
 	)
 </insert>
 

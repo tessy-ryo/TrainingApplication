@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.model.WeightRecord;
@@ -26,6 +27,7 @@ public class BodyWeightEditController {
 		model.addAttribute("username",userDetails.getAccountName());
 	}
 	
+	//体重データを削除する画面へ遷移
 	@GetMapping("/weight/delete/{id}")
 	public String getDelete(@ModelAttribute BodyWeightDataForm form, Authentication authentication, Model model,
 			HttpSession session,@PathVariable("id") Integer id) {
@@ -41,8 +43,26 @@ public class BodyWeightEditController {
 		form.setId(record.getId());
 		
 		//セッションにフォームデータを保存
-		session.setAttribute("exerciseDataForm", form);
+		session.setAttribute("bodyWeightDataForm", form);
 		
-		return  "";
+		return  "training/weight/edit/deleteBodyWeight";
 	}
+	
+	//体重データ（１件）削除
+	@PostMapping("/weight/edit/deleteBodyWeight")
+	public String postDeleteBodyWeight(Authentication authentication, HttpSession session, Model model) {
+		setupModel(model, authentication);
+		
+		BodyWeightDataForm form = (BodyWeightDataForm)session.getAttribute("bodyWeightDataForm");
+		
+		//体重データ削除
+		weightService.deleteBodyWeightDataOne(form.getId());
+		
+		session.removeAttribute("bodyWeightDataForm");
+		
+		//体重記録画面にリダイレクト
+		return "redirect:/training/weight/record/weightHistory";
+	}
+	
+	//体重データを編集する画面へ遷移
 }

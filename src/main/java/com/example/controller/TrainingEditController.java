@@ -303,7 +303,7 @@ public class TrainingEditController {
 		
 		session.removeAttribute("exerciseDataForm");
 
-		//ダッシュボード画面にリダイレクト
+		//筋トレ記録画面にリダイレクト
 		return "redirect:/training/exercise/record/trainingHistory";
 	}
 
@@ -319,7 +319,7 @@ public class TrainingEditController {
 		
 		session.removeAttribute("exerciseDataForm");
 
-		//ダッシュボード画面にリダイレクト
+		//筋トレ記録画面にリダイレクト
 		return "redirect:/training/exercise/record/trainingHistory";
 	}
 

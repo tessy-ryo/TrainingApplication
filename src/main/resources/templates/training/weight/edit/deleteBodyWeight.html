@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/btn/btn.css}">
+<title>体重データ削除</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<form th:action="@{/training/weight/edit/deleteBodyWeight}" method="post" th:object="${bodyWeightDataForm}">
+			<div class="border-bottom">
+				<h1 class="h2">体重データを削除する（確認）</h1>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<label for="date" class="form-label">日付</label>
+					<input type="date" class="form-control" th:field="*{date}" readonly>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<label for="bodyWeight" class="form-label">体重</label>
+					<input type="text" class="form-control" th:field="*{bodyWeight}" readonly>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<p>上記の体重データを削除します。よろしいですか？</p>
+				</div>
+			</div>
+			<div class="mt-3">
+				<div class="d-flex justify-content-center">
+					<a class="btn btn-secondary" href="/training/weight/record/weightHistory" role="button">いいえ</a>
+					<button type="submit" class="btn-record-red ms-2">はい</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

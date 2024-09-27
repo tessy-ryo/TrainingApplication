@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -123,9 +123,10 @@ public class TrainingGraphController {
 			totalPages = (int)Math.ceil((double)totalRecords / size);
 		}
 		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		 // 日付と最大重量のリストを作成
 	    List<String> dates = maxWeightRecords.stream()
-	            .map(r -> new SimpleDateFormat("yyyy/MM/dd").format(r.getDate()))
+	            .map(r -> r.getDate().format(formatter))
 	            .collect(Collectors.toList());
 	    List<Integer> weights = maxWeightRecords.stream()
 	            .map(ExerciseRecord::getWeight)
@@ -175,11 +176,12 @@ public class TrainingGraphController {
 			totalPages = (int)Math.ceil((double)totalRecords / size);
 		}
 		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		List<String> dates = bodyWeightRecords.stream()
-	            .map(r -> new SimpleDateFormat("yyyy/MM/dd").format(r.getDate()))
-	            .collect(Collectors.toList());
+		    .map(r -> r.getDate().format(formatter))
+		    .collect(Collectors.toList());
 	    List<Double> weights = bodyWeightRecords.stream()
-	            .map(WeightRecord::getWeight)
+	            .map(WeightRecord::getBodyWeight)
 	            .collect(Collectors.toList());
 		
 		model.addAttribute("minBodyWeight", minBodyWeight);

@@ -3,6 +3,7 @@ package com.example.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.example.domain.model.WeightRecord;
 
@@ -16,6 +17,9 @@ public interface WeightMapper {
 	
 	//ユーザーの体重データのレコード数を検索を含めてカウントする
 	public int countBodyWeightData(int userId, String searchName);
+	
+	//筋トレデータ1件削除
+	public int  deleteOneBodyWeightData(@Param("id") Integer id);
 	
 	/**体重記録*/
 	public int insertWeightRecord(WeightRecord record);

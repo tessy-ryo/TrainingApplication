@@ -36,7 +36,7 @@
 						//yyyy-MM-dd形式をyyyy/MM/dd形式に変換
 						var formattedDate = clickedDate.replace(/-/g, '/');
 						
-						window.location.href = '/training/dashboard?searchName=' + formattedDate;
+						window.location.href = '/training/exercise/record/trainingHistory?searchName=' + formattedDate;
 					}
 				});
 				calendar.render();

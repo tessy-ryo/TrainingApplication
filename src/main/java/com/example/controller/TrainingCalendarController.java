@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,10 +44,12 @@ public class TrainingCalendarController {
 		List<ExerciseRecord> records = exerciseService.getAllTrainingDate(userDetails.getId());
 		
 		List<Map<String, Object>> events = new ArrayList<>();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
 		for (ExerciseRecord record : records) {
 			Map<String, Object> event = new HashMap<>();
 			event.put("title","筋トレ");
-			event.put("start", new SimpleDateFormat("yyyy-MM-dd").format(record.getDate()));
+			event.put("start", record.getDate().format(formatter));
 			event.put("color", "red");
 			events.add(event);
 		}

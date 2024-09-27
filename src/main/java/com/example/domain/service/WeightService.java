@@ -16,6 +16,9 @@ public interface WeightService {
 	//ユーザーの体重データのレコード数を検索を含めてカウントする
 	public int getCountBodyWeightData(int userId, String searchName);
 	
+	//筋トレデータ1件削除
+	public void deleteBodyWeightDataOne(Integer id);
+	
 	/**体重を記録*/
 	public void recordWeight(WeightRecord record, Authentication authentication);
 	
