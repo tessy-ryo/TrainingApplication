@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,4 +67,32 @@ public class BodyWeightEditController {
 	}
 	
 	//体重データを編集する画面へ遷移
+	@GetMapping("/weight/edit/{id}")
+	public String getEdit(@ModelAttribute BodyWeightDataForm form, Authentication authentication, Model model,
+			HttpSession session,@PathVariable("id") Integer id) {
+		//特定の体重データを取得
+		WeightRecord record = weightService.showSpecificBodyWeight(id);
+				
+		form.setDate(record.getDate());
+				
+		form.setBodyWeight(record.getBodyWeight());
+				
+		form.setId(record.getId());
+				
+		//セッションにフォームデータを保存
+		session.setAttribute("bodyWeightDataForm", form);
+		
+		return "training/weight/edit/editBodyWeight";
+	}
+	
+	@PostMapping("/weight/edit/editBodyWeight")
+	public String postEditBodyWeight(@ModelAttribute @Validated BodyWeightDataForm form,BindingResult bindingResult,
+			HttpSession session, Authentication authentication, Model model) {
+		//フォームデータを取り出してsessionFormに格納
+		BodyWeightDataForm sessionForm = (BodyWeightDataForm)session.getAttribute("bodyWeightDataForm");
+		
+		if (bindingResult.hasErrors()) {
+			return getEdit(form, authentication,model,session,sessionForm.getId());
+		}
+	}
 }
