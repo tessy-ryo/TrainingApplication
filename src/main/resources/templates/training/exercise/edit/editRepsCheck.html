@@ -10,7 +10,7 @@
 
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/editRepsCheck}" th:object="${exerciseDataForm}" method="post">
+		<form th:action="@{/training/exercise/editRepsCheck}" method="post" th:object="${exerciseDataForm}">
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 					<label for="date" class="form-label">日付</label>

@@ -1,5 +1,6 @@
 package com.example.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -35,4 +36,9 @@ public interface WeightMapper {
 	
 	//体重が記録された日付の総数をカウントする
 	public int countBodyWeightRecords(int userId);
+	
+	//体重データをIDで更新する
+	public void updateOneBodyWeightData(@Param("date")LocalDate date,
+			@Param("bodyWeight")Double bodyWeight,
+			@Param("id")Integer id);
 }

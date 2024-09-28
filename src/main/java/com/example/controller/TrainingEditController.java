@@ -223,7 +223,9 @@ public class TrainingEditController {
 	}
 	
 	@GetMapping("/exercise/editWeightRepsCheck")
-	public String getEditWeightRepsSuccess(Model model, HttpSession session, Authentication authentication) {
+	public String getEditWeightRepsCheck(Model model, HttpSession session, Authentication authentication) {
+		setupModel(model, authentication);
+		
 		//保存されたフォームの取り出し
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 				

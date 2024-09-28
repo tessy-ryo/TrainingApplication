@@ -1,5 +1,6 @@
 package com.example.domain.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.security.core.Authentication;
@@ -33,4 +34,7 @@ public interface WeightService {
 	
 	//体重が記録された日付の総数をカウントする
 	public int getCountBodyWeightRecords(int userId);
+	
+	//体重データをIDで更新する
+	public void updateBodyWeightDataOne(LocalDate date, Double bodyWeight, Integer id) ;
 }

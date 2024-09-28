@@ -28,6 +28,7 @@ LIMIT #{size} OFFSET #{offset}
 <!-- 特定の日付と体重を取得 -->
 <select id="findSpecificBodyWeight" resultType="WeightRecord">
 SELECT
+	user_id,
 	id,
 	date,
 	weight as bodyWeight
@@ -115,4 +116,15 @@ FROM
 WHERE 
 	user_id = #{userId}
 </select>
+
+<!-- 体重データをIDで更新する -->
+<update id="updateOneBodyWeightData">
+UPDATE
+	training.weight_records
+SET
+	weight_records.date=#{date}
+	,weight_records.weight=#{bodyWeight}
+WHERE
+	id=#{id}
+</update>
 </mapper>

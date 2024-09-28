@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/btn/btn.css}">
+	<title>体重データ編集確認</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<form th:action="@{/training/weight/edit/editBodyWeightCheck}" method="post" th:object="${bodyWeightDataForm}">
+			<div class="row justify-content-center mt-3">
+				<label for="date" class="form-label">日付</label>
+				<input type="date" class="form-control" th:field="*{date}" readonly>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<label for="bodyWeight" class="form-label">体重</label>
+				<input type="text" class="form-control" th:field="*{bodyWeight}" readonly>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<p>この体重データで変更を確定します。よろしいですか？</p>
+				</div>
+			</div>
+			<div class="mt-3">
+				<div class="d-flex justify-content-center">
+					<a class="btn btn-secondary" th:href="@{'/training/weight/edit/' + ${bodyWeightDataForm.id}}" role="button">いいえ</a>
+					<button type="submit" class="btn-record-red ms-2">はい</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

@@ -1,4 +1,5 @@
 package com.example.domain.service.impl;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +72,9 @@ public class WeightServiceImpl implements WeightService{
 		public int getCountBodyWeightRecords(int userId) {
 			return mapper.countBodyWeightRecords(userId);
 		}
-
+	//体重データをIDで更新する
+	@Override
+		public void updateBodyWeightDataOne(LocalDate date, Double bodyWeight, Integer id) {
+		 mapper.updateOneBodyWeightData(date, bodyWeight, id);
+	}
 }
