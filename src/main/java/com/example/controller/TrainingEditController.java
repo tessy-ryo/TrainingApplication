@@ -3,6 +3,7 @@ package com.example.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,10 +45,17 @@ public class TrainingEditController {
 	public String getEdit(@ModelAttribute ExerciseDataForm form, Authentication authentication, Model model,
 			HttpSession session, @PathVariable("id") Integer id) {
 		setupModel(model, authentication);
+		
+		CustomUserDetails userDetails =(CustomUserDetails) authentication.getPrincipal();
 
 		//特定の筋トレデータ取得
 		ExerciseRecord record = exerciseService.showSpecificData(id);
 
+		// 現在のユーザーがこのデータにアクセスできるか確認
+	    if (record.getUserId()!=(userDetails.getId())) {
+	        throw new AccessDeniedException("不正なアクセスです");
+	    }
+	    
 		//部位を取得
 		List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
 		model.addAttribute("bodyPartsList", bodyPartsList);
@@ -263,9 +271,16 @@ public class TrainingEditController {
 	public String getDelete(@ModelAttribute ExerciseDataForm form, Authentication authentication, Model model,
 			HttpSession session, @PathVariable("id") Integer id) {
 		setupModel(model, authentication);
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
 		//特定の筋トレデータ取得
 		ExerciseRecord record = exerciseService.showSpecificData(id);
+		
+		// 現在のユーザーがこのデータにアクセスできるか確認
+	    if (record.getUserId()!=(userDetails.getId())) {
+	        throw new AccessDeniedException("不正なアクセスです");
+	    }
 
 		int weightBased = exerciseService.checkWeightBased(record.getExerciseId());
 
@@ -417,7 +432,23 @@ public class TrainingEditController {
 		//部位を取得
 		List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
 		model.addAttribute("bodyPartsList", bodyPartsList);
-		//種目を選択する画面を表示
+		
+		  if (form.getBodyPartId() != null) {
+		        // 部位が選択されている場合、その部位に紐づく種目リストを取得
+		        List<Exercise> exercises = exerciseService.getExercises(form.getBodyPartId());
+		        
+		        if (exercises == null || exercises.isEmpty()) {
+		            // 種目がnullまたは空リストの場合
+		            model.addAttribute("message", "・登録されている種目がありません。");
+		        } else {
+		            model.addAttribute("exercises", exercises);
+		        }
+		    } else {
+		        // bodyPartIdがnullの場合、部位が選択されていないメッセージを表示
+		        model.addAttribute("message", "・部位を選択してください");
+		    }
+		  
+		//種目を追加する画面を表示
 		return "training/exercise/edit/addExercise";
 	}
 

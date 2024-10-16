@@ -11,12 +11,16 @@
 	<div layout:fragment="content">
 		<form th:action="@{/training/weight/edit/editBodyWeightCheck}" method="post" th:object="${bodyWeightDataForm}">
 			<div class="row justify-content-center mt-3">
-				<label for="date" class="form-label">日付</label>
-				<input type="date" class="form-control" th:field="*{date}" readonly>
+				<div class="col-4">
+					<label for="date" class="form-label">日付</label>
+					<input type="date" class="form-control" th:field="*{date}" readonly>
+				</div>
 			</div>
 			<div class="row justify-content-center mt-3">
-				<label for="bodyWeight" class="form-label">体重</label>
-				<input type="text" class="form-control" th:field="*{bodyWeight}" readonly>
+				<div class="col-4">
+					<label for="bodyWeight" class="form-label">体重</label>
+					<input type="text" class="form-control" th:field="*{bodyWeight}" readonly>
+				</div>
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">

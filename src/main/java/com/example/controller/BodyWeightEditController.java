@@ -36,8 +36,15 @@ public class BodyWeightEditController {
 			HttpSession session,@PathVariable("id") Integer id) {
 		setupModel(model, authentication);
 		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		
 		//特定の体重データを取得
 		WeightRecord record = weightService.showSpecificBodyWeight(id);
+		
+		// 現在のユーザーがこのデータにアクセスできるか確認
+	    if (record.getUserId()!=(userDetails.getId())) {
+	        throw new AccessDeniedException("不正なアクセスです");
+	    }
 		
 		form.setDate(record.getDate());
 		

@@ -6,6 +6,7 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" th:href="@{/css/btn/btn.css}">
 	<title>種目を追加する</title>
+	<script th:src="@{/js/loadExercisesByBodyPart.js}"></script>
 </head>
 
 <body>
@@ -25,7 +26,7 @@
 						<label for="bodyPartsSelect" class="form-label">部位</label>
 					</div>
 					<div>
-						<select id="bodyPartsSelect" th:field="*{bodyPartId}" class="form-select" th:errorclass="is-invalid">
+						<select id="bodyPartsSelect" th:field="*{bodyPartId}" class="form-select" th:errorclass="is-invalid" onchange="loadExercisesByBodyPart()">
 							<option value = "">選択してください</option>
 							<option th:each="item : ${bodyPartsList}" th:text="${item.name}" 
 								th:value="${item.id}"></option>
@@ -37,7 +38,20 @@
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 					<div>
-						<label for="exerciseSelect" class="form-label">種目</label>
+						<label for="registeredTrainingExercises" class="form-label">登録されている種目</label>
+					</div>
+					<div id = "exerciseBox">
+						<ul>
+							<li th:each="exercise : ${exercises}" th:text="${exercise.name}">種目名</li>
+						</ul>
+						<p th:if="${message}" th:text="${message}"></p>
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-3">
+				<div class="col-4">
+					<div>
+						<label for="exerciseSelect" class="form-label">追加する種目</label>
 					</div>
 					<div>
 						<input type="text" class="form-control" th:field="*{exerciseName}" placeholder="入力してください" th:errorclass="is-invalid">

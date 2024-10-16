@@ -153,7 +153,8 @@ LIMIT #{size} OFFSET #{offset}
 <!-- 特定のExerciseRecordを筋トレデータIDで取得する -->
 <select id="getSpecificData" resultMap="record">
 SELECT
-	exercise_records.id
+	exercise_records.user_id
+	,exercise_records.id
 	,exercise_records.date
 	,exercise_records.weight
 	,exercise_records.reps
