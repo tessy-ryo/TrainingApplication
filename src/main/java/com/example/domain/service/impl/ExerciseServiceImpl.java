@@ -127,7 +127,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 	}
 	
 	//ユーザーが筋トレした日付け（重複無し）をすべて取得する
-		public List<ExerciseRecord> getAllTrainingDate(Integer userId){
-			return mapper.findAllTrainingDate(userId);
+		public List<ExerciseRecord> getAllDistinctTrainingDate(Integer userId){
+			return mapper.findAllDistinctTrainingDate(userId);
 		}
 }

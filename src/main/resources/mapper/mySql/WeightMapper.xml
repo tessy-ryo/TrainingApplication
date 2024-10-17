@@ -104,7 +104,7 @@ FROM
 WHERE
 	user_id = #{userId}
 ORDER BY
-	date DESC
+	date ASC
 LIMIT #{size} OFFSET #{offset}
 </select>
 
@@ -127,4 +127,13 @@ SET
 WHERE
 	id=#{id}
 </update>
+
+<!-- ユーザーが体重を記録した日付け（重複無し）をすべて取得する -->
+<select id="findAllDistinctWeightRecordsDate" resultType="WeightRecord">
+SELECT DISTINCT date
+FROM
+	training.weight_records
+WHERE
+	user_id = #{userId}
+</select>
 </mapper>

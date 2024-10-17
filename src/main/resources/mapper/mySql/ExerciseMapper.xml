@@ -271,7 +271,7 @@ AND
 GROUP BY
 	date
 ORDER BY
-	date DESC
+	date ASC
 LIMIT #{size} OFFSET #{offset}
 </select>
 
@@ -287,7 +287,7 @@ AND
 </select>
 
 <!-- ユーザーが筋トレした日付け（重複無し）をすべて取得する -->
-<select id="findAllTrainingDate" resultMap = "record">
+<select id="findAllDistinctTrainingDate" resultMap = "record">
 SELECT DISTINCT date
 FROM
 	training.exercise_records

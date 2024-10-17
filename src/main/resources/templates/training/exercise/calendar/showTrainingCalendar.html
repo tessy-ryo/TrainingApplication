@@ -9,9 +9,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/locales/ja.min.js"></script>
 	<style>
-		.fc a{
-			text-decoration: none;  
-			color: black;  
+		.fc a {
+			text-decoration: none;
+			color: black;
+			cursor: pointer;
 		}
 	</style>
 </head>
@@ -24,25 +25,29 @@
 
 				var eventsJsonStr = /*[[${eventsJson}]]*/'[]';
 				var events = JSON.parse(eventsJsonStr);
-				
+
 				var calendar = new FullCalendar.Calendar(calendarEl, {
-					locale:'ja',
-					contentHeight:'auto',
+					locale: 'ja',
+					contentHeight: 'auto',
 					initialView: "dayGridMonth",
 					events: events,
 					eventClick: function (info) {
 						var clickedDate = info.event.startStr;
-						
+
 						//yyyy-MM-dd形式をyyyy/MM/dd形式に変換
 						var formattedDate = clickedDate.replace(/-/g, '/');
-						
-						window.location.href = '/training/exercise/record/trainingHistory?searchName=' + formattedDate;
+
+						if(info.event.title === "筋トレ"){
+						window.location.href =  '/training/exercise/record/trainingHistory?searchName=' + formattedDate;
+						}else if(info.event.title === "体重記録"){
+							window.location.href = '/training/weight/record/weightHistory?searchName=' + formattedDate;
+						}
 					}
 				});
 				calendar.render();
 			});
 		</script>
-		<div id='calendar'style="width: 80%; margin: auto;"></div>
+		<div id='calendar' style="width: 80%; margin: auto;"></div>
 	</div>
 </body>
 

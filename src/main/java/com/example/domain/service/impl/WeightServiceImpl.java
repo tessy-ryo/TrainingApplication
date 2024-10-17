@@ -77,4 +77,9 @@ public class WeightServiceImpl implements WeightService{
 		public void updateBodyWeightDataOne(LocalDate date, Double bodyWeight, Integer id) {
 		 mapper.updateOneBodyWeightData(date, bodyWeight, id);
 	}
+	
+	@Override
+		public List<WeightRecord> getAllDistinctWeightRecordsDate(Integer userId){
+		return mapper.findAllDistinctWeightRecordsDate(userId);
+	}
 }

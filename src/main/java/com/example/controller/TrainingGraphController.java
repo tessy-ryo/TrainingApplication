@@ -94,37 +94,39 @@ public class TrainingGraphController {
 	
 	//トレーニンググラフを表示する画面を表示
 	@GetMapping("/exercise/graph/showTrainingGraph")
-	public String getShowTrainingGraph(Model model,Authentication authentication,HttpSession session,
-				@RequestParam(value = "page", defaultValue = "1" )int page,
-				@RequestParam(value = "size", defaultValue = "7")int size) {
-		setupModel(model,authentication);
-		
-		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
-		
-		TrainingGraphForm sessionForm = (TrainingGraphForm) session.getAttribute("trainingGraphForm");
-		
-		//筋トレ種目と種目ID、筋トレ部位を一件取得
-		ExerciseRecord record = exerciseService.getOneExercise(sessionForm.getExerciseId());
-		
-		//特定の種目の、今までの最大重量を取得する
-		Integer maxWeight = exerciseService.getMaxWeightByExerciseId(sessionForm.getExerciseId(),userDetails.getId());
-		
-		//7日分のデータを取得
-		int offset = (page - 1) * size;
-		List<ExerciseRecord> maxWeightRecords = exerciseService.getMaxWeightForLast7Days(sessionForm.getExerciseId(),userDetails.getId(), size, offset);
-		int totalRecords = exerciseService.getMaxWeightRecords(sessionForm.getExerciseId(),userDetails.getId());
-		
-		int totalPages = 0;
-		
-		if (totalRecords == 0) {
-			totalPages = 1;
-		}else {
-			//レコード数をsizeで割って、合計ページを計算する
-			totalPages = (int)Math.ceil((double)totalRecords / size);
-		}
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		 // 日付と最大重量のリストを作成
+	public String getShowTrainingGraph(Model model, Authentication authentication, HttpSession session,
+	        @RequestParam(value = "page", required = false) Integer page,  
+	        @RequestParam(value = "size", defaultValue = "7") int size) {
+	    
+	    setupModel(model, authentication);
+	    
+	    CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+	    
+	    TrainingGraphForm sessionForm = (TrainingGraphForm) session.getAttribute("trainingGraphForm");
+
+	    // 筋トレ種目と種目ID、筋トレ部位を一件取得
+	    ExerciseRecord record = exerciseService.getOneExercise(sessionForm.getExerciseId());
+
+	    // 特定の種目の、今までの最大重量を取得する
+	    Integer maxWeight = exerciseService.getMaxWeightByExerciseId(sessionForm.getExerciseId(), userDetails.getId());
+
+	    // 総レコード数を取得
+	    int totalRecords = exerciseService.getMaxWeightRecords(sessionForm.getExerciseId(), userDetails.getId());
+	    // 合計ページ数を計算
+	    int totalPages = totalRecords == 0 ? 1 : (int) Math.ceil((double) totalRecords / size);
+
+	    // pageがnullの場合のみ totalPages にリダイレクト
+	    if (page == null) {
+	        return "redirect:/training/exercise/graph/showTrainingGraph?page=" + totalPages + "&size=" + size;
+	    }
+
+	    // 7日分のデータを取得
+	    int offset = (page - 1) * size;
+	    List<ExerciseRecord> maxWeightRecords = exerciseService.getMaxWeightForLast7Days(sessionForm.getExerciseId(), userDetails.getId(), size, offset);
+
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	    
+	    // 日付と最大重量のリストを作成
 	    List<String> dates = maxWeightRecords.stream()
 	            .map(r -> r.getDate().format(formatter))
 	            .collect(Collectors.toList());
@@ -132,70 +134,61 @@ public class TrainingGraphController {
 	            .map(ExerciseRecord::getWeight)
 	            .collect(Collectors.toList());
 
-		model.addAttribute("exerciseName",record.getExercise().getName());
-			
-		model.addAttribute("maxWeight",maxWeight);
-		
-		model.addAttribute("dates", dates);
-		
-		model.addAttribute("weights",weights);
-		
-		model.addAttribute("currentPage", page);
-		
-		model.addAttribute("totalPages",totalPages);
-		
-		return "training/exercise/graph/showTrainingGraph";
+	    model.addAttribute("exerciseName", record.getExercise().getName());
+	    model.addAttribute("maxWeight", maxWeight);
+	    model.addAttribute("dates", dates);
+	    model.addAttribute("weights", weights);
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", totalPages);
+
+	    return "training/exercise/graph/showTrainingGraph";
 	}
+
 	
 	//体重グラフを表示する画面を表示
 	@GetMapping("/weight/graph/showWeightGraph")
 	public String getShowWeightGraph(Model model, Authentication authentication,
-			@RequestParam(value = "page", defaultValue = "1") int page,
-			@RequestParam(value = "size", defaultValue = "7") int size) {
-		setupModel(model,authentication);
-		
-		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
-		
-		//今までの最低体重を取得
-		Double minBodyWeight = weightService.getMinBodyWeight(userDetails.getId());
-		
-		//今までの最大体重を取得
-		Double maxBodyWeight = weightService.getMaxBodyWeight(userDetails.getId());
-		
-		//7日分のデータを取得
-		int offset = (page -1) * size;
-		List<WeightRecord> bodyWeightRecords = weightService.getBodyWeightForLast7Days(userDetails.getId(),size, offset);
-		int totalRecords = weightService.getCountBodyWeightRecords(userDetails.getId());
-		
-		int totalPages = 0;
-		
-		if (totalRecords == 0) {
-			totalPages = 1;
-		}else {
-			//レコード数をsizeで割って、合計ページを計算する
-			totalPages = (int)Math.ceil((double)totalRecords / size);
-		}
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		List<String> dates = bodyWeightRecords.stream()
-		    .map(r -> r.getDate().format(formatter))
-		    .collect(Collectors.toList());
+	        @RequestParam(value = "page", required = false) Integer page, 
+	        @RequestParam(value = "size", defaultValue = "7") int size) {
+	    
+	    setupModel(model, authentication);
+	    
+	    CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+	    // 今までの最低体重と最大体重を取得
+	    Double minBodyWeight = weightService.getMinBodyWeight(userDetails.getId());
+	    Double maxBodyWeight = weightService.getMaxBodyWeight(userDetails.getId());
+
+	    // 総レコード数を取得
+	    int totalRecords = weightService.getCountBodyWeightRecords(userDetails.getId());
+	    // 合計ページ数を計算
+	    int totalPages = totalRecords == 0 ? 1 : (int) Math.ceil((double) totalRecords / size);
+	    
+	    // pageがnullの場合のみ totalPages にリダイレクト
+	    if (page == null) {
+	        return "redirect:/training/weight/graph/showWeightGraph?page=" + totalPages + "&size=" + size;
+	    }
+
+	    // 7日分のデータを取得
+	    int offset = (page - 1) * size;
+	    List<WeightRecord> bodyWeightRecords = weightService.getBodyWeightForLast7Days(userDetails.getId(), size, offset);
+
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	    List<String> dates = bodyWeightRecords.stream()
+	            .map(r -> r.getDate().format(formatter))
+	            .collect(Collectors.toList());
 	    List<Double> weights = bodyWeightRecords.stream()
 	            .map(WeightRecord::getBodyWeight)
 	            .collect(Collectors.toList());
-		
-		model.addAttribute("minBodyWeight", minBodyWeight);
-		
-		model.addAttribute("maxBodyWeight", maxBodyWeight);
-		
-		model.addAttribute("dates", dates);
-		
-		model.addAttribute("weights",weights);
-		
-		model.addAttribute("currentPage", page);
-		
-		model.addAttribute("totalPages",totalPages);
-		
-		return "training/weight/graph/showWeightGraph";
+
+	    model.addAttribute("minBodyWeight", minBodyWeight);
+	    model.addAttribute("maxBodyWeight", maxBodyWeight);
+	    model.addAttribute("dates", dates);
+	    model.addAttribute("weights", weights);
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", totalPages);
+
+	    return "training/weight/graph/showWeightGraph";
 	}
+
 }

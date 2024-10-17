@@ -72,5 +72,5 @@ public interface ExerciseService {
 	public int getMaxWeightRecords(Integer exerciseId, Integer userId);
 	
 	//ユーザーが筋トレした日付け（重複無し）をすべて取得する
-	public List<ExerciseRecord> getAllTrainingDate(Integer userId);
+	public List<ExerciseRecord> getAllDistinctTrainingDate(Integer userId);
 }

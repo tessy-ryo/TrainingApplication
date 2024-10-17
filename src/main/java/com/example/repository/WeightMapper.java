@@ -41,4 +41,7 @@ public interface WeightMapper {
 	public void updateOneBodyWeightData(@Param("date")LocalDate date,
 			@Param("bodyWeight")Double bodyWeight,
 			@Param("id")Integer id);
+	
+	//ユーザーが体重を記録した日付け（重複無し）をすべて取得する
+	public List<WeightRecord> findAllDistinctWeightRecordsDate(Integer userId);
 }

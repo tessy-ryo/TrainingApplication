@@ -37,4 +37,7 @@ public interface WeightService {
 	
 	//体重データをIDで更新する
 	public void updateBodyWeightDataOne(LocalDate date, Double bodyWeight, Integer id) ;
+	
+	//ユーザーが筋トレした日付け（重複無し）をすべて取得する
+	public List<WeightRecord> getAllDistinctWeightRecordsDate(Integer userId);
 }

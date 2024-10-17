@@ -75,5 +75,5 @@ public interface ExerciseMapper {
 	public int countMaxWeightRecords(Integer exerciseId, Integer userId);
 	
 	//ユーザーが筋トレした日付け（重複無し）をすべて取得する
-	public List<ExerciseRecord> findAllTrainingDate(Integer userId);
+	public List<ExerciseRecord> findAllDistinctTrainingDate(Integer userId);
 }
