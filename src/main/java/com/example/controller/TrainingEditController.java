@@ -61,7 +61,7 @@ public class TrainingEditController {
 		model.addAttribute("bodyPartsList", bodyPartsList);
 
 		//種目を取得
-		List<Exercise> exerciseList = exerciseService.getExercises(record.getBodyPartId());
+		List<Exercise> exerciseList = exerciseService.getExercises(record.getBodyPartId(),userDetails.getId());
 		model.addAttribute("exerciseList", exerciseList);
 
 		//id設定
@@ -88,6 +88,8 @@ public class TrainingEditController {
 			HttpSession session, Authentication authentication, Model model) {
 		//フォームデータを取り出してsessionFormに格納
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("exerciseDataForm", form);
@@ -97,7 +99,7 @@ public class TrainingEditController {
 			//部位は選択されていた場合
 			if (form.getBodyPartId() != null) {
 				//種目を取得
-				List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId());
+				List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId(),userDetails.getId());
 				model.addAttribute("exerciseList", exerciseList);
 			}
 
@@ -357,6 +359,9 @@ public class TrainingEditController {
 	public String postDeleteExercise(@ModelAttribute @Validated DeleteExerciseForm form,BindingResult bindingResult, Authentication authentication, Model model,
 			HttpSession session) {
 		setupModel(model, authentication);
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("deleteExerciseForm", form);
 			//部位を取得
@@ -365,7 +370,7 @@ public class TrainingEditController {
 			//部位は選択されていた場合
 			if (form.getBodyPartId() != null) {
 				//種目を取得
-				List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId());
+				List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId(),userDetails.getId());
 				model.addAttribute("exerciseList", exerciseList);
 			}
 
@@ -428,6 +433,8 @@ public class TrainingEditController {
 	public String addExercise(@ModelAttribute AddExerciseForm form, Authentication authentication, Model model,
 			HttpSession session) {
 		setupModel(model, authentication);
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
 		//部位を取得
 		List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
@@ -435,7 +442,7 @@ public class TrainingEditController {
 		
 		  if (form.getBodyPartId() != null) {
 		        // 部位が選択されている場合、その部位に紐づく種目リストを取得
-		        List<Exercise> exercises = exerciseService.getExercises(form.getBodyPartId());
+		        List<Exercise> exercises = exerciseService.getExercises(form.getBodyPartId(),userDetails.getId());
 		        
 		        if (exercises == null || exercises.isEmpty()) {
 		            // 種目がnullまたは空リストの場合
@@ -497,9 +504,11 @@ public class TrainingEditController {
 	@PostMapping("/exercise/addExerciseCheck")
 	public String postExerciseCheck(Authentication authentication, Model model, HttpSession session) {
 		AddExerciseForm sessionForm = (AddExerciseForm) session.getAttribute("addExerciseForm");
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
 		exerciseService.addExercise(sessionForm.getExerciseName(), sessionForm.getBodyPartId(),
-				sessionForm.getWeightBased());
+				userDetails.getId(),sessionForm.getWeightBased());
 
 		//セッションフォームのデータを破棄
 		session.removeAttribute("addExerciseForm");

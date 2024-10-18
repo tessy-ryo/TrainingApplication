@@ -37,8 +37,8 @@ public class ExerciseServiceImpl implements ExerciseService {
 	
 	//筋トレ種目複数件取得
 	@Override
-	public List<Exercise> getExercises(int bodyPartId){
-		return mapper.getExercisesByBodyPart(bodyPartId);
+	public List<Exercise> getExercises(int bodyPartId, int userId){
+		return mapper.getExercisesByBodyPart(bodyPartId, userId);
 	}
 	
 	//重量あり筋トレ種目複数件取得
@@ -95,38 +95,46 @@ public class ExerciseServiceImpl implements ExerciseService {
 	}
 	
 	//筋トレ種目を論理削除 
+	@Override
 	public void softDeleteExercise(int id) {
 		mapper.softDeleteOne(id);
 	}
 	
 	//筋トレ種目を追加
+	@Override
 	public void addExercise(String name,
 			Integer bodyPartId,
+			Integer userId,
 			Integer weightBased) {
-		mapper.insertOne(name, bodyPartId, weightBased);
+		mapper.insertOne(name, bodyPartId, userId, weightBased);
 	}
 	
 	//ユーザーの筋トレデータレコード数をカウント
+	@Override
 	public int getTotalRecords(Integer userId, String searchName) {
 		return mapper.countExerciseData(userId, searchName);
 	}
 	
 	//特定の種目の、今までの最大重量を取得する
+	@Override
 	public Integer getMaxWeightByExerciseId(Integer exerciseId,Integer userId) {
 		return mapper.findMaxWeightByExerciseId(exerciseId, userId);
 	}
 	
 	//特定の種目の、直近7日間の最大重量を取得
+	@Override
 	public List<ExerciseRecord> getMaxWeightForLast7Days(Integer exerciseId, Integer userId, int size, int offset){
 		return mapper.findMaxWeightForLast7Days(exerciseId,userId, size, offset);
 	}
 		
 	//特定の種目の、筋トレが記録された日付け（重複無し）の総数をカウントする
+	@Override
 	public int getMaxWeightRecords(Integer exerciseId, Integer userId){
 		return mapper.countMaxWeightRecords(exerciseId, userId);
 	}
 	
 	//ユーザーが筋トレした日付け（重複無し）をすべて取得する
+	@Override
 		public List<ExerciseRecord> getAllDistinctTrainingDate(Integer userId){
 			return mapper.findAllDistinctTrainingDate(userId);
 		}

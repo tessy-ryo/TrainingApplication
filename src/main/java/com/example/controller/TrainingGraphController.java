@@ -72,6 +72,8 @@ public class TrainingGraphController {
 	public String postSelectExerciseGraph(@ModelAttribute @Validated TrainingGraphForm form,BindingResult bindingResult, Model model, Authentication authentication,HttpSession session) {
 		setupModel(model,authentication);
 		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("trainingGraphForm",form);
 			//部位を取得
@@ -80,7 +82,7 @@ public class TrainingGraphController {
 			//部位は選択されていた場合
 			if(form.getBodyPartId() != null) {
 				//種目を取得
-				List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId());
+				List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId(),userDetails.getId());
 				model.addAttribute("exerciseList",exerciseList);
 			}
 			return "training/exercise/graph/selectExerciseGraph";

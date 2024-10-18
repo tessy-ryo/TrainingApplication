@@ -144,6 +144,8 @@ public class ExerciseRecordController {
 	public String postSelectExercise(@ModelAttribute @Validated ExerciseDataForm form,BindingResult bindingResult,Model model,HttpSession session,Authentication authentication) {
 		setupModel(model, authentication);
 		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("exerciseDataForm",form);
 			//部位を取得
@@ -152,7 +154,7 @@ public class ExerciseRecordController {
 			//部位は選択されていた場合
 			if(form.getBodyPartId() != null) {
 				//種目を取得
-				List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId());
+				List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId(),userDetails.getId());
 				model.addAttribute("exerciseList",exerciseList);
 			}
 			return "training/exercise/record/selectExercise";

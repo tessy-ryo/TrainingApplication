@@ -74,6 +74,8 @@ FROM
 WHERE
 	body_part_id=#{bodyPartId}
 AND
+	(`user_id` IS NULL OR `user_id` = #{userId}) 
+AND
 	is_deleted=0	
 </select>
 
@@ -214,11 +216,13 @@ WHERE
 INSERT into training.exercises(
 	name
 	,body_part_id
+	,user_id
 	,weight_based
 	)
 values(
 	#{name}
 	,#{bodyPartId}
+	,#{userId}
 	,#{weightBased}
 	)
 </insert>

@@ -22,7 +22,7 @@ public interface ExerciseMapper {
 	public ExerciseRecord getExerciseBodyPartById(int exerciseId);
 
 	/**筋トレ種目取得*/
-	public List<Exercise> getExercisesByBodyPart(int bodyPartId);
+	public List<Exercise> getExercisesByBodyPart(int bodyPartId,int userId);
 	
 	//重量あり筋トレ種目複数件取得
 	public List<Exercise> getWeightBasedExercisesByBodyPart(int bodyPartId);
@@ -59,6 +59,7 @@ public interface ExerciseMapper {
 	//筋トレ種目を追加
 	public int insertOne(@Param("name") String name,
 			@Param("bodyPartId") Integer BodyPartId,
+			@Param("userId") Integer userId,
 			@Param("weightBased") Integer weightBased);
 	
 	//ユーザーの筋トレデータのレコード数をカウントする
