@@ -3,7 +3,7 @@ function fetchExercises() {
     const exerciseSelect = document.getElementById("exerciseSelect");
 
     if (bodyPartId) {
-        fetch('/api/exercise?bodyPartId=${bodyPartId}')
+        fetch(`/api/exercise?bodyPartId=${bodyPartId}`)
             .then(response => response.json())
             .then(data => {
                 exerciseSelect.innerHTML = '<option value="">選択してください</option>';

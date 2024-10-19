@@ -23,7 +23,7 @@ public interface ExerciseService {
 	public List<Exercise> getExercises(int bodyPartId, int userId);
 
 	//重量あり筋トレ種目複数件取得
-	public List<Exercise> getWeightBasedExercises(int bodyPartId);
+	public List<Exercise> getWeightBasedExercises(int bodyPartId, int userId);
 
 	//重量の有無の確認
 	public int checkWeightBased(int exerciseId);

@@ -39,8 +39,11 @@ public class ExerciseController {
 	}
 	
 	@GetMapping("/exercise/weightBased")
-	public List<Map<String,Object>> listWeightBasedExercises(@RequestParam("bodyPartId") Integer bodyPartId ){
-		List<Exercise> exercises = exerciseService.getWeightBasedExercises(bodyPartId);
+	public List<Map<String,Object>> listWeightBasedExercises(@RequestParam("bodyPartId") Integer bodyPartId, Authentication authentication ){
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		
+		List<Exercise> exercises = exerciseService.getWeightBasedExercises(bodyPartId, userDetails.getId());
 		return exercises.stream()
 				.map(exercise -> {
 					Map<String, Object> map = new HashMap<>();

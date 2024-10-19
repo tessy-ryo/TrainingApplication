@@ -88,6 +88,8 @@ FROM
 WHERE
 	body_part_id=#{bodyPartId}
 AND
+	(`user_id` IS NULL OR `user_id` = #{userId}) 
+AND
 	is_deleted=0	
 AND 
 	weight_based=1

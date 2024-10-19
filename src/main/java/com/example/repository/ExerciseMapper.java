@@ -25,7 +25,7 @@ public interface ExerciseMapper {
 	public List<Exercise> getExercisesByBodyPart(int bodyPartId,int userId);
 	
 	//重量あり筋トレ種目複数件取得
-	public List<Exercise> getWeightBasedExercisesByBodyPart(int bodyPartId);
+	public List<Exercise> getWeightBasedExercisesByBodyPart(int bodyPartId, int userId);
 	
 	//**重量の有無の確認*/
 	public int findWeightBased(int exerciseId);

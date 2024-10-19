@@ -346,9 +346,15 @@ public class TrainingEditController {
 	@GetMapping("/exercise/deleteExercise")
 	public String deleteExercise(@ModelAttribute DeleteExerciseForm form,Authentication authentication, Model model, HttpSession session) {
 		setupModel(model, authentication);
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		
 		//部位を取得
 		List<BodyParts> bodyPartsList = exerciseService.getBodyParts();
 		model.addAttribute("bodyPartsList", bodyPartsList);
+		
+		List<Exercise> exerciseList = exerciseService.getExercises(form.getBodyPartId(),userDetails.getId());
+		model.addAttribute("exerciseList", exerciseList);
 		
 		//種目を選択する画面を表示
 		return "training/exercise/edit/deleteExercise";

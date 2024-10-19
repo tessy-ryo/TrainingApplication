@@ -5,3 +5,4 @@ INSERT INTO `body_parts` (`id`,`name`,`create_date_time`,`update_date_time`) VAL
 INSERT INTO `body_parts` (`id`,`name`,`create_date_time`,`update_date_time`) VALUES (5,'上腕二頭筋','2024-07-20 11:21:49','2024-07-20 14:24:18');
 INSERT INTO `body_parts` (`id`,`name`,`create_date_time`,`update_date_time`) VALUES (6,'上腕三頭筋','2024-07-20 11:21:49','2024-07-20 14:24:18');
 INSERT INTO `body_parts` (`id`,`name`,`create_date_time`,`update_date_time`) VALUES (7,'腹筋','2024-07-20 14:24:18','2024-07-20 14:24:18');
+

@@ -43,8 +43,8 @@ public class ExerciseServiceImpl implements ExerciseService {
 	
 	//重量あり筋トレ種目複数件取得
 	@Override
-	public List<Exercise> getWeightBasedExercises(int bodyPartId){
-		return mapper.getWeightBasedExercisesByBodyPart(bodyPartId);
+	public List<Exercise> getWeightBasedExercises(int bodyPartId,int userId){
+		return mapper.getWeightBasedExercisesByBodyPart(bodyPartId, userId);
 	}
 	
 	//重量の有無の確認
