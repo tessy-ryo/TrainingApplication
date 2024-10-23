@@ -32,16 +32,10 @@ public class TrainingCalendarController {
 	@Autowired
 	private WeightService weightService;
 	
-	//**認証されたユーザーのアカウントネームを表示するメソッド*/
-	private void setupModel(Model model,Authentication authentication,HttpServletRequest request) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		model.addAttribute("username",userDetails.getAccountName());
-		model.addAttribute("currentUri",request.getRequestURI());
-	}
-	
-	@GetMapping("/exercise/calendar/showTrainingCalendar")
+	@GetMapping("/calendar/showTrainingCalendar")
 	public String getTrainingCalendar(Model model, Authentication authentication,HttpServletRequest request) throws JsonProcessingException {
-		setupModel(model, authentication, request);
+		
+		model.addAttribute("currentUri",request.getRequestURI());
 		
 		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
 		
@@ -72,6 +66,6 @@ public class TrainingCalendarController {
 		String eventsJson = new ObjectMapper().writeValueAsString(events);
 		model.addAttribute("eventsJson",eventsJson);
 		
-		return "training/exercise/calendar/showTrainingCalendar";
+		return "training/calendar/showTrainingCalendar";
 	}
 }

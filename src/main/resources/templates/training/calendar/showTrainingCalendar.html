@@ -36,11 +36,13 @@
 
 						//yyyy-MM-dd形式をyyyy/MM/dd形式に変換
 						var formattedDate = clickedDate.replace(/-/g, '/');
+						
+						var encodedDate = encodeURIComponent(formattedDate);
 
 						if(info.event.title === "筋トレ"){
-						window.location.href =  '/training/exercise/record/trainingHistory?searchName=' + formattedDate;
+						window.location.href =  '/training/exercise/record/trainingHistory?searchName=' + encodedDate;
 						}else if(info.event.title === "体重記録"){
-							window.location.href = '/training/weight/record/weightHistory?searchName=' + formattedDate;
+							window.location.href = '/training/weight/record/weightHistory?searchName=' + encodedDate;
 						}
 					}
 				});

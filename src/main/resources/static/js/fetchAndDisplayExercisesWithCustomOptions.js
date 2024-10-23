@@ -1,5 +1,5 @@
 // 種目を取得し、セレクトボックスに追加する関数
-function fetchExercises() {
+function fetchAndDisplayExercisesWithCustomOptions()  {
     const bodyPartId = document.getElementById('bodyPartsSelect').value;
     const exerciseSelect = document.getElementById("exerciseSelect");
 

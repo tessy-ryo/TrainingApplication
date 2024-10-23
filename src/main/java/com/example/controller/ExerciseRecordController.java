@@ -37,12 +37,6 @@ public class ExerciseRecordController {
 	
 	@Autowired
 	private ModelMapper modelMapper;
-	
-	//**認証されたユーザーのアカウントネームを表示するメソッド*/
-	private void setupModel(Model model,Authentication authentication) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		model.addAttribute("username",userDetails.getAccountName());
-	}
 			
 	/**筋トレ記録画面を表示*/
 	@GetMapping("/exercise/record/trainingHistory")
@@ -51,7 +45,7 @@ public class ExerciseRecordController {
 			@RequestParam(value="size",defaultValue="6") int size,
 			Model model,HttpSession session,Authentication authentication,HttpServletRequest request) {
 		//ダッシュボード画面を表示
-		setupModel(model,authentication);
+		
 		
 		model.addAttribute("currentUri",request.getRequestURI());
 		
@@ -83,48 +77,10 @@ public class ExerciseRecordController {
 		return "training/exercise/record/trainingHistory";
 	}
 	
-	@PostMapping("/exercise/record/trainingHistory")
-	public String postTrainingDashBoard(@ModelAttribute HistoryForm form,
-			@RequestParam(value="page",defaultValue="1") int page,
-			@RequestParam(value="size",defaultValue="6") int size,
-			Model model,Authentication authentication,HttpServletRequest request) {
-		//ダッシュボード画面を表示
-		setupModel(model,authentication);
-		
-		model.addAttribute("currentUri",request.getRequestURI());
-		
-		CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
-		form.setUserId(userDetails.getId());
-		
-		int offset = (page - 1) * size;
-		
-		List<ExerciseRecord> trainingList = exerciseService.showExerciseData(form.getUserId(),form.getSearchName(),offset,size);
-		
-		//ユーザーの筋トレデータレコード数をカウント
-		Integer totalRecords = exerciseService.getTotalRecords(form.getUserId(),form.getSearchName());
-
-		int totalPages = 0;
-		
-		if (totalRecords == null||totalRecords == 0) {
-			totalPages = 1;
-		}else {
-			//レコード数をsizeで割って、合計ページを計算する
-			totalPages = (int)Math.ceil((double)totalRecords / size);
-		}
-				
-		model.addAttribute("trainingList",trainingList);
-		
-		model.addAttribute("currentPage",page);
-		
-		model.addAttribute("totalPages", totalPages);
-		
-		return "training/exercise/record/trainingHistory";
-	}
-	
 	//**種目を選択する画面を表示*/
 	@GetMapping("/exercise/selectExercise")
 	public String getSelectExercise(@ModelAttribute ExerciseDataForm form,Model model,HttpSession session,Authentication authentication) {
-		setupModel(model,authentication);
+		
 		
 		//セッションにフォームデータがある場合、破棄する
 		session.removeAttribute("exerciseDataForm");
@@ -142,7 +98,7 @@ public class ExerciseRecordController {
 	
 	@PostMapping("/exercise/selectExercise")
 	public String postSelectExercise(@ModelAttribute @Validated ExerciseDataForm form,BindingResult bindingResult,Model model,HttpSession session,Authentication authentication) {
-		setupModel(model, authentication);
+		
 		
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		
@@ -177,7 +133,7 @@ public class ExerciseRecordController {
 	//回数を記録する画面に遷移
 	@GetMapping("/exercise/recordReps")
 	public String getRecordReps(Model model,HttpSession session,Authentication authentication) {
-		setupModel(model, authentication);
+		
 		
 		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
 		model.addAttribute("noWeightExerciseDataForm",form);
@@ -187,7 +143,7 @@ public class ExerciseRecordController {
 	
 	@PostMapping("/exercise/recordReps")
 	public String postRecordReps(@ModelAttribute @Validated NoWeightExerciseDataForm form,BindingResult bindingResult,Model model,HttpSession session,Authentication authentication) {
-		setupModel(model, authentication);
+		
 		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("noWeightExerciseDataForm",form);
@@ -207,7 +163,7 @@ public class ExerciseRecordController {
 	
 	@GetMapping("/exercise/recordRepsCheck")
 	public String getRecordRepsCheck(Authentication authentication,Model model,HttpSession session) {
-		setupModel(model, authentication);
+		
 		
 		//保存されたフォームの取り出し
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
@@ -225,7 +181,7 @@ public class ExerciseRecordController {
 	
 	@PostMapping("/exercise/recordRepsCheck")
 	public String postRecordRepsCheck(Authentication authentication,Model model, HttpSession session) {
-		setupModel(model, authentication);
+		
 		
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 		
@@ -241,7 +197,7 @@ public class ExerciseRecordController {
 	//トレーニングデータ記録完了のお知らせ（重量なし）へ遷移
 		@GetMapping("/exercise/confirmRecordReps")
 		public String getConfirmRecordReps(Model model, HttpSession session,Authentication authentication) {
-			setupModel(model,authentication);
+			
 			
 			return "training/exercise/record/confirmRecordReps";
 		}
@@ -249,7 +205,7 @@ public class ExerciseRecordController {
 		//重量と回数を記録する画面へ遷移
 		@PostMapping("/exercise/confirmRecordReps")
 		public String postConfirmRecordReps(Model model,HttpSession session,Authentication authentication) {
-			setupModel(model,authentication);
+			
 			
 			ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 			//回数をnullに設定
@@ -261,7 +217,7 @@ public class ExerciseRecordController {
 	//重量と回数を記録する画面に遷移
 	@GetMapping("/exercise/recordWeightReps")
 	public String getRecordWeightReps(Model model,HttpSession session,Authentication authentication) {
-		setupModel(model, authentication);
+		
 		
 		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm") ;
 		model.addAttribute("weightExerciseDataForm",form);
@@ -271,7 +227,7 @@ public class ExerciseRecordController {
 	
 	@PostMapping("/exercise/recordWeightReps")
 	public String postRecordWeightReps(@ModelAttribute @Validated WeightExerciseDataForm form, BindingResult bindingResult,Model model,HttpSession session,Authentication authentication) {
-		setupModel(model, authentication);
+		
 		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("weightExerciseDataForm",form);
@@ -293,7 +249,7 @@ public class ExerciseRecordController {
 	
 	@GetMapping("/exercise/recordWeightRepsCheck")
 	public String getRecordWeightRepsCheck(Authentication authentication,Model model,HttpSession session) {
-		setupModel(model,authentication);
+		
 		
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 		//筋トレ種目と種目ID、筋トレ部位を一件取得
@@ -310,7 +266,7 @@ public class ExerciseRecordController {
 	
 	@PostMapping("/exercise/recordWeightRepsCheck")
 	public String postRecordWeightRepsCheck(Authentication authentication,Model model, HttpSession session) {
-		setupModel(model, authentication);
+		
 		
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 		
@@ -325,7 +281,7 @@ public class ExerciseRecordController {
 	//トレーニングデータ記録完了のお知らせ（重量あり）へ遷移
 	@GetMapping("/exercise/confirmRecordWeightReps")
 	public String getConfirmRecordWeightReps(Model model, HttpSession session,Authentication authentication) {
-		setupModel(model,authentication);
+		
 		
 		return "training/exercise/record/confirmRecordWeightReps";
 	}
@@ -333,7 +289,7 @@ public class ExerciseRecordController {
 	//重量と回数を記録する画面へ遷移
 	@PostMapping("/exercise/confirmRecordWeightReps")
 	public String postConfirmRecordWeightReps(Model model,HttpSession session,Authentication authentication) {
-		setupModel(model,authentication);
+		
 		
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 		//重量をnullに設定

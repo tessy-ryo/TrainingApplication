@@ -34,17 +34,11 @@ public class TrainingEditController {
 	@Autowired
 	private ExerciseService exerciseService;
 
-	//**認証されたユーザーのアカウントネームを表示するメソッド*/
-	private void setupModel(Model model, Authentication authentication) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		model.addAttribute("username", userDetails.getAccountName());
-	}
-
 	//トレーニング種目の編集画面を表示するメソッド
 	@GetMapping("/edit/{id}")
 	public String getEdit(@ModelAttribute ExerciseDataForm form, Authentication authentication, Model model,
 			HttpSession session, @PathVariable("id") Integer id) {
-		setupModel(model, authentication);
+		
 		
 		CustomUserDetails userDetails =(CustomUserDetails) authentication.getPrincipal();
 
@@ -128,7 +122,7 @@ public class TrainingEditController {
 	//回数を編集する画面を表示
 	@GetMapping("/exercise/editReps")
 	public String getEditReps(Model model, HttpSession session, Authentication authentication) {
-		setupModel(model, authentication);
+		
 		//保存されたフォームの取り出し
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 		model.addAttribute("noWeightExerciseDataForm", sessionForm);
@@ -139,7 +133,7 @@ public class TrainingEditController {
 	@PostMapping("/exercise/editReps")
 	public String postEditReps(@ModelAttribute @Validated NoWeightExerciseDataForm form, BindingResult bindingResult,
 			HttpSession session, Authentication authentication, Model model) {
-		setupModel(model, authentication);
+		
 		//保存されたフォームの取り出し
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 
@@ -163,7 +157,7 @@ public class TrainingEditController {
 	
 	@GetMapping("/exercise/editRepsCheck")
 	public String getEditRepsCheck(Authentication authentication, Model model, HttpSession session) {
-		setupModel(model, authentication);
+		
 		
 		//保存されたフォームの取り出し
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
@@ -183,7 +177,7 @@ public class TrainingEditController {
 	
 	@PostMapping("/exercise/editRepsCheck")
 	public String postEditRepsCheck(Model model, Authentication authentication, HttpSession session) {
-		setupModel(model,authentication);
+		
 		
 		//保存されたフォームの取り出し
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
@@ -200,7 +194,7 @@ public class TrainingEditController {
 	//重量と回数を編集する画面を表示
 	@GetMapping("/exercise/editWeightReps")
 	public String getEditWeightReps(Model model, HttpSession session, Authentication authentication) {
-		setupModel(model, authentication);
+		
 
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 		model.addAttribute("weightExerciseDataForm", sessionForm);
@@ -211,7 +205,7 @@ public class TrainingEditController {
 	@PostMapping("/exercise/editWeightReps")
 	public String postEditWeightReps(@ModelAttribute @Validated WeightExerciseDataForm form,
 			BindingResult bindingResult, Model model, HttpSession session, Authentication authentication) {
-		setupModel(model, authentication);
+		
 
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 
@@ -234,7 +228,7 @@ public class TrainingEditController {
 	
 	@GetMapping("/exercise/editWeightRepsCheck")
 	public String getEditWeightRepsCheck(Model model, HttpSession session, Authentication authentication) {
-		setupModel(model, authentication);
+		
 		
 		//保存されたフォームの取り出し
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
@@ -254,7 +248,7 @@ public class TrainingEditController {
 	
 	@PostMapping("/exercise/editWeightRepsCheck")
 	public String postEditWeightRepsCheck(Model model, Authentication authentication, HttpSession session) {
-		setupModel(model,authentication);
+		
 		
 		//保存されたフォームの取り出し
 		ExerciseDataForm sessionForm = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
@@ -272,7 +266,7 @@ public class TrainingEditController {
 	@GetMapping("/delete/{id}")
 	public String getDelete(@ModelAttribute ExerciseDataForm form, Authentication authentication, Model model,
 			HttpSession session, @PathVariable("id") Integer id) {
-		setupModel(model, authentication);
+		
 		
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
@@ -313,7 +307,7 @@ public class TrainingEditController {
 	//重量あり筋トレデータ（１件）削除
 	@PostMapping("/exercise/deleteWeightReps")
 	public String postDeleteWeightReps(Authentication authentication, HttpSession session, Model model) {
-		setupModel(model, authentication);
+		
 
 		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 
@@ -329,7 +323,7 @@ public class TrainingEditController {
 	//重量なし筋トレデータ（１件）削除
 	@PostMapping("/exercise/deleteReps")
 	public String postDeleteReps(Authentication authentication, HttpSession session, Model model) {
-		setupModel(model, authentication);
+		
 
 		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
 
@@ -345,7 +339,7 @@ public class TrainingEditController {
 	//種目を削除する画面を表示
 	@GetMapping("/exercise/deleteExercise")
 	public String deleteExercise(@ModelAttribute DeleteExerciseForm form,Authentication authentication, Model model, HttpSession session) {
-		setupModel(model, authentication);
+		
 		
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		
@@ -364,7 +358,7 @@ public class TrainingEditController {
 	@PostMapping("/exercise/deleteExercise")
 	public String postDeleteExercise(@ModelAttribute @Validated DeleteExerciseForm form,BindingResult bindingResult, Authentication authentication, Model model,
 			HttpSession session) {
-		setupModel(model, authentication);
+		
 		
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		
@@ -392,7 +386,7 @@ public class TrainingEditController {
 	//種目削除確認画面を表示
 	@GetMapping("/exercise/deleteExerciseCheck")
 	public String deleteExerciseCheck(Authentication authentication, Model model, HttpSession session) {
-		setupModel(model, authentication);
+		
 
 		DeleteExerciseForm sessionForm = (DeleteExerciseForm) session.getAttribute("deleteExerciseForm");
 
@@ -420,7 +414,7 @@ public class TrainingEditController {
 	//種目が削除され、ダッシュボード画面に遷移する
 	@PostMapping("/exercise/deleteExerciseCheck")
 	public String postDeleteExerciseCheck(Authentication authentication, Model model, HttpSession session) {
-		setupModel(model, authentication);
+		
 
 		//保存されたフォームの取り出し
 		DeleteExerciseForm sessionForm = (DeleteExerciseForm) session.getAttribute("deleteExerciseForm");
@@ -438,7 +432,7 @@ public class TrainingEditController {
 	@GetMapping("/exercise/addExercise")
 	public String addExercise(@ModelAttribute AddExerciseForm form, Authentication authentication, Model model,
 			HttpSession session) {
-		setupModel(model, authentication);
+		
 		
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
@@ -469,7 +463,7 @@ public class TrainingEditController {
 	@PostMapping("/exercise/addExercise")
 	public String postAddExercise(@ModelAttribute @Validated AddExerciseForm form, BindingResult bindingResult,
 			Authentication authentication, Model model, HttpSession session) {
-		setupModel(model, authentication);
+		
 
 		if (bindingResult.hasErrors()) {
 			return addExercise(form, authentication, model, session);
@@ -490,7 +484,7 @@ public class TrainingEditController {
 	//種目追加確認画面を表示
 	@GetMapping("/exercise/addExerciseCheck")
 	public String addExerciseCheck(Authentication authentication, Model model, HttpSession session) {
-		setupModel(model, authentication);
+		
 
 		AddExerciseForm sessionForm = (AddExerciseForm) session.getAttribute("addExerciseForm");
 

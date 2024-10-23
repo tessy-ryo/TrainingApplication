@@ -14,7 +14,7 @@ public interface WeightMapper {
 	public List<WeightRecord> findBodyWeight(int userId, String searchName, int size, int offset);
 	
 	//特定の日付と体重を取得
-	public WeightRecord findSpecificBodyWeight(int id);
+	public WeightRecord selectWeightRecordById(int id);
 	
 	//ユーザーの体重データのレコード数を検索を含めてカウントする
 	public int countBodyWeightData(int userId, String searchName);

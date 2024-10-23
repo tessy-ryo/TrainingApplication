@@ -26,7 +26,7 @@ LIMIT #{size} OFFSET #{offset}
 </select>
 
 <!-- 特定の日付と体重を取得 -->
-<select id="findSpecificBodyWeight" resultType="WeightRecord">
+<select id="selectWeightRecordById" resultType="WeightRecord">
 SELECT
 	user_id,
 	id,

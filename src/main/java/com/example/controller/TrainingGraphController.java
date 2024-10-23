@@ -36,17 +36,10 @@ public class TrainingGraphController {
 	
 	@Autowired
 	private WeightService weightService;
-	
-	//**認証されたユーザーのアカウントネームを表示するメソッド*/
-	private void setupModel(Model model,Authentication authentication) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		model.addAttribute("username",userDetails.getAccountName());
-	}
+
 		
 	@GetMapping("/selectGraph")
 	public String getSelectGraph(Model model, Authentication authentication,HttpServletRequest request) {
-		setupModel(model,authentication);
-		
 		model.addAttribute("currentUri",request.getRequestURI());
 		//筋トレグラフ選択画面を表示
 		return "training/selectGraph";
@@ -55,7 +48,7 @@ public class TrainingGraphController {
 	//種目グラフ選択画面を表示
 	@GetMapping("/exercise/graph/selectExerciseGraph")
 	public String getExerciseGraph(@ModelAttribute TrainingGraphForm form, Model model, Authentication authentication,HttpSession session) {
-		setupModel(model,authentication);
+		
 		//セッションにフォームデータが保存されている場合、破棄する
 		session.removeAttribute("trainingGraphForm");
 		
@@ -70,7 +63,7 @@ public class TrainingGraphController {
 	//トレーニンググラフを表示する画面に遷移
 	@PostMapping("/exercise/graph/selectExerciseGraph")
 	public String postSelectExerciseGraph(@ModelAttribute @Validated TrainingGraphForm form,BindingResult bindingResult, Model model, Authentication authentication,HttpSession session) {
-		setupModel(model,authentication);
+		
 		
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		
@@ -99,9 +92,6 @@ public class TrainingGraphController {
 	public String getShowTrainingGraph(Model model, Authentication authentication, HttpSession session,
 	        @RequestParam(value = "page", required = false) Integer page,  
 	        @RequestParam(value = "size", defaultValue = "7") int size) {
-	    
-	    setupModel(model, authentication);
-	    
 	    CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 	    
 	    TrainingGraphForm sessionForm = (TrainingGraphForm) session.getAttribute("trainingGraphForm");
@@ -152,9 +142,6 @@ public class TrainingGraphController {
 	public String getShowWeightGraph(Model model, Authentication authentication,
 	        @RequestParam(value = "page", required = false) Integer page, 
 	        @RequestParam(value = "size", defaultValue = "7") int size) {
-	    
-	    setupModel(model, authentication);
-	    
 	    CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
 	    // 今までの最低体重と最大体重を取得

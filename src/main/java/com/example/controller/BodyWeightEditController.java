@@ -24,22 +24,17 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/training")
 public class BodyWeightEditController {
 	@Autowired WeightService weightService;
-	//**認証されたユーザーのアカウントネームを表示するメソッド*/
-	private void setupModel(Model model,Authentication authentication) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		model.addAttribute("username",userDetails.getAccountName());
-	}
 	
 	//体重データを削除する画面へ遷移
 	@GetMapping("/weight/delete/{id}")
 	public String getDelete(@ModelAttribute BodyWeightDataForm form, Authentication authentication, Model model,
 			HttpSession session,@PathVariable("id") Integer id) {
-		setupModel(model, authentication);
+		
 		
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		
 		//特定の体重データを取得
-		WeightRecord record = weightService.showSpecificBodyWeight(id);
+		WeightRecord record = weightService.findWeightRecordById(id);
 		
 		// 現在のユーザーがこのデータにアクセスできるか確認
 	    if (record.getUserId()!=(userDetails.getId())) {
@@ -61,7 +56,7 @@ public class BodyWeightEditController {
 	//体重データ（１件）削除
 	@PostMapping("/weight/edit/deleteBodyWeight")
 	public String postDeleteBodyWeight(Authentication authentication, HttpSession session, Model model) {
-		setupModel(model, authentication);
+		
 		
 		BodyWeightDataForm form = (BodyWeightDataForm)session.getAttribute("bodyWeightDataForm");
 		
@@ -78,12 +73,12 @@ public class BodyWeightEditController {
 	@GetMapping("/weight/edit/{id}")
 	public String getEdit(@ModelAttribute BodyWeightDataForm form, Authentication authentication, Model model,
 			HttpSession session,@PathVariable("id") Integer id) {
-		setupModel(model, authentication);
+		
 		
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		
 		//特定の体重データを取得
-		WeightRecord record = weightService.showSpecificBodyWeight(id);
+		WeightRecord record = weightService.findWeightRecordById(id);
 		// 現在のユーザーがこのデータにアクセスできるか確認
 	    if (record.getUserId()!=(userDetails.getId())) {
 	        throw new AccessDeniedException("不正なアクセスです");
@@ -125,7 +120,7 @@ public class BodyWeightEditController {
 	//体重データ編集確認画面を表示
 	@GetMapping("/weight/edit/editBodyWeightCheck")
 	public String getEditBodyWeightCheck(Model model, Authentication authentication, HttpSession session) {
-		setupModel(model, authentication);
+		
 		
 		//保存されたフォームの取り出し
 		BodyWeightDataForm sessionForm = (BodyWeightDataForm) session.getAttribute("bodyWeightDataForm");
@@ -138,7 +133,7 @@ public class BodyWeightEditController {
 	//体重データを編集して体重記録画面へ遷移
 	@PostMapping("/weight/edit/editBodyWeightCheck")
 	public String postEditBodyWeightCheck(Model model, Authentication authentication, HttpSession session) {
-		setupModel(model, authentication);
+		
 		
 		//保存されたフォームの取り出し
 		BodyWeightDataForm sessionForm = (BodyWeightDataForm) session.getAttribute("bodyWeightDataForm");

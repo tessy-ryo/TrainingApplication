@@ -6,3 +6,22 @@ INSERT INTO `body_parts` (`id`,`name`,`create_date_time`,`update_date_time`) VAL
 INSERT INTO `body_parts` (`id`,`name`,`create_date_time`,`update_date_time`) VALUES (6,'上腕三頭筋','2024-07-20 11:21:49','2024-07-20 14:24:18');
 INSERT INTO `body_parts` (`id`,`name`,`create_date_time`,`update_date_time`) VALUES (7,'腹筋','2024-07-20 14:24:18','2024-07-20 14:24:18');
 
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (1,'ベンチプレス',1,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (2,'ダンベルフライ',1,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (3,'プッシュアップ',1,NULL,0,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (4,'デッドリフト',2,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (5,'ラットプルダウン',2,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (6,'ベントオーバーロウ',2,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (7,'ショルダープレス',3,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (8,'ラテラルレイズ',3,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (9,'フロントレイズ',3,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (10,'スクワット',4,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (11,'レッグプレス',4,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (12,'ルーマニアンデッドリフト',4,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (13,'バーベルカール',5,NULL,1,0,'2024-07-20 14:32:48','2024-09-04 13:13:29');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (14,'ダンベルカール',5,NULL,1,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (15,'トライセプスエクステンション',6,NULL,1,0,'2024-07-20 14:32:48','2024-10-16 15:22:38');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (16,'ディップス',6,NULL,0,0,'2024-07-20 14:32:48','2024-09-19 10:26:36');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (17,'シットアップ',7,NULL,0,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (18,'プランク',7,NULL,0,0,'2024-07-20 14:32:48','2024-08-09 11:41:30');
+INSERT INTO `exercises` (`id`,`name`,`body_part_id`,`user_id`,`weight_based`,`is_deleted`,`create_date_time`,`update_date_time`) VALUES (19,'レッグレイズ',7,NULL,0,0,'2024-07-20 14:32:48','2024-07-20 14:32:48');

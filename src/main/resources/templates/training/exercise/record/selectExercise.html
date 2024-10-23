@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/css/btn/btn.css}">
 <title>種目を選択する</title>
-<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/fetchAndDisplayExercisesWithCustomOptions.js}"></script>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -31,7 +31,7 @@
 						<label for="bodyPartsSelect" class="form-label">部位</label>
 					</div>
 					<div>
-						<select id="bodyPartsSelect" th:field="*{bodyPartId}" class="form-select" th:errorclass="is-invalid" onchange="fetchExercises()">
+						<select id="bodyPartsSelect" th:field="*{bodyPartId}" class="form-select" th:errorclass="is-invalid" onchange="fetchAndDisplayExercisesWithCustomOptions()">
 							<option value = "">選択してください</option>
 							<option th:each="item : ${bodyPartsList}" th:text="${item.name}" 
 								th:value="${item.id}"></option>

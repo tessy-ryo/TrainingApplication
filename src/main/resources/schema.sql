@@ -27,6 +27,7 @@ CREATE TABLE `exercises` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `body_part_id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
   `weight_based` int NOT NULL,
   `is_deleted` int NOT NULL DEFAULT '0',
   `create_date_time` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -34,7 +35,8 @@ CREATE TABLE `exercises` (
   PRIMARY KEY (`id`),
   KEY `body_part_id` (`body_part_id`),
   CONSTRAINT `exercises_ibfk_1` FOREIGN KEY (`body_part_id`) REFERENCES `body_parts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,

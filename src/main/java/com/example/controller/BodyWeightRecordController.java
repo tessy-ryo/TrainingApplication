@@ -34,12 +34,6 @@ public class BodyWeightRecordController {
 	
 	@Autowired
 	private ModelMapper modelMapper;
-	
-		//**認証されたユーザーのアカウントネームを表示するメソッド*/
-		private void setupModel(Model model,Authentication authentication) {
-			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-			model.addAttribute("username",userDetails.getAccountName());
-		}
 		
 		@GetMapping("/weight/record/weightHistory")
 		public String getWeightHistory(@ModelAttribute HistoryForm form,
@@ -47,7 +41,7 @@ public class BodyWeightRecordController {
 				@RequestParam(value="size",defaultValue="6") int size,
 				Model model,HttpSession session,Authentication authentication,HttpServletRequest request) {
 			//ダッシュボード画面を表示
-			setupModel(model,authentication);
+			
 			
 			model.addAttribute("currentUri",request.getRequestURI());
 			
@@ -79,48 +73,10 @@ public class BodyWeightRecordController {
 			return "training/weight/record/weightHistory";
 		}
 		
-		@PostMapping("/weight/record/weightHistory")
-		public String postTrainingDashBoard(@ModelAttribute HistoryForm form,
-				@RequestParam(value="page",defaultValue="1") int page,
-				@RequestParam(value="size",defaultValue="6") int size,
-				Model model,Authentication authentication,HttpServletRequest request) {
-			//ダッシュボード画面を表示
-			setupModel(model,authentication);
-			
-			model.addAttribute("currentUri",request.getRequestURI());
-			
-			CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
-			form.setUserId(userDetails.getId());
-			
-			int offset = (page - 1) * size;
-			
-			List<WeightRecord> weightList = weightService.getBodyWeight(form.getUserId(),form.getSearchName(),size, offset);
-			
-			//ユーザーの体重データのレコード数を検索を含めてカウントする
-			Integer totalRecords = weightService.getCountBodyWeightData(form.getUserId(),form.getSearchName());
-			
-			int totalPages = 0;
-			
-			if (totalRecords == null||totalRecords == 0) {
-				totalPages = 1;
-			}else {
-				//レコード数をsizeで割って、合計ページを計算する
-				totalPages = (int)Math.ceil((double)totalRecords / size);
-			}
-					
-			model.addAttribute("weightList",weightList);
-			
-			model.addAttribute("currentPage",page);
-			
-			model.addAttribute("totalPages", totalPages);
-			
-			return "training/weight/record/weightHistory";
-		}
-		
 		//**体重を記録する画面を表示*/
 		@GetMapping("/record/weight")
 		public String getRecordWeight(@ModelAttribute BodyWeightDataForm form,Model model,Authentication authentication,HttpSession session) {
-			setupModel(model,authentication);
+			
 			
 			//現在の日付をフォームのdateフィールドにセット
 			form.setDate(LocalDate.now());
@@ -132,7 +88,7 @@ public class BodyWeightRecordController {
 		//**体重記録確認画面に移動*/
 		@PostMapping("/record/weight")
 		public String postRecordWeight(@Valid @ModelAttribute BodyWeightDataForm form,BindingResult bindingResult, Model model,HttpSession session, Authentication authentication) {
-			setupModel(model,authentication);
+			
 			
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("recordBodyWeightForm",form);
@@ -148,7 +104,7 @@ public class BodyWeightRecordController {
 		//**体重記録確認画面を表示*/
 		@GetMapping("/weight/checkWeightRecord")
 			public String checkWeightRecord(Model model, HttpSession session, Authentication authentication) {
-			setupModel(model,authentication);
+			
 			//セッションからフォームデータを取得
 			BodyWeightDataForm form = (BodyWeightDataForm) session.getAttribute("recordBodyWeightForm");
 			
@@ -159,7 +115,7 @@ public class BodyWeightRecordController {
 		
 		@PostMapping("/weight/checkWeightRecord")
 			public String confirmWeightRecord(Model model, HttpSession session, Authentication authentication) {
-			setupModel(model,authentication);
+			
 			
 			//セッションからフォームデータを取得
 			BodyWeightDataForm form = (BodyWeightDataForm) session.getAttribute("recordBodyWeightForm");

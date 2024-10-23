@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<form role="search" method="post" th:action="@{/training/exercise/record/trainingHistory}" th:object="${historyForm}">
+		<form role="search" method="get" th:action="@{/training/exercise/record/trainingHistory}" th:object="${historyForm}">
 			<div class="text-center">
 				<div class="row justify-content-center">
 					<div class="mt-3 col-auto">
