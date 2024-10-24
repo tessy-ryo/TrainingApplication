@@ -15,6 +15,6 @@ public class ErrorAspect {
 			+"(bean(*Controller)||bean(*Service)||bean(*Repository))",
 			throwing="ex")
 	public void throwingNull(DataAccessException ex) {
-		log.error("内部エラーが発生しました");
+		log.error("不正な操作が行われました");
 	}
 }

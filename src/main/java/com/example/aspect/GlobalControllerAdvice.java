@@ -15,7 +15,7 @@ public class GlobalControllerAdvice {
 		
 		model.addAttribute("error","");
 		
-		model.addAttribute("message","内部エラーが発生しました");
+		model.addAttribute("message","不正な操作が行われました");
 		
 		model.addAttribute("status",HttpStatus.INTERNAL_SERVER_ERROR);
 		
@@ -39,7 +39,7 @@ public class GlobalControllerAdvice {
 		
 		model.addAttribute("error","");
 		
-		model.addAttribute("message","内部エラーが発生しました");
+		model.addAttribute("message","不正な操作が行われました");
 		
 		model.addAttribute("status",HttpStatus.INTERNAL_SERVER_ERROR);
 		

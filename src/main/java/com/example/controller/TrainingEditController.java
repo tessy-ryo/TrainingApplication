@@ -266,8 +266,6 @@ public class TrainingEditController {
 	@GetMapping("/delete/{id}")
 	public String getDelete(@ModelAttribute ExerciseDataForm form, Authentication authentication, Model model,
 			HttpSession session, @PathVariable("id") Integer id) {
-		
-		
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
 		//特定の筋トレデータ取得
@@ -306,15 +304,18 @@ public class TrainingEditController {
 
 	//重量あり筋トレデータ（１件）削除
 	@PostMapping("/exercise/deleteWeightReps")
-	public String postDeleteWeightReps(Authentication authentication, HttpSession session, Model model) {
-		
-
-		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+	public String postDeleteWeightReps(@ModelAttribute ExerciseDataForm form,Authentication authentication, HttpSession session, Model model) {
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		//特定の筋トレデータ取得
+		ExerciseRecord record = exerciseService.showSpecificData(form.getId());
+				
+		// 現在のユーザーがこのデータにアクセスできるか確認
+		if (record.getUserId()!=(userDetails.getId())) {
+			throw new AccessDeniedException("不正なアクセスです");
+		}
 
 		//筋トレデータ削除
 		exerciseService.deleteExerciseRecordOne(form.getId());
-		
-		session.removeAttribute("exerciseDataForm");
 
 		//筋トレ記録画面にリダイレクト
 		return "redirect:/training/exercise/record/trainingHistory";
@@ -322,15 +323,18 @@ public class TrainingEditController {
 
 	//重量なし筋トレデータ（１件）削除
 	@PostMapping("/exercise/deleteReps")
-	public String postDeleteReps(Authentication authentication, HttpSession session, Model model) {
-		
-
-		ExerciseDataForm form = (ExerciseDataForm) session.getAttribute("exerciseDataForm");
+	public String postDeleteReps(@ModelAttribute ExerciseDataForm form,Authentication authentication, HttpSession session, Model model) {
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		//特定の筋トレデータ取得
+		ExerciseRecord record = exerciseService.showSpecificData(form.getId());
+				
+		// 現在のユーザーがこのデータにアクセスできるか確認
+		if (record.getUserId()!=(userDetails.getId())) {
+			throw new AccessDeniedException("不正なアクセスです");
+		}
 
 		//筋トレデータ削除
 		exerciseService.deleteExerciseRecordOne(form.getId());
-		
-		session.removeAttribute("exerciseDataForm");
 
 		//筋トレ記録画面にリダイレクト
 		return "redirect:/training/exercise/record/trainingHistory";
@@ -484,8 +488,6 @@ public class TrainingEditController {
 	//種目追加確認画面を表示
 	@GetMapping("/exercise/addExerciseCheck")
 	public String addExerciseCheck(Authentication authentication, Model model, HttpSession session) {
-		
-
 		AddExerciseForm sessionForm = (AddExerciseForm) session.getAttribute("addExerciseForm");
 
 		BodyParts bodyPart = exerciseService.getOneBodyPart(sessionForm.getBodyPartId());
