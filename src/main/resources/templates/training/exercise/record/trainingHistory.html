@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<form role="search" method="get" th:action="@{/training/exercise/record/trainingHistory}" th:object="${historyForm}">
+		<form role="search" method="get" th:action="@{/exercise}" th:object="${historyForm}">
 			<div class="text-center">
 				<div class="row justify-content-center">
 					<div class="mt-3 col-auto">
@@ -43,8 +43,8 @@
 							<td th:text="${training.reps}"></td>
 							<td>
 								<div class="d-flex">  
-									<a class="btn btn-secondary" th:href="@{'/training/delete/'+${training.id}}" role="delete">削除</a>
-									<a class="btn-select-orange ms-2" th:href="@{'/training/edit/'+${training.id}}" role="edit">編集</a>
+									<a class="btn btn-secondary" th:href="@{'exercise/delete/'+${training.id}}" role="delete">削除</a>
+									<a class="btn-select-orange ms-2" th:href="@{/exercise/edit/{id}/event(id=${training.id})}" role="edit">編集</a>
 								</div>
 							</td>
 						</tr>
@@ -55,15 +55,15 @@
 						<nav aria-label="Page navigation">
 							<ul class="pagination">
 								<li th:classappend="${currentPage == 1} ? 'disabled'" class="page-item">
-									<a class="page-link" th:href="@{'/training/exercise/record/trainingHistory'(page=${currentPage - 1},size=${size},searchName=${historyForm.searchName})}" aria-label="前へ">
+									<a class="page-link" th:href="@{'/exercise'(page=${currentPage - 1},size=${size},searchName=${historyForm.searchName})}" aria-label="前へ">
 										前へ
 									</a>
 								</li>
 								<li th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage == i} ? 'active'" class="page-item">
-									<a class="page-link" th:href="@{'/training/exercise/record/trainingHistory'(page=${i},size=${size},searchName=${historyForm.searchName})}" th:text="${i}"></a>
+									<a class="page-link" th:href="@{'/exercise'(page=${i},size=${size},searchName=${historyForm.searchName})}" th:text="${i}"></a>
 								</li>
 								<li th:classappend="${currentPage == totalPages} ? 'disabled'" class="page-item">
-									<a class="page-link" th:href="@{'/training/exercise/record/trainingHistory'(page=${currentPage + 1},size=${size},searchName=${historyForm.searchName})}" aria-label="次へ">
+									<a class="page-link" th:href="@{'/exercise'(page=${currentPage + 1},size=${size},searchName=${historyForm.searchName})}" aria-label="次へ">
 										次へ
 									</a>
 								</li>
@@ -75,7 +75,7 @@
 		</div>
 		<div class="mt-3">
 				<div class="d-flex justify-content-center">
-					<a class="btn-record-red" th:href="@{/training/exercise/selectExercise}" role="button">筋トレを記録する</a>
+					<a class="btn-record-red" th:href="@{/exercise/add/event}" role="button">筋トレを記録する</a>
 				</div>
 		</div>
 	</div>

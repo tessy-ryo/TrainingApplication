@@ -74,4 +74,7 @@ public interface ExerciseService {
 
 	//ユーザーが筋トレした日付け（重複無し）をすべて取得する
 	public List<ExerciseRecord> getAllDistinctTrainingDate(Integer userId);
+	
+	//種目IDからUserIdを取得する
+	public ExerciseRecord getUserIdByExerciseId(Integer exerciseId);
 }

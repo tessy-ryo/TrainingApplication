@@ -33,7 +33,7 @@ public class SignupController {
 		return "user/signup";
 	}
 	
-	/**新規登録処理*/
+	//新規登録処理
 	@PostMapping("/signup")
 	public String postSignup(@ModelAttribute @Validated(GroupOrder.class) SignupForm form,
 			BindingResult bindingResult) {

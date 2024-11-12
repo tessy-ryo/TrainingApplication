@@ -13,7 +13,7 @@
 		<div class="border-bottom">
 			<h1 class="h2">体重を記録する</h1>
 		</div>
-		<form th:action="@{/training/record/weight}" method="post" th:object="${bodyWeightDataForm}">
+		<form th:action="@{/weight/add/bodyWeight}" method="post" th:object="${bodyWeightDataForm}">
 			<div class="text-center">
 				<div class="mt-3">
 					<p>下記の内容を入力してください</p>
@@ -35,7 +35,7 @@
 			</div> 
 			<div class="mt-3">
 				<div class="d-flex justify-content-center">
-					<a class="btn btn-secondary" href="/training/weight/record/weightHistory" role="button">体重記録へ戻る</a>
+					<a class="btn btn-secondary" href="/weight" role="button">体重記録へ戻る</a>
 					<button type="submit" class="btn-record-red ms-2">記録</button>
 				</div>
 			</div>

@@ -150,7 +150,9 @@ ON
 		body_parts.name LIKE CONCAT('%', #{searchName}, '%'))
 </if>
 </where>
-ORDER BY exercise_records.date DESC
+ORDER BY 
+	exercise_records.date DESC,
+	exercise_records.id DESC
 LIMIT #{size} OFFSET #{offset}
 </select>
 
@@ -299,5 +301,15 @@ FROM
 	training.exercise_records
 WHERE
 	user_id = #{userId}
+</select>
+
+<!--種目IDからUserIdを取得する -->
+<select id="findUserIdByExerciseId" resultMap = "record">
+SELECT 
+	user_id
+FROM
+	training.exercises
+WHERE 
+ id = #{exerciseId}
 </select>
 </mapper>

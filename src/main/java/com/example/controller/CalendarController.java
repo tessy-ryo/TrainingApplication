@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.model.ExerciseRecord;
 import com.example.domain.model.WeightRecord;
@@ -24,15 +23,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/training")
-public class TrainingCalendarController {
+public class CalendarController {
 	@Autowired
 	private ExerciseService exerciseService;
 	
 	@Autowired
 	private WeightService weightService;
 	
-	@GetMapping("/calendar/showTrainingCalendar")
+	@GetMapping("/calendar")
 	public String getTrainingCalendar(Model model, Authentication authentication,HttpServletRequest request) throws JsonProcessingException {
 		
 		model.addAttribute("currentUri",request.getRequestURI());

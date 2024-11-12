@@ -19,21 +19,21 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link" th:classappend="${currentUri == '/training/exercise/record/trainingHistory'} ? ' active'"
-							href="/training/exercise/record/trainingHistory">筋トレ記録</a>
+						<a class="nav-link" th:classappend="${currentUri == '/exercise'} ? ' active'"
+							href="/exercise">筋トレ記録</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" th:classappend="${currentUri == '/training/weight/record/weightHistory'} ? ' active'"
-							href="/training/weight/record/weightHistory">体重記録</a>
+						<a class="nav-link" th:classappend="${currentUri == '/weight'} ? ' active'"
+							href="/weight">体重記録</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link"
-							th:classappend="${currentUri == '/training/calendar/showTrainingCalendar'} ? ' active'"
-							href="/training/calendar/showTrainingCalendar">筋トレカレンダー</a>
+							th:classappend="${currentUri == '/calendar'} ? ' active'"
+							href="/calendar">筋トレカレンダー</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" th:classappend="${currentUri == '/training/selectGraph'} ? ' active'"
-							href="/training/selectGraph">筋トレグラフ</a>
+						<a class="nav-link" th:classappend="${currentUri == '/graph'} ? ' active'"
+							href="/graph">筋トレグラフ</a>
 					</li>
 				</ul>
 				<ul class="navbar-nav ms-lg-4 mb-2 mb-lg-0">

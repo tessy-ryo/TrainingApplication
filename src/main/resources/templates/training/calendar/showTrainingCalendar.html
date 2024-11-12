@@ -40,9 +40,9 @@
 						var encodedDate = encodeURIComponent(formattedDate);
 
 						if(info.event.title === "筋トレ"){
-						window.location.href =  '/training/exercise/record/trainingHistory?searchName=' + encodedDate;
+						window.location.href =  '/exercise?searchName=' + encodedDate;
 						}else if(info.event.title === "体重記録"){
-							window.location.href = '/training/weight/record/weightHistory?searchName=' + encodedDate;
+							window.location.href = '/weight?searchName=' + encodedDate;
 						}
 					}
 				});

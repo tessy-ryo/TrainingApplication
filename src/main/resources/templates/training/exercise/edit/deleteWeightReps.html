@@ -10,8 +10,7 @@
 
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/deleteWeightReps}" method="post" th:object="${exerciseDataForm}">
-			<input type="hidden" th:field="*{id}">
+		<form th:action="@{/exercise/delete/{id}/weight(id=${exerciseDataForm.id})}" method="post" th:object="${exerciseDataForm}">
 			<div class="border-bottom">
 				<h1 class="h2">トレーニングデータを削除する（確認）</h1>
 			</div>
@@ -52,7 +51,7 @@
 			</div>
 			<div class="mt-3">
 				<div class="d-flex justify-content-center">
-					<a class="btn btn-secondary" href="/training/exercise/record/trainingHistory" role="button">いいえ</a>
+					<a class="btn btn-secondary" href="/exercise" role="button">いいえ</a>
 					<button type="submit" class="btn-record-red ms-2">はい</button>
 				</div>
 			</div>

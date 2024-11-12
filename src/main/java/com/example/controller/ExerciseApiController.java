@@ -19,7 +19,7 @@ import com.example.domain.service.ExerciseService;
 
 @RestController
 @RequestMapping("/api")
-public class ExerciseController {
+public class ExerciseApiController {
 	@Autowired
 	private ExerciseService exerciseService;
 	

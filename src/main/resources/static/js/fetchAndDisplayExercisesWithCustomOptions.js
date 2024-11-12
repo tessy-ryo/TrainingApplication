@@ -62,11 +62,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (selectedValue === "delete") {
             // 「種目削除」を選択した場合に画面遷移
-                window.location.href = `/training/exercise/deleteExercise?bodyPartId=${bodyPartId}`;
+                window.location.href = `/exercise/delete/types?bodyPartId=${bodyPartId}`;
             
         } else if (selectedValue === "add") {
             // 「種目追加」を選択した場合に画面遷移
-                window.location.href = `/training/exercise/addExercise?bodyPartId=${bodyPartId}`;
+                window.location.href = `/exercise/add/types?bodyPartId=${bodyPartId}`;
         }
     });
 });

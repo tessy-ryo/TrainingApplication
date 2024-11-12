@@ -84,15 +84,15 @@
 		        <nav aria-label="Page navigation">
 		            <ul class="pagination">
 		                <li th:classappend="${currentPage == 1} ? 'disabled'" class="page-item">
-		                    <a class="page-link" th:href="@{'/training/weight/graph/showWeightGraph'(page=${currentPage - 1}, size=${size})}" aria-label="前の期間">
+		                    <a class="page-link" th:href="@{'/graph/weight'(page=${currentPage - 1}, size=${size})}" aria-label="前の期間">
 		                        前の期間
 		                    </a>
 		                </li>
 		                <li th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage == i} ? 'active'" class="page-item">
-		                    <a class="page-link" th:href="@{'/training/weight/graph/showWeightGraph'(page=${i}, size=${size})}" th:text="${i}"></a>
+		                    <a class="page-link" th:href="@{'/graph/weight'(page=${i}, size=${size})}" th:text="${i}"></a>
 		                </li>
 		                <li th:classappend="${currentPage == totalPages} ? 'disabled'" class="page-item">
-		                    <a class="page-link" th:href="@{'/training/weight/graph/showWeightGraph'(page=${currentPage + 1}, size=${size})}" aria-label="次の期間">
+		                    <a class="page-link" th:href="@{'/graph/weight'(page=${currentPage + 1}, size=${size})}" aria-label="次の期間">
 		                        次の期間
 		                    </a>
 		                </li>
@@ -102,7 +102,7 @@
 		</div>
 		<div class="row justify-content-center mt-3 mb-3">
 			<div class="col-auto">
-				<a class="btn btn-secondary" th:href="@{/training/selectGraph}" role="button">筋トレグラフへ戻る</a>
+				<a class="btn btn-secondary" th:href="@{/graph}" role="button">筋トレグラフへ戻る</a>
 			</div>
 		</div>
 	</div>

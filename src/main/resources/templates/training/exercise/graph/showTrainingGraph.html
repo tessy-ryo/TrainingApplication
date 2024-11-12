@@ -38,39 +38,39 @@
 
 		<script th:inline="javascript">
 			const ctx = document.getElementById('trainingGraph').getContext('2d');
-			const labels = /*[[${dates}]]*/ [];
-			const data = /*[[${weights}]]*/ [];
-			
+			const labels = /*[[${dates}]]*/[];
+			const data = /*[[${weights}]]*/[];
+
 			const chart = new Chart(ctx, {
-				type: 'line',  
+				type: 'line',
 				data: {
 					labels: labels,
 					datasets: [{
 						label: '最大重量',
 						data: data,
-						backgroundColor: 'rgba(255, 255, 0, 0.2)',  
-						borderColor: 'rgba(255, 255, 0, 1)',  
-						borderWidth: 2,  
-						tension: 0.1,  
-						fill: false,  
-						pointRadius: 5,  
-						pointBackgroundColor: 'rgba(255, 255, 0, 1)',  
+						backgroundColor: 'rgba(255, 255, 0, 0.2)',
+						borderColor: 'rgba(255, 255, 0, 1)',
+						borderWidth: 2,
+						tension: 0.1,
+						fill: false,
+						pointRadius: 5,
+						pointBackgroundColor: 'rgba(255, 255, 0, 1)',
 					}]
 				},
 				options: {
 					scales: {
 						y: {
 							beginAtZero: true,
-							title:{
-								display:true,
-								text:'最大重量(kg)'
+							title: {
+								display: true,
+								text: '最大重量(kg)'
 							}
 						},
-						x:{
-							beginAtZero:true,
-							title:{
-								display:true,
-								text:'日付'
+						x: {
+							beginAtZero: true,
+							title: {
+								display: true,
+								text: '日付'
 							}
 						}
 					}
@@ -80,32 +80,39 @@
 
 		<!-- ページング機能 -->
 		<div class="row justify-content-center mt-3">
-		    <div class="col-auto">
-		        <nav aria-label="Page navigation">
-		            <ul class="pagination">
-		                <li th:classappend="${currentPage == 1} ? 'disabled'" class="page-item">
-		                    <a class="page-link" th:href="@{'/training/exercise/graph/showTrainingGraph'(page=${currentPage - 1}, size=${size})}" aria-label="前の期間">
-		                        前の期間
-		                    </a>
-		                </li>
-		                <li th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage == i} ? 'active'" class="page-item">
-		                    <a class="page-link" th:href="@{'/training/exercise/graph/showTrainingGraph'(page=${i}, size=${size})}" th:text="${i}"></a>
-		                </li>
-		                <li th:classappend="${currentPage == totalPages} ? 'disabled'" class="page-item">
-		                    <a class="page-link" th:href="@{'/training/exercise/graph/showTrainingGraph'(page=${currentPage + 1}, size=${size})}" aria-label="次の期間">
-		                        次の期間
-		                    </a>
-		                </li>
-		            </ul>
-		        </nav>
-		    </div>
+			<div class="col-auto">
+				<nav aria-label="Page navigation">
+					<ul class="pagination">
+						<li th:classappend="${currentPage == 1} ? 'disabled'" class="page-item">
+							<a class="page-link"
+								th:href="@{|/graph/exercise/${exerciseId}?page=${currentPage - 1}&size=${size}|}"
+								aria-label="前の期間">
+								前の期間
+							</a>
+						</li>
+						<li th:each="i : ${#numbers.sequence(1, totalPages)}"
+							th:classappend="${currentPage == i} ? 'active'" class="page-item">
+							<a class="page-link" th:href="@{|/graph/exercise/${exerciseId}?page=${i}&size=${size}|}"
+								th:text="${i}"></a>
+						</li>
+						<li th:classappend="${currentPage == totalPages} ? 'disabled'" class="page-item">
+							<a class="page-link"
+								th:href="@{|/graph/exercise/${exerciseId}?page=${currentPage + 1}&size=${size}|}"
+								aria-label="次の期間">
+								次の期間
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
 		</div>
 		<div class="row justify-content-center mt-3 mb-3">
 			<div class="col-auto">
-				<a class="btn btn-secondary" th:href="@{/training/exercise/graph/selectExerciseGraph}" role="button">種目グラフ選択に戻る</a>
+				<a class="btn btn-secondary" th:href="@{/graph/exercise}" role="button">種目グラフ選択に戻る</a>
 			</div>
 		</div>
 	</div>
 
 </body>
+
 </html>

@@ -138,4 +138,10 @@ public class ExerciseServiceImpl implements ExerciseService {
 		public List<ExerciseRecord> getAllDistinctTrainingDate(Integer userId){
 			return mapper.findAllDistinctTrainingDate(userId);
 		}
+	
+	//種目IDからUserIdを取得する
+	@Override
+	public ExerciseRecord getUserIdByExerciseId(Integer exerciseId) {
+		return mapper.findUserIdByExerciseId(exerciseId);
+	}
 }

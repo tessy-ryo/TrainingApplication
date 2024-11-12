@@ -12,7 +12,7 @@
 		<div class="border-bottom">
 			<h1 class="h2">種目を選択する</h1>
 		</div>
-		<form th:action="@{/training/exercise/selectExercise}" method="post" th:object="${exerciseDataForm}">
+		<form th:action="@{/exercise/add/event}" method="post" th:object="${exerciseDataForm}">
 			<div class="text-center">
 				<div class= "mt-3">
 					<p>日付を入力し、種目を一つ選択してください</p>
@@ -57,7 +57,7 @@
 			</div>
 			<div class="mt-3">
 				<div class="d-flex justify-content-center">
-					<a class="btn btn-secondary" href="/training/exercise/record/trainingHistory" role="button">筋トレ記録へ戻る</a>
+					<a class="btn btn-secondary" href="/exercise" role="button">筋トレ記録へ戻る</a>
 					<button type="submit" class="btn-record-red ms-2">重量や回数を入力する</button>
 				</div>
 			</div>

@@ -21,7 +21,8 @@ FROM
 </if>
 </where>
 ORDER BY
-	date DESC
+	date DESC,
+	id DESC
 LIMIT #{size} OFFSET #{offset}
 </select>
 

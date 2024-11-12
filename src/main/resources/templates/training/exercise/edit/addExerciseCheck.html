@@ -10,7 +10,9 @@
 
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/addExerciseCheck}" method="post" th:object="${addExerciseForm}">
+		<form th:action="@{/exercise/add/typesCheck}" method="post" th:object="${addExerciseForm}">
+			<input type="hidden" th:field="*{bodyPartId}">
+			<input type="hidden" th:field="*{weightBased}">
 			<div class="border-bottom">
 				<h1 class="h2">種目を追加する（確認）</h1>
 			</div>
@@ -28,7 +30,7 @@
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
-					<label for="weightBased" class="form-label">重量の有無</label>
+					<label for="weightBasedText" class="form-label">重量の有無</label>
 					<input type="text" class="form-control" th:field="*{weightBasedText}" readonly>
 				</div>
 			</div>
@@ -39,7 +41,7 @@
 			</div>
 			<div class="mt-3">
 				<div class="d-flex justify-content-center">
-					<a class="btn btn-secondary" th:href="@{/training/exercise/addExercise}" role="button">いいえ</a>
+					<a class="btn btn-secondary" th:href="@{/exercise/add/types}" role="button">いいえ</a>
 					<button type="submit" class="btn-record-red ms-2">はい</button>
 				</div>
 			</div>

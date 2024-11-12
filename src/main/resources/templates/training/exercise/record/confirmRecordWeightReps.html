@@ -8,7 +8,10 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/exercise/confirmRecordWeightReps}" th:object="${exerciseDataForm}" method="post">
+		<form th:action="@{/exercise/confirm/weight}" th:object="${exerciseDataForm}" method="post">
+			<input type="hidden" th:field="*{date}">
+    		<input type="hidden" th:field="*{bodyPartId}">
+    		<input type="hidden" th:field="*{exerciseId}">
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 					<p class="text-center">トレーニングデータが記録されました</p>
@@ -17,7 +20,7 @@
 			<div class="text-center">
 			<div class="row justify-content-center">
 				<div class="d-grid gap-2 col-6 mx-auto mt-3">
-					<a class="btn btn-secondary" href="/training/exercise/selectExercise" role="button">種目を変更する</a>
+					<a class="btn btn-secondary" href="/exercise/add/event" role="button">種目を変更する</a>
 				</div>
   			</div>
   			<div class="row justify-content-center">

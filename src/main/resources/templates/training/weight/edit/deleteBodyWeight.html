@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/training/weight/edit/deleteBodyWeight}" method="post" th:object="${bodyWeightDataForm}">
+		<form th:action="@{'/weight/delete/' + ${bodyWeightDataForm.id}}" method="post" th:object="${bodyWeightDataForm}">
 			<div class="border-bottom">
 				<h1 class="h2">体重データを削除する（確認）</h1>
 			</div>
@@ -31,7 +31,7 @@
 			</div>
 			<div class="mt-3">
 				<div class="d-flex justify-content-center">
-					<a class="btn btn-secondary" href="/training/weight/record/weightHistory" role="button">いいえ</a>
+					<a class="btn btn-secondary" href="/weight" role="button">いいえ</a>
 					<button type="submit" class="btn-record-red ms-2">はい</button>
 				</div>
 			</div>
