@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -85,6 +86,15 @@ public class GraphController {
 	        @RequestParam(value = "page", required = false) Integer page,  
 	        @RequestParam(value = "size", defaultValue = "7") int size) {
 	    CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+	    
+		if (exerciseId != null) {
+			ExerciseRecord record = exerciseService.getUserIdByExerciseId(exerciseId);
+
+			// recordがnullでない場合のみアクセス権限をチェック
+			if (record != null && !record.getUserId().equals(userDetails.getId())) {
+				throw new AccessDeniedException("不正なアクセスです");
+			}
+		}
 
 	    // 筋トレ種目と種目ID、筋トレ部位を一件取得
 	    ExerciseRecord record = exerciseService.getOneExercise(exerciseId);
