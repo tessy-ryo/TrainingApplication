@@ -82,7 +82,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 	public void updateExerciseRecordOne(LocalDate date,
 			Integer bodyPartId,
 			Integer exerciseId,
-			Integer weight,
+			Double weight,
 			Integer reps,
 			Integer id) {
 		mapper.updateOne(date,bodyPartId,exerciseId,weight,reps,id);
@@ -117,7 +117,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 	
 	//特定の種目の、今までの最大重量を取得する
 	@Override
-	public Integer getMaxWeightByExerciseId(Integer exerciseId,Integer userId) {
+	public Double getMaxWeightByExerciseId(Integer exerciseId,Integer userId) {
 		return mapper.findMaxWeightByExerciseId(exerciseId, userId);
 	}
 	

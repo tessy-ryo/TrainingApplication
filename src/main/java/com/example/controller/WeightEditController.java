@@ -24,19 +24,24 @@ import jakarta.servlet.http.HttpSession;
 public class WeightEditController {
 	@Autowired WeightService weightService;
 	
-	//体重データを削除する画面へ遷移
-	@GetMapping("/delete/{id}")
-	public String getDelete(@ModelAttribute BodyWeightDataForm form, Authentication authentication, Model model) {
-		
+	@ModelAttribute
+	public void checkWeightAccess(@ModelAttribute BodyWeightDataForm form, Authentication authenticaion, Model model, Authentication authentication) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		
 		//特定の体重データを取得
 		WeightRecord record = weightService.findWeightRecordById(form.getId());
-		
 		// 現在のユーザーがこのデータにアクセスできるか確認
 	    if (record.getUserId()!=(userDetails.getId())) {
 	        throw new AccessDeniedException("不正なアクセスです");
 	    }
+	}
+	
+	//体重データを削除する画面へ遷移
+	@GetMapping("/delete/{id}")
+	public String getDelete(@ModelAttribute BodyWeightDataForm form, Authentication authentication, Model model) {
+		
+		//特定の体重データを取得
+		WeightRecord record = weightService.findWeightRecordById(form.getId());
 		
 		form.setDate(record.getDate());
 		
@@ -62,15 +67,8 @@ public class WeightEditController {
 	@GetMapping("/edit/{id}")
 	public String getEdit(@ModelAttribute BodyWeightDataForm form, Authentication authentication, Model model) {
 		
-		
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		
 		//特定の体重データを取得
 		WeightRecord record = weightService.findWeightRecordById(form.getId());
-		// 現在のユーザーがこのデータにアクセスできるか確認
-	    if (record.getUserId()!=(userDetails.getId())) {
-	        throw new AccessDeniedException("不正なアクセスです");
-	    }
 				
 		form.setDate(record.getDate());
 				
@@ -101,14 +99,6 @@ public class WeightEditController {
 	        Model model,
 	        Authentication authentication,
 	        @ModelAttribute BodyWeightDataForm form) { 
-	    
-	    CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-	    
-	    // 特定の体重データを取得し、アクセス確認
-	    WeightRecord record = weightService.findWeightRecordById(form.getId());
-	    if (record.getUserId() != userDetails.getId()) {
-	        throw new AccessDeniedException("不正なアクセスです");
-	    }
 	    
 	    form.setDate(form.getDate());
 	    form.setBodyWeight(form.getBodyWeight());

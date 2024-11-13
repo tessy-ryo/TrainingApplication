@@ -17,7 +17,7 @@ public class ExerciseRecord {
 	
 	private LocalDate date;
 	
-	private Integer weight;
+	private Double weight;
 	
 	private Integer reps;
 	

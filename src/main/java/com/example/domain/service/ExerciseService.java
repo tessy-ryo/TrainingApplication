@@ -44,7 +44,7 @@ public interface ExerciseService {
 	public void updateExerciseRecordOne(LocalDate date,
 			Integer bodyPartId,
 			Integer exerciseId,
-			Integer weight,
+			Double weight,
 			Integer reps,
 			Integer id);
 
@@ -64,7 +64,7 @@ public interface ExerciseService {
 	public int getTotalRecords(Integer userId, String searchName);
 
 	//特定の種目の、今までの最大重量を取得する
-	public Integer getMaxWeightByExerciseId(Integer exerciseId, Integer userId);
+	public Double getMaxWeightByExerciseId(Integer exerciseId, Integer userId);
 
 	//特定の種目の、直近7日間の最大重量を取得
 	public List<ExerciseRecord> getMaxWeightForLast7Days(Integer exerciseId, Integer userId, int size, int offset);

@@ -20,7 +20,7 @@ public class ExerciseDataForm {
 	@NotNull
 	private LocalDate date;
 	
-	private Integer weight;
+	private Double weight;
 	
 	private Integer reps;
 	

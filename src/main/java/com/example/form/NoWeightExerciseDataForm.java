@@ -18,7 +18,7 @@ public class NoWeightExerciseDataForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
 	
-	private Integer weight;
+	private Double weight;
 	
 	@NotNull
 	private Integer reps;

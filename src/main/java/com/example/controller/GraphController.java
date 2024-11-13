@@ -90,7 +90,7 @@ public class GraphController {
 	    ExerciseRecord record = exerciseService.getOneExercise(exerciseId);
 
 	    // 特定の種目の、今までの最大重量を取得する
-	    Integer maxWeight = exerciseService.getMaxWeightByExerciseId(exerciseId, userDetails.getId());
+	    Double maxWeight = exerciseService.getMaxWeightByExerciseId(exerciseId, userDetails.getId());
 
 	    // 総レコード数を取得
 	    int totalRecords = exerciseService.getMaxWeightRecords(exerciseId, userDetails.getId());
@@ -112,7 +112,7 @@ public class GraphController {
 	    List<String> dates = maxWeightRecords.stream()
 	            .map(r -> r.getDate().format(formatter))
 	            .collect(Collectors.toList());
-	    List<Integer> weights = maxWeightRecords.stream()
+	    List<Double> weights = maxWeightRecords.stream()
 	            .map(ExerciseRecord::getWeight)
 	            .collect(Collectors.toList());
 

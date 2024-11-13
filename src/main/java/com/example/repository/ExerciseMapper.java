@@ -46,7 +46,7 @@ public interface ExerciseMapper {
 	public void updateOne(@Param("date")LocalDate date,
 			@Param("bodyPartId")Integer bodyPartId,
 			@Param("exerciseId")Integer exerciseId,
-			@Param("weight")Integer weight,
+			@Param("weight")Double weight,
 			@Param("reps")Integer reps,
 			@Param("id")Integer id);
 	
@@ -67,7 +67,7 @@ public interface ExerciseMapper {
 			@Param("searchName") String searchName);
 	
 	//特定の種目の、今までの最大重量を取得する
-	public Integer findMaxWeightByExerciseId(Integer exerciseId, Integer userId);
+	public Double findMaxWeightByExerciseId(Integer exerciseId, Integer userId);
 	
 	//特定の種目の、直近7日間の最大重量を取得
 	public List<ExerciseRecord> findMaxWeightForLast7Days(Integer exerciseId,Integer userId, int size, int offset);
