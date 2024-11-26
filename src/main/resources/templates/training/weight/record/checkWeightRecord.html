@@ -13,7 +13,7 @@
 		<div class="border-bottom">
 			<h1 class="h2">体重を記録する（確認）</h1>
 		</div>
-		<form th:action="@{/weight/check/bodyWeight}" method="post" th:object="${recordBodyWeightForm}">
+		<form th:action="@{/weight/check/bodyWeight}" method="post" th:object="${bodyWeightDataForm}">
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 					<label for="日付" class="form-label">日付</label>

@@ -23,5 +23,9 @@ public class WeightExerciseDataForm {
 	
 	@NotNull
 	private Integer reps;
+	
+	private String bodyPartName;
+	
+	private String exerciseName;
 }
 

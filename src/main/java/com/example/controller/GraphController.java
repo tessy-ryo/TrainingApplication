@@ -28,6 +28,7 @@ import com.example.domain.service.WeightService;
 import com.example.form.TrainingGraphForm;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/graph")
@@ -40,7 +41,15 @@ public class GraphController {
 
 		
 	@GetMapping("")
-	public String getSelectGraph(Model model, Authentication authentication,HttpServletRequest request) {
+	public String getSelectGraph(Model model, Authentication authentication,HttpServletRequest request, HttpSession session) {
+		//入力画面の途中で画面を遷移し、セッションにデータが残っている場合に、データを破棄
+		if(session != null) {
+			session.removeAttribute("exerciseDataForm");
+			session.removeAttribute("bodyWeightDataForm");
+			session.removeAttribute("deleteExerciseForm");
+			session.removeAttribute("addExerciseForm");
+		}
+		
 		model.addAttribute("currentUri",request.getRequestURI());
 		//筋トレグラフ選択画面を表示
 		return "training/selectGraph";

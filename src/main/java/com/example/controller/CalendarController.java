@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class CalendarController {
@@ -31,7 +32,14 @@ public class CalendarController {
 	private WeightService weightService;
 	
 	@GetMapping("/calendar")
-	public String getTrainingCalendar(Model model, Authentication authentication,HttpServletRequest request) throws JsonProcessingException {
+	public String getTrainingCalendar(Model model, Authentication authentication,HttpServletRequest request, HttpSession session) throws JsonProcessingException {
+		//入力画面の途中で画面を遷移し、セッションにデータが残っている場合に、データを破棄
+		if(session != null) {
+			session.removeAttribute("exerciseDataForm");
+			session.removeAttribute("bodyWeightDataForm");
+			session.removeAttribute("deleteExerciseForm");
+			session.removeAttribute("addExerciseForm");
+		}
 		
 		model.addAttribute("currentUri",request.getRequestURI());
 		

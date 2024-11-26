@@ -9,8 +9,6 @@
 <body>
 	<div layout:fragment="content">
 		<form th:action="@{/exercise/check/weight}" th:object="${exerciseDataForm}" method="post">
-			<input type="hidden" th:field="*{bodyPartId}">
-    		<input type="hidden" th:field="*{exerciseId}">
 			<div class="border-bottom">
 				<h1 class="h2">トレーニングデータ記録確認（重量あり）</h1>
 			</div>
@@ -34,9 +32,8 @@
 			</div>
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
-					<label for="重量" class="form-label">重量</label>
-					<input type="text" class="form-control" th:field="*{weight}" th:errorclass="is-invalid">
-					<div class="invalid-feedback" th:errors="*{weight}"></div>
+					<label for="weight" class="form-label">重量</label>
+					<input type="text" class="form-control" th:field="*{weight}" readonly>
 				</div>
 			</div>
 			<div class="row justify-content-center mt-3">

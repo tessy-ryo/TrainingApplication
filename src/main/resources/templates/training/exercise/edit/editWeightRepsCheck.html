@@ -11,8 +11,6 @@
 <body>
 	<div layout:fragment="content">
 		<form th:action="@{/exercise/edit/{id}/weightCheck(id=${exerciseDataForm.id})}" th:object="${exerciseDataForm}" method="post">
-			<input type="hidden" th:field="*{bodyPartId}">
-    		<input type="hidden" th:field="*{exerciseId}">
 			<div class="row justify-content-center mt-3">
 				<div class="col-4">
 					<label for="date" class="form-label">日付</label>
